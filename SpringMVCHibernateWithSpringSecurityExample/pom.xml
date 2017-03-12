@@ -8,7 +8,7 @@
 	<artifactId>SpringMVCHibernateManyToManyCRUDExample</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>SpringMVCHibernateWithSpringSecurityExample</name>
+	<name>ZulfiCricket</name>
 
 	<properties>
 		<springframework.version>4.0.6.RELEASE</springframework.version>
@@ -147,13 +147,13 @@
 					<version>2.4</version>
 					<configuration>
 						<warSourceDirectory>src/main/webapp</warSourceDirectory>
-						<warName>SpringMVCHibernateWithSpringSecurityExample</warName>
+						<warName>ZulfiCricket</warName>
 						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<finalName>SpringMVCHibernateWithSpringSecurityExample</finalName>
+		<finalName>ZulfiCricket</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
