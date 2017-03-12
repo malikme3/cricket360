@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.websystique.springmvc.dao.UserDao;
+import com.websystique.springmvc.model.Player;
 import com.websystique.springmvc.model.User;
 
 
@@ -66,6 +67,12 @@ public class UserServiceImpl implements UserService{
 	public boolean isUserSSOUnique(Integer id, String sso) {
 		User user = findBySSO(sso);
 		return ( user == null || ((id != null) && (user.getId() == id)));
+	}
+
+	@Override
+	public List<Player> getAllPlayers() {
+		// TODO Auto-generated method stub
+		return dao.getAllPlayers();
 	}
 	
 }

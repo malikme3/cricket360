@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.websystique.springmvc.model.Player;
 import com.websystique.springmvc.model.User;
 import com.websystique.springmvc.model.UserProfile;
 import com.websystique.springmvc.service.UserProfileService;
@@ -190,6 +193,15 @@ public class AppController {
 	    	return "redirect:/list";  
 	    }
 	}
+
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
+	public ResponseEntity<List<Player>> getAllPlayers() {
+        List<Player> users = userService.getAllPlayers();
+       /* if(users.isEmpty()){
+            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
+        }*/
+        return new ResponseEntity<List<Player>>(users, HttpStatus.OK);
+    }
 
 	/**
 	 * This method handles logout requests.
