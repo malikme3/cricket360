@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 
@@ -77,6 +79,23 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	@Override
 	public List<Player> getAllPlayers() {
 		return session().createQuery("from Player").list();
+	}
+
+	// Submitting player list for team selection
+	@Override
+	public List<Availability> savePlayerForSelection() {
+
+		String hql = "Update Availability set player_name = :player_name where player_id = :id";
+		Query query = session().createQuery(hql);
+		query.setParameter("player_name", "Dr Mukhtar Ahmad");
+		query.setParameter("id", 3);
+		int result = query.executeUpdate();
+		if (result > 0) {
+			System.out.println("Update :  " + result + " rows");
+
+		}
+		return null;
+
 	}
 
 }

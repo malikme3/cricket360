@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.UserDao;
+import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 
@@ -71,8 +72,13 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public List<Player> getAllPlayers() {
-		// TODO Auto-generated method stub
 		return dao.getAllPlayers();
+	}
+
+	@Override
+	public List<Availability> savePlayerForSelection() {
+		return dao.savePlayerForSelection();
+
 	}
 	
 }

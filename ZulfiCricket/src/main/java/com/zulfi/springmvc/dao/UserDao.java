@@ -2,6 +2,7 @@ package com.zulfi.springmvc.dao;
 
 import java.util.List;
 
+import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 
@@ -19,6 +20,8 @@ public interface UserDao {
 	List<User> findAllUsers();
 
 	List<Player> getAllPlayers();
+
+	List<Availability>  savePlayerForSelection();
 
 }
 
