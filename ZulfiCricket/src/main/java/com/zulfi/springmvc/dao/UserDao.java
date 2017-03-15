@@ -19,7 +19,7 @@ public interface UserDao {
 	
 	List<User> findAllUsers();
 
-	List<Player> getAllPlayers();
+	List<Availability> getTeamPlayers();
 
 	List<Availability>  savePlayerForSelection(Availability availability);
 

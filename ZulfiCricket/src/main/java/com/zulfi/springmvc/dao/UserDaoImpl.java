@@ -77,8 +77,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Player> getAllPlayers() {
-		return session().createQuery("from Player").list();
+	public List<Availability> getTeamPlayers() {
+		return session().createQuery("from Availability").list();
 	}
 
 	// Submitting player list for team selection

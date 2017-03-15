@@ -202,13 +202,20 @@ public class AppController {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ResponseEntity<List<Player>> getAllPlayers() {
-        List<Player> users = userService.getAllPlayers();
+       // List<Player> users = userService.getAllPlayers();
        /* if(users.isEmpty()){
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);//You many decide to return HttpStatus.NOT_FOUND
         }*/
-        return new ResponseEntity<List<Player>>(users, HttpStatus.OK);
+        return new ResponseEntity<List<Player>>(HttpStatus.OK);
     }
 
+	//Getting Players for Match Selection
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = "/team/selection", method = RequestMethod.GET)
+	public ResponseEntity<List<Availability>> getTeamPlayers() {
+        List<Availability> players = userService.getTeamPlayers();
+        return new ResponseEntity<List<Availability>>(players, HttpStatus.OK);
+    }
     /* -------------------Submitting Player for team Selection-------------------------------------------------------- */
 
 	@CrossOrigin(origins = "http://localhost:3000")

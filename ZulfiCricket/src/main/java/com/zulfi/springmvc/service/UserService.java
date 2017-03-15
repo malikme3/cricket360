@@ -10,7 +10,7 @@ public interface UserService {
 
 	User findById(int id);
 
-	public List<Player> getAllPlayers();
+	public List<Availability> getTeamPlayers();
 
 	User findBySSO(String sso);
 

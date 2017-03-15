@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Player> getAllPlayers() {
-		return dao.getAllPlayers();
+	public List<Availability> getTeamPlayers() {
+		return dao.getTeamPlayers();
 	}
 
 	@Override
