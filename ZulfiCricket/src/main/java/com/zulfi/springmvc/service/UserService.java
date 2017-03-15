@@ -24,6 +24,6 @@ public interface UserService {
 
 	boolean isUserSSOUnique(Integer id, String sso);
 
-	List<Availability> savePlayerForSelection();
+	List<Availability> savePlayerForSelection(Availability availability);
 
 }

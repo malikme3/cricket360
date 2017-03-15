@@ -1,13 +1,8 @@
 package com.zulfi.springmvc.controller;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -16,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
@@ -33,8 +27,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,7 +41,7 @@ import com.zulfi.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/")
-@SessionAttributes("roles")
+//@SessionAttributes("roles")
 public class AppController {
 
 	@Autowired
@@ -217,16 +209,16 @@ public class AppController {
         return new ResponseEntity<List<Player>>(users, HttpStatus.OK);
     }
 
-    //-------------------Submitting Player for team Selection--------------------------------------------------------
+    /* -------------------Submitting Player for team Selection-------------------------------------------------------- */
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = "team/selection", method = RequestMethod.GET)
-	public ResponseEntity<List<Availability>> submitPlayerForSelection(UriComponentsBuilder ucBuilder) {
-		List<Availability> players = userService.savePlayerForSelection();
+	@RequestMapping(value = "{selection}", method = RequestMethod.POST)
+	public ResponseEntity<List<Availability>> submitPlayerForSelection(@RequestBody Availability availability, UriComponentsBuilder ucBuilder) {
+		List<Availability> playerSelection = userService.savePlayerForSelection(availability);
 
 		HttpHeaders headers = new HttpHeaders();
-		//headers.setLocation(ucBuilder.path("/user/{id}").buildAndExpand(2).toUri());
-		return new ResponseEntity<List<Availability>>(players, HttpStatus.CREATED);
+		headers.setLocation(ucBuilder.path("/selection/").buildAndExpand(2).toUri());
+		return new ResponseEntity<List<Availability>>(headers, HttpStatus.CREATED);
 	}
 
 	/**

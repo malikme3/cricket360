@@ -21,7 +21,7 @@ public interface UserDao {
 
 	List<Player> getAllPlayers();
 
-	List<Availability>  savePlayerForSelection();
+	List<Availability>  savePlayerForSelection(Availability availability);
 
 }
 

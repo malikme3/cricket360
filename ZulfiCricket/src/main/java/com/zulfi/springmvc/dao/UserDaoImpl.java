@@ -83,12 +83,12 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	// Submitting player list for team selection
 	@Override
-	public List<Availability> savePlayerForSelection() {
+	public List<Availability> savePlayerForSelection(Availability availability) {
 
-		String hql = "Update Availability set player_name = :player_name where player_id = :id";
+		String hql = "Update Availability set player_availability = :availability where player_id = :id";
 		Query query = session().createQuery(hql);
-		query.setParameter("player_name", "Dr Mukhtar Ahmad");
-		query.setParameter("id", 3);
+		query.setParameter("id", availability.getPlayer_id());
+		query.setParameter("availability", availability.getPlayer_availability());
 		int result = query.executeUpdate();
 		if (result > 0) {
 			System.out.println("Update :  " + result + " rows");

@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Availability> savePlayerForSelection() {
-		return dao.savePlayerForSelection();
+	public List<Availability> savePlayerForSelection(Availability availability) {
+		return dao.savePlayerForSelection(availability);
 
 	}
 	
