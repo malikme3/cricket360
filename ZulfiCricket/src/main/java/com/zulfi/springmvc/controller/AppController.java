@@ -221,11 +221,10 @@ public class AppController {
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "{selection}", method = RequestMethod.POST)
 	public ResponseEntity<List<Availability>> submitPlayerForSelection(@RequestBody Availability availability, UriComponentsBuilder ucBuilder) {
-		List<Availability> playerSelection = userService.savePlayerForSelection(availability);
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.setLocation(ucBuilder.path("/selection/").buildAndExpand(2).toUri());
-		return new ResponseEntity<List<Availability>>(headers, HttpStatus.CREATED);
+		userService.savePlayerForSelection(availability);
+		//for returning update team players list
+		List<Availability> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<Availability>>(players, HttpStatus.CREATED);
 	}
 
 	/**
