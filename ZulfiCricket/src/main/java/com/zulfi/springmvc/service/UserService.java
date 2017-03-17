@@ -16,6 +16,8 @@ public interface UserService {
 
 	void saveUser(User user);
 
+	void savePlayerInfo(Player player);
+
 	void updateUser(User user);
 
 	void deleteUserBySSO(String sso);

@@ -98,4 +98,10 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	}
 
+	@Override
+	public void savePlayerInfo(Player player) {
+		session().save(player);
+		
+	}
+
 }
