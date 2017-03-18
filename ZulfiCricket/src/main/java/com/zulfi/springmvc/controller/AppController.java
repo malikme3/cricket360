@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -225,6 +225,14 @@ public class AppController {
 		//for returning update team players list
 		List<Availability> players = userService.getTeamPlayers();
 		return new ResponseEntity<List<Availability>>(players, HttpStatus.CREATED);
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = { "/player" }, method = RequestMethod.POST)
+	public ResponseEntity<List<Player>> submitPlayerRegist(@RequestBody Player player) {
+		System.out.println("IN App Controller : SubmitPlayerRegist Mathod");
+		userService.savePlayerInfo(player);
+		return new ResponseEntity<List<Player>>(HttpStatus.CREATED);
 	}
 
 	/**
