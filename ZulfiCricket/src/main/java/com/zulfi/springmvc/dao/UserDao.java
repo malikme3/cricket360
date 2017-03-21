@@ -16,6 +16,8 @@ public interface UserDao {
 
 	void savePlayerInfo(Player player);
 
+	List<Player> getPlayerInfo(Player player);
+
 	void deleteBySSO(String sso);
 
 	List<User> findAllUsers();

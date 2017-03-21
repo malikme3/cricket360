@@ -100,8 +100,20 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@Override
 	public void savePlayerInfo(Player player) {
-		session().save(player);
-		
+
+		session().saveOrUpdate(player);
+
+	}
+
+	@Override
+	public List<Player> getPlayerInfo(Player player) {
+		String hql = "from Player where player_firstName = :fname and player_lastName = :lname ";
+		Query query = session().createQuery(hql);
+		query.setParameter("fname", player.getPlayer_firstName());
+		query.setParameter("lname", player.getPlayer_lastName());
+		List<Player> listPlayer = query.list();
+		return listPlayer;
+
 	}
 
 }

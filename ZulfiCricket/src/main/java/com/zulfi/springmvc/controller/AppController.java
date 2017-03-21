@@ -228,11 +228,19 @@ public class AppController {
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = { "/player" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/player/registration" }, method = RequestMethod.POST)
 	public ResponseEntity<List<Player>> submitPlayerRegist(@RequestBody Player player) {
 		System.out.println("IN App Controller : SubmitPlayerRegist Mathod");
 		userService.savePlayerInfo(player);
 		return new ResponseEntity<List<Player>>(HttpStatus.CREATED);
+	}
+	// Updating existing player
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = { "/player/exist" }, method = RequestMethod.POST)
+	public ResponseEntity<List<Player>> getPlayerInfo(@RequestBody Player player) {
+		System.out.println("IN App Controller : getPlayerInfo Mathod");
+		List<Player> existingPlayer = userService.getPlayerInfo(player);
+		return new ResponseEntity<List<Player>>(existingPlayer, HttpStatus.OK);
 	}
 
 	/**

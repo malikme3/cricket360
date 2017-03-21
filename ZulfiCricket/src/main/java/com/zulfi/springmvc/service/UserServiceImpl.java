@@ -84,7 +84,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void savePlayerInfo(Player player) {
 		dao.savePlayerInfo(player);
-		
+
 	}
-	
+
+	@Override
+	public List<Player> getPlayerInfo(Player player) {
+		return dao.getPlayerInfo(player);
+
+	}
+
 }
