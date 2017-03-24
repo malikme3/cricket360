@@ -211,20 +211,20 @@ public class AppController {
 
 	//Getting Players for Match Selection
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = "/team/selection", method = RequestMethod.GET)
-	public ResponseEntity<List<Availability>> getTeamPlayers() {
-        List<Availability> players = userService.getTeamPlayers();
-        return new ResponseEntity<List<Availability>>(players, HttpStatus.OK);
+	@RequestMapping(value = "/players/selection", method = RequestMethod.GET)
+	public ResponseEntity<List<Player>> getTeamPlayers() {
+        List<Player> players = userService.getTeamPlayers();
+        return new ResponseEntity<List<Player>>(players, HttpStatus.OK);
     }
     /* -------------------Submitting Player for team Selection-------------------------------------------------------- */
 
 	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "{selection}", method = RequestMethod.POST)
-	public ResponseEntity<List<Availability>> submitPlayerForSelection(@RequestBody Availability availability, UriComponentsBuilder ucBuilder) {
-		userService.savePlayerForSelection(availability);
+	public ResponseEntity<List<Player>> submitPlayerForSelection(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
+		userService.savePlayerForSelection(player);
 		//for returning update team players list
-		List<Availability> players = userService.getTeamPlayers();
-		return new ResponseEntity<List<Availability>>(players, HttpStatus.CREATED);
+		List<Player> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<Player>>(players, HttpStatus.CREATED);
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")

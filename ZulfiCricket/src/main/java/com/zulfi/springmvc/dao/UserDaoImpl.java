@@ -77,18 +77,18 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Availability> getTeamPlayers() {
-		return session().createQuery("from Availability").list();
+	public List<Player> getTeamPlayers() {
+		return session().createQuery("from Player").list();
 	}
 
 	// Submitting player list for team selection
 	@Override
-	public List<Availability> savePlayerForSelection(Availability availability) {
+	public List<Player> savePlayerForSelection(Player player) {
 
-		String hql = "Update Availability set player_availability = :availability where player_id = :id";
+		String hql = "Update Player set player_availability = :availability where player_id = :id";
 		Query query = session().createQuery(hql);
-		query.setParameter("id", availability.getPlayer_id());
-		query.setParameter("availability", availability.getPlayer_availability());
+		query.setParameter("id", player.getPlayer_id());
+		query.setParameter("availability", player.getPlayer_availability());
 		int result = query.executeUpdate();
 		if (result > 0) {
 			System.out.println("Update :  " + result + " rows");

@@ -71,13 +71,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<Availability> getTeamPlayers() {
+	public List<Player> getTeamPlayers() {
 		return dao.getTeamPlayers();
 	}
 
 	@Override
-	public List<Availability> savePlayerForSelection(Availability availability) {
-		return dao.savePlayerForSelection(availability);
+	public List<Player> savePlayerForSelection(Player player) {
+		return dao.savePlayerForSelection(player);
 
 	}
 

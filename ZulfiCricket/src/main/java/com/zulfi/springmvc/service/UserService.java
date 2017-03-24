@@ -10,7 +10,7 @@ public interface UserService {
 
 	User findById(int id);
 
-	public List<Availability> getTeamPlayers();
+	public List<Player> getTeamPlayers();
 
 	User findBySSO(String sso);
 
@@ -28,6 +28,6 @@ public interface UserService {
 
 	boolean isUserSSOUnique(Integer id, String sso);
 
-	List<Availability> savePlayerForSelection(Availability availability);
+	List<Player> savePlayerForSelection(Player player);
 
 }
