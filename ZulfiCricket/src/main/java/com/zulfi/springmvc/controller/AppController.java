@@ -36,6 +36,7 @@ import com.zulfi.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/")
+@CrossOrigin(origins = "https://malikme3.github.io")
 // @SessionAttributes("roles")
 public class AppController {
 
