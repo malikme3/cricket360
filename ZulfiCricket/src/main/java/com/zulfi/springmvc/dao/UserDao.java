@@ -26,4 +26,6 @@ public interface UserDao {
 
 	List<Player> savePlayerForSelection(Player player);
 
+	List<Player> saveplayingXI(Player[] player);
+
 }

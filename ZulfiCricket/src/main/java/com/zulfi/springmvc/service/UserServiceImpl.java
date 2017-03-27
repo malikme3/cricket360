@@ -12,17 +12,16 @@ import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 
-
 @Service("userService")
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao dao;
 
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	public User findById(int id) {
 		return dao.findById(id);
 	}
@@ -38,15 +37,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	/*
-	 * Since the method is running with Transaction, No need to call hibernate update explicitly.
-	 * Just fetch the entity from db and update it with proper values within transaction.
-	 * It will be updated in db once transaction ends. 
+	 * Since the method is running with Transaction, No need to call hibernate
+	 * update explicitly. Just fetch the entity from db and update it with
+	 * proper values within transaction. It will be updated in db once
+	 * transaction ends.
 	 */
 	public void updateUser(User user) {
 		User entity = dao.findById(user.getId());
-		if(entity!=null){
+		if (entity != null) {
 			entity.setSsoId(user.getSsoId());
-			if(!user.getPassword().equals(entity.getPassword())){
+			if (!user.getPassword().equals(entity.getPassword())) {
 				entity.setPassword(passwordEncoder.encode(user.getPassword()));
 			}
 			entity.setFirstName(user.getFirstName());
@@ -56,7 +56,6 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 
-	
 	public void deleteUserBySSO(String sso) {
 		dao.deleteBySSO(sso);
 	}
@@ -67,7 +66,7 @@ public class UserServiceImpl implements UserService{
 
 	public boolean isUserSSOUnique(Integer id, String sso) {
 		User user = findBySSO(sso);
-		return ( user == null || ((id != null) && (user.getId() == id)));
+		return (user == null || ((id != null) && (user.getId() == id)));
 	}
 
 	@Override
@@ -91,6 +90,11 @@ public class UserServiceImpl implements UserService{
 	public List<Player> getPlayerInfo(Player player) {
 		return dao.getPlayerInfo(player);
 
+	}
+
+	@Override
+	public List<Player> saveplayingXI(Player[] player) {
+		return dao.saveplayingXI(player);
 	}
 
 }

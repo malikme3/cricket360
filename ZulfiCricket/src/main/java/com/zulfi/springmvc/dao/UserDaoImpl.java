@@ -31,7 +31,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	public User findById(int id) {
 		User user = getByKey(id);
-		if(user!=null){
+		if (user != null) {
 			Hibernate.initialize(user.getUserProfiles());
 		}
 		return user;
@@ -41,8 +41,8 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		logger.info("SSO : {}", sso);
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("ssoId", sso));
-		User user = (User)crit.uniqueResult();
-		if(user!=null){
+		User user = (User) crit.uniqueResult();
+		if (user != null) {
 			Hibernate.initialize(user.getUserProfiles());
 		}
 		return user;
@@ -51,15 +51,17 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	@SuppressWarnings("unchecked")
 	public List<User> findAllUsers() {
 		Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
-		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);//To avoid duplicates.
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);// To avoid
+																		// duplicates.
 		List<User> users = (List<User>) criteria.list();
 
-		// No need to fetch userProfiles since we are not showing them on list page. Let them lazy load.
-		// Uncomment below lines for eagerly fetching of userProfiles if you want.
+		// No need to fetch userProfiles since we are not showing them on list
+		// page. Let them lazy load.
+		// Uncomment below lines for eagerly fetching of userProfiles if you
+		// want.
 		/*
-		 * for(User user : users)
-		 * { Hibernate.initialize(user.getUserProfiles());
-		 * }
+		 * for(User user : users) {
+		 * Hibernate.initialize(user.getUserProfiles()); }
 		 */
 		return users;
 	}
@@ -71,7 +73,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	public void deleteBySSO(String sso) {
 		Criteria crit = createEntityCriteria();
 		crit.add(Restrictions.eq("ssoId", sso));
-		User user = (User)crit.uniqueResult();
+		User user = (User) crit.uniqueResult();
 		delete(user);
 	}
 
@@ -114,6 +116,22 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		List<Player> listPlayer = query.list();
 		return listPlayer;
 
+	}
+
+	@Override
+	public List<Player> saveplayingXI(Player[] player) {
+		for (Player aplayer : player) {
+			String hql = "Update Player set player_availability = :availability where player_id = :id";
+			Query query = session().createQuery(hql);
+			query.setParameter("id", aplayer.getPlayer_id());
+			query.setParameter("availability", aplayer.getPlayer_availability());
+			int result = query.executeUpdate();
+			if (result > 0) {
+				System.out.println("Update :  " + result + " rows");
+
+			}
+		}
+		return null;
 	}
 
 }

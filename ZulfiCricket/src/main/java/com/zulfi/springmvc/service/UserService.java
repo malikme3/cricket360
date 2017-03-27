@@ -30,4 +30,6 @@ public interface UserService {
 
 	List<Player> savePlayerForSelection(Player player);
 
+	List<Player> saveplayingXI(Player[] player);
+
 }
