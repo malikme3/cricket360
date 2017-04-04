@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -31,6 +32,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
+import com.zulfi.springmvc.security.CustomUserDetailsService;
 import com.zulfi.springmvc.service.UserProfileService;
 import com.zulfi.springmvc.service.UserService;
 
@@ -49,6 +51,9 @@ public class AppController {
 	@Autowired
 	MessageSource messageSource;
 
+	/*@Autowired
+	CustomUserDetailsService customUserDetailsService;*/
+
 	@Autowired
 	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
 
@@ -58,12 +63,35 @@ public class AppController {
 	/**
 	 * This method will list all existing users.
 	 */
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET)
-	public String listUsers(ModelMap model) {
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET,  produces = "application/json")
+	public ResponseEntity<List<User>> listUsers(Model model) {
 
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		model.addAttribute("loggedinuser", getPrincipal());
+		return new ResponseEntity( model, HttpStatus.OK);
+	}
+
+	@CrossOrigin(origins = "http://localhost:3000")
+	@RequestMapping(value = { "user/sign" }, method = RequestMethod.POST)
+	public String userLogin() {
+		String userr = "Ahmad";
+
+		User user = userService.findBySSO("Ahmad");
+
+		CustomUserDetailsService play = new CustomUserDetailsService();
+
+		UserDetails users = play.loadUserByUser(user);
+		if (isCurrentAuthenticationAnonymous()) {
+			System.out.println(" NOT authenticated ");
+		} else {
+			System.out.println(" Authenticated ");
+		}
+		;
+
+		System.out.println("users  = " + users);
+		System.out.println("loggedinuser  = " + getPrincipal());
 		return "userslist";
 	}
 
@@ -185,6 +213,7 @@ public class AppController {
 	 * This method handles login GET requests. If users is already logged-in and
 	 * tries to goto login page again, will be redirected to list page.
 	 */
+	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginPage() {
 		if (isCurrentAuthenticationAnonymous()) {

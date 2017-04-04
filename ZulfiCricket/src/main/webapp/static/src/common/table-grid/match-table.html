@@ -1,0 +1,26 @@
+<div id="home-tiles" class="col-md-12 row ">
+    <!-- #menu-tile span, #specials-tile span, #map-tile span -->
+    <h1 id="map-title" align="middle">Coming Matches</h1>
+    <div id="map-tile" align="middle">
+        <TABLE BORDER="5" WIDTH="100%" CELLPADDING="10" CELLSPACING="10">
+            <TR ALIGN="CENTER" CELLPADDING="8" bgcolor="green" style="height: 40px; overflow: hidden;">
+                <TH>WEEK</TH>
+                <TH>Match #</TH>
+                <TH>Host Team</TH>
+                <TH>Guest Team</TH>
+                <TH>Date</TH>
+                <TH>Ground</TH>
+                <TH>Umpire</TH>
+            </TR>
+            <TR ALIGN="left" ng-repeat="record in $ctrl.data | limitTo : '10'">
+                <TD>{{record.week}}</TD>
+                <TD>{{record.match_no}}</TD>
+                <TD>{{record.host-team}}</TD>
+                <TD>{{record.guest-team}}</TD>
+                <TD>{{record.match-date}}</TD>
+                <TD>{{record.match-ground}}</TD>
+                <TD>{{record.match-umpire}}</TD>
+            </TR>
+        </TABLE>
+    </div>
+</div>

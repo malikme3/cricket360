@@ -1,0 +1,37 @@
+<div id="main-content" class="container">
+    <!--    Player of the week-->
+    <div id="home-tiles" class="row">
+        <div class="col-xs-12">
+            <a ui-sref="public.home">
+                <div id="map-tile" align="middle">
+                    <p class="headingg" style="position: absolute; top: 10px; left: 10%; width: 80%; padding: 4px; background-color: transparent; font-weight: bold; color: #fff; font-weight: 600; font-size: 2em;"> Congratulation Zabair
+                        <br> Score: 40 (27)
+                        <br>Wickets: 3/4.0 (17)
+                        <br> </p> <img style="width: auto;" src="images/lagan-2.jpg" alt="Tiger Pro Logo"></img><span>Player of the Week !!</span> </div>
+            </a>
+        </div>
+        <button type="button" class="btn btn-info col-xs-12 headingg" data-toggle="collapse" data-target="#recent-matches">Top Players
+            <div id="recent-matches" class="col-xs-12">
+                <div align="middle">
+                    <h2 id="menu-categories-title" class="text-center">Most Runs</h2>
+                    <dynamic-table category="homeCtrl.tableType" tables="homeCtrl.tableData" header="homeCtrl.tableHeader"> </dynamic-table>
+                </div>
+                <!--    Most runs-->
+                <div align="middle">
+                    <h2 id="menu-categories-title" class="text-center">Most Wickets</h2>
+                    <dynamic-table category="homeCtrl.tableType" tables="homeCtrl.tableData" header="homeCtrl.tableHeader"> </dynamic-table>
+                </div>
+            </div>
+        </button>
+        <!--    Start of next week-->
+        <button type="button" class="btn btn-info col-xs-12 headingg" data-toggle="collapse" data-target="#next-matches">Coming Matches
+            <div id="next-matches">
+                <div id="map-tile-home" align="middle">
+                    <div> Panthor vs Tiger March 3rd (Sunday @ RRCC)</div>
+                    <div> Lagaan vs Tiger Pro March 3rd (Sunday @ RRCC)</div>
+                    <div> Lagaan vs Tiger Pro March 3rd (Sunday @ RRCC)</div>
+                </div>
+            </div>
+        </button>
+    </div>
+</div>
