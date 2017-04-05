@@ -3,8 +3,8 @@
 
 	angular.module('public').controller('availabilityController', availabilityController);
 
-	availabilityController.$inject = [ 'MenuService' ];
-	function availabilityController(MenuService) {
+	availabilityController.$inject = [ 'MenuService', 'DataStoreService', 'UserSessionInfo'];
+	function availabilityController(MenuService, DataStoreService, UserSessionInfo) {
 		var $ctrl = this;
 		$ctrl.options = [ "Available", "Not-Available", "Tentive", "Out of town" ];
 		$ctrl.playerAvailablity = "Available";
@@ -14,6 +14,9 @@
 		$ctrl.notAvailablePlayer = [];
 		$ctrl.OutOfTownPlayer = [];
 		$ctrl.tentivePlayer = [];
+		$ctrl.Admin = false;
+		$ctrl.Dba = false;
+		$ctrl.User = false;
 
 		/* Date Start */
 		$ctrl.checkDate = new Date();
@@ -88,7 +91,21 @@
 			MenuService.submittingPlayingXI(player).then(function(response) {
 				$ctrl.players = response;
 			});
-		}
+		};
+
+		var userSession = UserSessionInfo.getUserSession();
+		$ctrl.roles = userSession.authorities;
+
+		angular.forEach($ctrl.roles, function(role) {
+
+			if (role == "ROLE_ADMIN") {
+				$ctrl.Admin = true;
+			} else if (role == "ROLE_DBA") {
+				$ctrl.Dba = true;
+			} else {
+				$ctrl.User = true;
+			}
+		})
 
 	}
 

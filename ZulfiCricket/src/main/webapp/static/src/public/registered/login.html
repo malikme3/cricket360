@@ -5,6 +5,7 @@
 			<div class="login-form">
 				<form
 					action="login/"
+					name = "login"
 					method="post"
 					class="form-horizontal">
 					<div ng-if="logInCtrl.loginId && logInCtrl.loginPassword ">
@@ -25,7 +26,7 @@
 					<div class="input-group input-sm">
 						<label
 							class="input-group-addon"
-							for="username"><i class="fa fa-user"></i></label>
+							for="username" required><i class="fa fa-user"></i></label>
 						<input
 							type="text"
 							class="form-control"
@@ -66,7 +67,7 @@
 					<div
 						class="form-actions btn btn-block btn-primary btn-default"
 						ng-click="logInCtrl.loginSubmit()"
-						value="Log in">Login</div>
+						value="Log in" {{login.username.$valid}} >Login</div>
 				</form>
 			</div>
 		</div>

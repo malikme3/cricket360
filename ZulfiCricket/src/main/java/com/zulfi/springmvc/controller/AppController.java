@@ -51,8 +51,9 @@ public class AppController {
 	@Autowired
 	MessageSource messageSource;
 
-	/*@Autowired
-	CustomUserDetailsService customUserDetailsService;*/
+	/*
+	 * @Autowired CustomUserDetailsService customUserDetailsService;
+	 */
 
 	@Autowired
 	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
@@ -64,13 +65,13 @@ public class AppController {
 	 * This method will list all existing users.
 	 */
 	@CrossOrigin(origins = "http://localhost:3000")
-	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET,  produces = "application/json")
+	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<User>> listUsers(Model model) {
 
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		model.addAttribute("loggedinuser", getPrincipal());
-		return new ResponseEntity( model, HttpStatus.OK);
+		return new ResponseEntity(model, HttpStatus.OK);
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -236,7 +237,6 @@ public class AppController {
 	}
 
 	// Getting Players for Match Selection
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/players/selection", method = RequestMethod.GET)
 	public ResponseEntity<List<Player>> getTeamPlayers() {
 		List<Player> players = userService.getTeamPlayers();
@@ -247,7 +247,6 @@ public class AppController {
 	 * Selection--------------------------------------------------------
 	 */
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/submit/availability", method = RequestMethod.POST)
 	public ResponseEntity<List<Player>> submitPlayerForSelection(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
 		System.out.println("In Spring MVC controller for Submitting availability for team Selection");
@@ -257,7 +256,6 @@ public class AppController {
 	}
 
 	/* Submitting and retrieving selected player for Playing XI */
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/submit/playingXI", method = RequestMethod.POST)
 	public ResponseEntity<List<Player>> playingXI(@RequestBody Player[] player) {
 		System.out.println("In Spring MVC controller for Subumitting Playing XI");
@@ -267,7 +265,6 @@ public class AppController {
 		return new ResponseEntity<List<Player>>(players, HttpStatus.CREATED);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = { "/player/registration" }, method = RequestMethod.POST)
 	public ResponseEntity<List<Player>> submitPlayerRegist(@RequestBody Player player) {
 		System.out.println("IN App Controller : SubmitPlayerRegist Mathod");
@@ -276,12 +273,25 @@ public class AppController {
 	}
 
 	// Updating existing player
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = { "/player/exist" }, method = RequestMethod.POST)
 	public ResponseEntity<List<Player>> getPlayerInfo(@RequestBody Player player) {
 		System.out.println("IN App Controller : getPlayerInfo Mathod");
 		List<Player> existingPlayer = userService.getPlayerInfo(player);
 		return new ResponseEntity<List<Player>>(existingPlayer, HttpStatus.OK);
+	}
+
+	// Getting session for existing player
+	@RequestMapping(value = { "/user/session" }, method = RequestMethod.POST)
+	public ResponseEntity getUserSessionInfo(@RequestBody Player player) {
+		System.out.println("IN App Controller : getUserSessionInfo Mathod");
+		Object principal;
+		// checking if session is expired or logout
+		if (isCurrentAuthenticationAnonymous()) {
+			principal = null;
+		} else {
+			principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		}
+		return new ResponseEntity(principal, HttpStatus.OK);
 	}
 
 	/**

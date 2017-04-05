@@ -3,8 +3,8 @@
 	angular.module('common').controller('SignUpController', SignUpController).controller('MyInfoController', MyInfoController).controller(
 			'LogInController', LogInController);
 
-	SignUpController.$inject = [ 'UserService' ];
-	function SignUpController(UserService) {
+	SignUpController.$inject = [ 'UserService', 'DataStoreService' ];
+	function SignUpController(UserService, DataStoreService) {
 		var signUpCtrl = this;
 
 		signUpCtrl.submitted = false;
@@ -83,8 +83,8 @@
 	}
 
 	/* *************Start of LogInController ************* */
-	LogInController.$inject = [ 'UserService' ];
-	function LogInController(UserService) {
+	LogInController.$inject = [ 'UserService', 'DataStoreService' ];
+	function LogInController(UserService, DataStoreService) {
 		var logInCtrl = this;
 		logInCtrl.loginId = "true";
 		logInCtrl.loginPassword = "true";
@@ -92,13 +92,23 @@
 		logInCtrl.loginSubmit = function loginSubmit() {
 			var loginInfo = {
 				"username" : logInCtrl.username,
-				"password" : logInCtrl.password
+				"password" : logInCtrl.password,
+				"rememberme": "on"
 			};
 			console.log("Submitting login details for sign in");
 			UserService.goLogin(loginInfo).then(function(response) {
 				logInCtrl.players = response;
-				logInCtrl.roles = response.roles;
-				logInCtrl.loggedUser = response.loggedinuser;
+
+				DataStoreService.setLoggedUser(response.loggedinuser);
+				logInCtrl.loggedUser = DataStoreService.getLoggedUser();
+				console.log("logged user is : " + logInCtrl.loggedUser2);
+
+				DataStoreService.setRoles(response.roles);
+				logInCtrl.roles = DataStoreService.getRoles();
+
+				angular.forEach(logInCtrl.roles, function(role) {
+					console.log("roles are + " + role.type);
+				})
 
 			});
 		}

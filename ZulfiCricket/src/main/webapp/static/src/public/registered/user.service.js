@@ -64,13 +64,16 @@
 			console.log("In service: For Login");
 			var deferred = $q.defer();
 			$http.post(ApiMVC + '/login', $.param({
-				ssoId : loginInfo.username,
-				password : loginInfo.password
+				"ssoId" : loginInfo.username,
+				"password" : loginInfo.password,
+				"remember-me" : loginInfo.rememberme
 			}), {
 				headers : {
 					'Access-Control-Allow-Origin' : '*',
 					'Content-Type' : 'application/x-www-form-urlencoded'
 				}
+			}, {
+				cache : true
 			}).then(function(response) {
 				deferred.resolve(response.data);
 			}, function(errResponse) {
@@ -79,7 +82,25 @@
 			});
 			return deferred.promise;
 		}
-
+		// For User Session
+		service.getUserSessionInfo = function() {
+			console.log("In service: For getUserSessionInfo");
+			var deferred = $q.defer();
+			$http.post(ApiMVC + '/user/session', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getUserSessionInfo');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
 		service.getMenuItem = function(category) {
 			return $http.get(ApiPath + '/menu_items/' + category + '.json');
 		};
