@@ -83,8 +83,8 @@
 	}
 
 	/* *************Start of LogInController ************* */
-	LogInController.$inject = [ 'UserService', 'DataStoreService' ];
-	function LogInController(UserService, DataStoreService) {
+	LogInController.$inject = [ 'UserService', 'DataStoreService','UserSessionInfo'];
+	function LogInController(UserService, DataStoreService, UserSessionInfo) {
 		var logInCtrl = this;
 		logInCtrl.loginId = "true";
 		logInCtrl.loginPassword = "true";
@@ -100,6 +100,7 @@
 				logInCtrl.players = response;
 
 				DataStoreService.setLoggedUser(response.loggedinuser);
+				UserSessionInfo.setUserSession(response.session.body);
 				logInCtrl.loggedUser = DataStoreService.getLoggedUser();
 				console.log("logged user is : " + logInCtrl.loggedUser2);
 

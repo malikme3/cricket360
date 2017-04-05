@@ -55,9 +55,11 @@
 			service.credentialsNonExpired = session.credentialsNonExpired;
 			service.enabled = session.enabled;
 			service.username = session.username;
+
 			angular.forEach(session.authorities, function(auth) {
 				service.authorities.push(auth.authority);
 			})
+
 		}
 		function getUserSession() {
 			return service;

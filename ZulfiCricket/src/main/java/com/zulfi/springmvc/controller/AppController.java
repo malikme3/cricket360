@@ -71,6 +71,8 @@ public class AppController {
 		List<User> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		model.addAttribute("loggedinuser", getPrincipal());
+		Object userSession = getUserSessionInfo();
+		model.addAttribute("session", userSession);
 		return new ResponseEntity(model, HttpStatus.OK);
 	}
 
@@ -282,7 +284,7 @@ public class AppController {
 
 	// Getting session for existing player
 	@RequestMapping(value = { "/user/session" }, method = RequestMethod.POST)
-	public ResponseEntity getUserSessionInfo(@RequestBody Player player) {
+	public ResponseEntity getUserSessionInfo() {
 		System.out.println("IN App Controller : getUserSessionInfo Mathod");
 		Object principal;
 		// checking if session is expired or logout
