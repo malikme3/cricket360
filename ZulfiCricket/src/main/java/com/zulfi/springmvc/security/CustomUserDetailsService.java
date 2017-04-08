@@ -19,7 +19,7 @@ import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.service.UserService;
 
 
-@Service("customUserDetailsService")
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 
 	static final Logger logger = LoggerFactory.getLogger(CustomUserDetailsService.class);

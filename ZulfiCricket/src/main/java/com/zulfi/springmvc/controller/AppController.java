@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.controller;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
@@ -32,6 +34,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
+import com.zulfi.springmvc.model.UserSession;
 import com.zulfi.springmvc.security.CustomUserDetailsService;
 import com.zulfi.springmvc.service.UserProfileService;
 import com.zulfi.springmvc.service.UserService;
@@ -47,6 +50,9 @@ public class AppController {
 
 	@Autowired
 	UserProfileService userProfileService;
+
+	@Autowired
+	UserSession userSession;
 
 	@Autowired
 	MessageSource messageSource;
@@ -284,16 +290,41 @@ public class AppController {
 
 	// Getting session for existing player
 	@RequestMapping(value = { "/user/session" }, method = RequestMethod.POST)
-	public ResponseEntity getUserSessionInfo() {
-		System.out.println("IN App Controller : getUserSessionInfo Mathod");
-		Object principal;
-		// checking if session is expired or logout
-		if (isCurrentAuthenticationAnonymous()) {
-			principal = null;
+	public ResponseEntity<UserSession> getUserSessionInfo() {
+		System.out.println("In App Controller : getUserSessionInfo Method");
+
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (principal instanceof UserDetails) {
+			boolean isAccountNonLocked = ((UserDetails) principal).isAccountNonLocked();
+
+			Collection<? extends GrantedAuthority> getAuthorities = ((UserDetails) principal).getAuthorities();
+
+			boolean isCredentialsNonExpired = ((UserDetails) principal).isCredentialsNonExpired();
+			boolean isEnabled = ((UserDetails) principal).isEnabled();
+			String username = ((UserDetails) principal).getUsername();
+
+			userSession.setAccountNonExpired(isAccountNonLocked);
+			userSession.setAuthorities(getAuthorities);
+			userSession.setCredentialsNonExpired(isCredentialsNonExpired);
+			userSession.setEnabled(isEnabled);
+			userSession.setUsername(username);
 		} else {
-			principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			userSession.setAccountNonExpired(false);
+			userSession.setAuthorities(null);
+			userSession.setCredentialsNonExpired(false);
+			userSession.setEnabled(false);
+			userSession.setUsername(principal.toString());
 		}
-		return new ResponseEntity(principal, HttpStatus.OK);
+
+		if (isCurrentAuthenticationAnonymous()) {
+			userSession.setLoggedin(false);
+			userSession.setLoggedout(true);
+
+		} else {
+			userSession.setLoggedin(true);
+			userSession.setLoggedout(false);
+		}
+		return new ResponseEntity(userSession, HttpStatus.OK);
 	}
 
 	/**

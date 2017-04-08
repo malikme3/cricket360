@@ -18,7 +18,7 @@
 	function run(UserService, UserSessionInfo) {
 
 		UserService.getUserSessionInfo().then(function(response) {
-			console.log("User session from middle tier is : " + response);
+			console.log("In Cricket Module : User session from middle tier is : " + response);
 			UserSessionInfo.setUserSession(response);
 
 		});

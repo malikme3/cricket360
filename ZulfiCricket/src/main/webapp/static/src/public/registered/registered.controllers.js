@@ -83,34 +83,42 @@
 	}
 
 	/* *************Start of LogInController ************* */
-	LogInController.$inject = [ 'UserService', 'DataStoreService','UserSessionInfo'];
+	LogInController.$inject = [ 'UserService', 'DataStoreService', 'UserSessionInfo' ];
 	function LogInController(UserService, DataStoreService, UserSessionInfo) {
 		var logInCtrl = this;
 		logInCtrl.loginId = "true";
 		logInCtrl.loginPassword = "true";
+		logInCtrl.isloggedOut = false;
+		logInCtrl.isloggedIn = false;
 
 		logInCtrl.loginSubmit = function loginSubmit() {
 			var loginInfo = {
 				"username" : logInCtrl.username,
 				"password" : logInCtrl.password,
-				"rememberme": "on"
+				"rememberme" : "on"
 			};
 			console.log("Submitting login details for sign in");
 			UserService.goLogin(loginInfo).then(function(response) {
 				logInCtrl.players = response;
 
 				DataStoreService.setLoggedUser(response.loggedinuser);
-				UserSessionInfo.setUserSession(response.session.body);
 				logInCtrl.loggedUser = DataStoreService.getLoggedUser();
 				console.log("logged user is : " + logInCtrl.loggedUser2);
-
 				DataStoreService.setRoles(response.roles);
 				logInCtrl.roles = DataStoreService.getRoles();
-
 				angular.forEach(logInCtrl.roles, function(role) {
 					console.log("roles are + " + role.type);
 				})
 
+				// For setting user Session
+				UserService.getUserSessionInfo().then(function(response) {
+					console.log("In Registered Controller : User session from middle tier is : " + response);
+					if (!response == undefined) {
+						UserSessionInfo.setUserSession(response);
+					}
+
+				});
+				logInCtrl.userSession = UserSessionInfo.getUserSession();
 			});
 		}
 

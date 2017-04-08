@@ -20,7 +20,11 @@
 		;
 
 		function getLoggedUser() {
-			return service.roles.push();
+
+			if (service.roles) {
+				var user_roles = service.roles.push()
+			}
+			return user_roles;
 		}
 		;
 
@@ -38,31 +42,18 @@
 	;
 	function UserSessionInfo() {
 		var service = {
-			accountNonExpired : false,
-			accountNonLocked : false,
-			credentialsNonExpired : false,
-			enabled : true,
-			username : "",
-			authorities : [],
+			userSession : "",
 			setUserSession : setUserSession,
 			getUserSession : getUserSession
 		}
 		return service;
 
 		function setUserSession(session) {
-			service.accountNonExpired = session.accountNonExpired;
-			service.accountNonLocked = session.accountNonLocked;
-			service.credentialsNonExpired = session.credentialsNonExpired;
-			service.enabled = session.enabled;
-			service.username = session.username;
-
-			angular.forEach(session.authorities, function(auth) {
-				service.authorities.push(auth.authority);
-			})
+			service.userSession = session;
 
 		}
 		function getUserSession() {
-			return service;
+			return service.userSession;
 		}
 
 	}

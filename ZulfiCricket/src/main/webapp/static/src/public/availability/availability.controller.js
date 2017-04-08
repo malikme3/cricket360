@@ -98,7 +98,7 @@
 
 		angular.forEach($ctrl.roles, function(role) {
 
-			if (role == "ROLE_ADMIN") {
+			if (role.authority == "ROLE_ADMIN") {
 				$ctrl.Admin = true;
 			} else if (role == "ROLE_DBA") {
 				$ctrl.Dba = true;
