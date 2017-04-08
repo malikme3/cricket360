@@ -3,8 +3,8 @@
 
 	angular.module('public').controller('availabilityController', availabilityController);
 
-	availabilityController.$inject = [ 'MenuService', 'DataStoreService', 'UserSessionInfo'];
-	function availabilityController(MenuService, DataStoreService, UserSessionInfo) {
+	availabilityController.$inject = [ 'MenuService', 'DataStoreService', 'UserSessionInfo', 'UserService' ];
+	function availabilityController(MenuService, DataStoreService, UserSessionInfo, UserService) {
 		var $ctrl = this;
 		$ctrl.options = [ "Available", "Not-Available", "Tentive", "Out of town" ];
 		$ctrl.playerAvailablity = "Available";
@@ -15,6 +15,7 @@
 		$ctrl.OutOfTownPlayer = [];
 		$ctrl.tentivePlayer = [];
 		$ctrl.Admin = false;
+		$ctrl.isTeamSelected = false;
 		$ctrl.Dba = false;
 		$ctrl.User = false;
 
@@ -90,7 +91,9 @@
 			})
 			MenuService.submittingPlayingXI(player).then(function(response) {
 				$ctrl.players = response;
+				$ctrl.isTeamSelected = true;
 			});
+
 		};
 
 		var userSession = UserSessionInfo.getUserSession();
@@ -106,6 +109,24 @@
 				$ctrl.User = true;
 			}
 		})
+
+		$ctrl.logoutSubmit = function logoutSubmit() {
+
+			console.log("Submitting request for logout");
+			UserService.goLogout().then(function(response) {
+				$ctrl.players = response;
+				$ctrl.loggedout = true;
+				// For setting user Session
+				UserService.getUserSessionInfo().then(function(response) {
+					console.log("In Availability Controller : User session from middle tier is : " + response);
+					if (!response == undefined) {
+						UserSessionInfo.setUserSession(response);
+					}
+
+				});
+				$ctrl.userSession = UserSessionInfo.getUserSession();
+			});
+		}
 
 	}
 

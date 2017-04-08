@@ -82,6 +82,25 @@
 			});
 			return deferred.promise;
 		}
+		// For Logout
+		service.goLogout = function(loginInfo) {
+			console.log("In service: For Logout");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/logout', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while login');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
 		// For User Session
 		service.getUserSessionInfo = function() {
 			console.log("In service: For getUserSessionInfo");
