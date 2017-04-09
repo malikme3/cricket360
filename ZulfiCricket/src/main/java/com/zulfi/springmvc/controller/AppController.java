@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.zulfi.springmvc.model.Player;
+import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.model.UserSession;
@@ -246,9 +247,14 @@ public class AppController {
 
 	// Getting Players for Match Selection
 	@RequestMapping(value = "/players/selection", method = RequestMethod.GET)
-	public ResponseEntity<List<Player>> getTeamPlayers() {
-		List<Player> players = userService.getTeamPlayers();
-		return new ResponseEntity<List<Player>>(players, HttpStatus.OK);
+	public ResponseEntity<List<PlayerCtcl>> getTeamPlayers() {
+		List<PlayerCtcl> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.OK);
+	}
+	@RequestMapping(value = "/playersCtcl/selection", method = RequestMethod.GET)
+	public ResponseEntity<List<PlayerCtcl>> getTeamPlayersCtcl() {
+		List<PlayerCtcl> players = userService.getTeamPlayersCtcl();
+		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.OK);
 	}
 	/*
 	 * -------------------Submitting availability for team
@@ -256,21 +262,21 @@ public class AppController {
 	 */
 
 	@RequestMapping(value = "/submit/availability", method = RequestMethod.POST)
-	public ResponseEntity<List<Player>> submitPlayerForSelection(@RequestBody Player player, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<List<PlayerCtcl>> submitPlayerForSelection(@RequestBody PlayerCtcl player, UriComponentsBuilder ucBuilder) {
 		System.out.println("In Spring MVC controller for Submitting availability for team Selection");
 		userService.savePlayerForSelection(player);
-		List<Player> players = userService.getTeamPlayers();
-		return new ResponseEntity<List<Player>>(players, HttpStatus.CREATED);
+		List<PlayerCtcl> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.CREATED);
 	}
 
 	/* Submitting and retrieving selected player for Playing XI */
 	@RequestMapping(value = "/submit/playingXI", method = RequestMethod.POST)
-	public ResponseEntity<List<Player>> playingXI(@RequestBody Player[] player) {
+	public ResponseEntity<List<PlayerCtcl>> playingXI(@RequestBody PlayerCtcl[] player) {
 		System.out.println("In Spring MVC controller for Subumitting Playing XI");
 		userService.saveplayingXI(player);
 		// for returning update team players list
-		List<Player> players = userService.getTeamPlayers();
-		return new ResponseEntity<List<Player>>(players, HttpStatus.CREATED);
+		List<PlayerCtcl> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = { "/player/registration" }, method = RequestMethod.POST)

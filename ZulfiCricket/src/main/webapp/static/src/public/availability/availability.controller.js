@@ -31,38 +31,62 @@
 
 		/* For Team Selection */
 		$ctrl.selectedPlayers = [];
-		$ctrl.checkedPlayer = function checkedPlayer(fieldName) {
-			var idx = $ctrl.selectedPlayers.indexOf(fieldName);
+		$ctrl.NotSelectedPlayers = [];
+		$ctrl.checked_selected_player = function checked_selected_player(fieldName) {
+				var idx = $ctrl.selectedPlayers.indexOf(fieldName);
+				$ctrl.players.forEach(function(component) {
+					if (idx > -1) {
+						if (component.playerFName == fieldName) {
+							var idxUnchecked = $ctrl.selectedPlayers.indexOf(fieldName);
+							if (idxUnchecked != -1) {
+								$ctrl.selectedPlayers.splice(idx, 1);
+								component.editable = false;
+								component.disabled = true;
+							}
+						}
+					} else {
+						if (component.playerFName == fieldName) {
+							var idxChecked = $ctrl.selectedPlayers.indexOf(fieldName);
+							if (idxChecked == -1) {
+								$ctrl.selectedPlayers.push(fieldName);
+								component.editable = true;
+								component.disabled = false;
+							}
+						}
+					}
+				});
+		};
+		$ctrl.checked_not_selected_player = function checked_not_selected_player(fieldName) {
+			var idx = $ctrl.NotSelectedPlayers.indexOf(fieldName);
 			$ctrl.players.forEach(function(component) {
 				if (idx > -1) {
-					if (component.player_firstName == fieldName) {
-						var idxUnchecked = $ctrl.selectedPlayers.indexOf(fieldName);
+					if (component.playerFName == fieldName) {
+						var idxUnchecked = $ctrl.NotSelectedPlayers.indexOf(fieldName);
 						if (idxUnchecked != -1) {
-							$ctrl.selectedPlayers.splice(idx, 1);
+							$ctrl.NotSelectedPlayers.splice(idx, 1);
 							component.editable = false;
 							component.disabled = true;
 						}
 					}
 				} else {
-					if (component.player_firstName == fieldName) {
-						var idxChecked = $ctrl.selectedPlayers.indexOf(fieldName);
+					if (component.playerFName == fieldName) {
+						var idxChecked = $ctrl.NotSelectedPlayers.indexOf(fieldName);
 						if (idxChecked == -1) {
-							$ctrl.selectedPlayers.push(fieldName);
+							$ctrl.NotSelectedPlayers.push(fieldName);
 							component.editable = true;
 							component.disabled = false;
 						}
 					}
 				}
 			});
-		};
-
+	};
 		MenuService.getTeamPlayers().then(function(response) {
 			$ctrl.players = response;
 		});
 
 		$ctrl.playerClicked = function(player) {
 			$ctrl.playerData = player;
-			$ctrl.key_search = $ctrl.playerData.player_firstName + " " + $ctrl.playerData.player_lastName;
+			$ctrl.key_search = $ctrl.playerData.playerFName + " " + $ctrl.playerData.playerLName;
 			$ctrl.submittButton = true;
 		}
 
@@ -78,17 +102,22 @@
 		$ctrl.submitSelection = function(player) {
 			angular.forEach(player, function(aPlayer) {
 				angular.forEach($ctrl.selectedPlayers, function(select) {
-					if (aPlayer.player_firstName == select) {
-						aPlayer.player_availability = "In Playing XI"
+					if (aPlayer.playerFName == select) {
+						aPlayer.playerAvailability = "In Playing XI"
+					}
+				})
+				angular.forEach($ctrl.NotSelectedPlayers, function(select) {
+					if (aPlayer.playerFName == select) {
+						aPlayer.playerAvailability = "Not Playing XI"
 					}
 				})
 
 			})
-			angular.forEach(player, function(aPlayer) {
-				if (aPlayer.player_availability != "In Playing XI") {
-					aPlayer.player_availability = "Not in Playing Xi"
+/*			angular.forEach(player, function(aPlayer) {
+				if (aPlayer.playerAvailability != "In Playing XI") {
+					aPlayer.playerAvailability = "Not in Playing Xi"
 				}
-			})
+			})*/
 			MenuService.submittingPlayingXI(player).then(function(response) {
 				$ctrl.players = response;
 				$ctrl.isTeamSelected = true;

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
+import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.User;
 
 @Repository("userDao")
@@ -79,18 +80,36 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Player> getTeamPlayers() {
-		return session().createQuery("from Player").list();
+	public List<PlayerCtcl> getTeamPlayers() {
+		String hql = "from PlayerCtcl where PlayerClub = :pclub and PlayerTeam = :pteam  and isactive = :isactive";
+		Query query = session().createQuery(hql);
+		query.setParameter("pclub", 10);
+		query.setParameter("pteam", 47);
+		query.setParameter("isactive", 0);
+		List<PlayerCtcl> listPlayer = query.list();
+		return listPlayer;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<PlayerCtcl> getTeamPlayersCtcl() {
+		String hql = "from PlayerCtcl where PlayerClub = :pclub and PlayerTeam = :pteam  and isactive = :isactive";
+		Query query = session().createQuery(hql);
+		query.setParameter("pclub", 10);
+		query.setParameter("pteam", 47);
+		query.setParameter("isactive", 0);
+		List<PlayerCtcl> listPlayer = query.list();
+		return listPlayer;
 	}
 
 	// Submitting player list for team selection
 	@Override
-	public List<Player> savePlayerForSelection(Player player) {
+	public List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player) {
 
-		String hql = "Update Player set player_availability = :availability where player_id = :id";
+		String hql = "Update PlayerCtcl set playerAvailability = :availability where playerID = :id";
 		Query query = session().createQuery(hql);
-		query.setParameter("id", player.getPlayer_id());
-		query.setParameter("availability", player.getPlayer_availability());
+		query.setParameter("id", player.getPlayerID());
+		query.setParameter("availability", player.getPlayerAvailability());
 		int result = query.executeUpdate();
 		if (result > 0) {
 			System.out.println("Update :  " + result + " rows");
@@ -119,12 +138,12 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	}
 
 	@Override
-	public List<Player> saveplayingXI(Player[] player) {
-		for (Player aplayer : player) {
-			String hql = "Update Player set player_availability = :availability where player_id = :id";
+	public List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player) {
+		for (PlayerCtcl aplayer : player) {
+			String hql = "Update PlayerCtcl set playerAvailability = :availability where playerID = :id";
 			Query query = session().createQuery(hql);
-			query.setParameter("id", aplayer.getPlayer_id());
-			query.setParameter("availability", aplayer.getPlayer_availability());
+			query.setParameter("id", aplayer.getPlayerID());
+			query.setParameter("availability", aplayer.getPlayerAvailability());
 			int result = query.executeUpdate();
 			if (result > 0) {
 				System.out.println("Update :  " + result + " rows");

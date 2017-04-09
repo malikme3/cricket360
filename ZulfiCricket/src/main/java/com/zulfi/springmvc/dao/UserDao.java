@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
+import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.User;
 
 public interface UserDao {
@@ -22,10 +23,12 @@ public interface UserDao {
 
 	List<User> findAllUsers();
 
-	List<Player> getTeamPlayers();
+	List<PlayerCtcl> getTeamPlayers();
 
-	List<Player> savePlayerForSelection(Player player);
+	List<PlayerCtcl> getTeamPlayersCtcl();
 
-	List<Player> saveplayingXI(Player[] player);
+	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
+
+	List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player);
 
 }

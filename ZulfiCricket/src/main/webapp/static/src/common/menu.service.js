@@ -30,7 +30,7 @@
 		// To get the Team players from Registered roster
 		service.getTeamPlayers = function() {
 			var deferred = $q.defer();
-			$http.get(ApiMVC + '/players/selection', {
+			$http.get(ApiMVC + '/playersCtcl/selection', {
 				headers : {
 					'Access-Control-Allow-Origin' : '*',
 					'Content-Type' : 'application/json'
@@ -49,10 +49,10 @@
 			var deferred = $q.defer();
 
 			var playerAvailability = {
-				player_id : player.player_id,
-				player_firstName : player.player_firstName,
-				player_lastName : player.player_lastName,
-				player_availability : availability
+				playerID : player.playerID,
+				playerFName : player.playerFName,
+				playerLName : player.playerLName,
+				playerAvailability : availability
 			};
 
 			$http.post(ApiMVC + '/submit/availability', playerAvailability, {

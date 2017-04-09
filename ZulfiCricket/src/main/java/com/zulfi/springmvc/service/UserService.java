@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
+import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.User;
 
 public interface UserService {
 
 	User findById(int id);
 
-	public List<Player> getTeamPlayers();
+	public List<PlayerCtcl> getTeamPlayers();
+
+	public List<PlayerCtcl> getTeamPlayersCtcl();
 
 	User findBySSO(String sso);
 
@@ -28,8 +31,8 @@ public interface UserService {
 
 	boolean isUserSSOUnique(Integer id, String sso);
 
-	List<Player> savePlayerForSelection(Player player);
+	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
 
-	List<Player> saveplayingXI(Player[] player);
+	List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player);
 
 }

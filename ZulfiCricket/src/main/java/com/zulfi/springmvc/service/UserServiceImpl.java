@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zulfi.springmvc.dao.UserDao;
 import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Player;
+import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.User;
 
 @Service("userService")
@@ -70,12 +71,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Player> getTeamPlayers() {
+	public List<PlayerCtcl> getTeamPlayers() {
 		return dao.getTeamPlayers();
 	}
 
 	@Override
-	public List<Player> savePlayerForSelection(Player player) {
+	public List<PlayerCtcl> getTeamPlayersCtcl() {
+		return dao.getTeamPlayersCtcl();
+	}
+
+	@Override
+	public List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player) {
 		return dao.savePlayerForSelection(player);
 
 	}
@@ -93,7 +99,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Player> saveplayingXI(Player[] player) {
+	public List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player) {
 		return dao.saveplayingXI(player);
 	}
 
