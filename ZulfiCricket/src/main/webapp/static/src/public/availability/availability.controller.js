@@ -18,6 +18,7 @@
 		$ctrl.isTeamSelected = false;
 		$ctrl.Dba = false;
 		$ctrl.User = false;
+		$ctrl.isAvailabilityOn = false;
 
 		/* Date Start */
 		$ctrl.checkDate = new Date();

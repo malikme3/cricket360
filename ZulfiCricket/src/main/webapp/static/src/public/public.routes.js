@@ -93,6 +93,13 @@
                 , controller: 'LogInController'
                 , controllerAs: 'logInCtrl'
             })
+          //For Submitting Score Card- First Step
+            .state('public.scorecard', {
+                url: '/submitScoreCard/step1'
+                , templateUrl: 'src/public/score-card/submitScore.html'
+                , controller: 'ScoreCardController'
+                , controllerAs: 'scoreCardCtrl'
+            })
             // I add this - end
             .state('public.menuitems', {
                 url: '/menu/{category}'

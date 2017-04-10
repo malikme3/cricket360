@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.User;
 
 @Repository("userDao")
@@ -153,4 +155,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		return null;
 	}
 
+	@Override
+	public List<Leagues> getLeaguesList() {
+		String hql = "from Leagues";
+		Query query = session().createQuery(hql);
+		List<Leagues> leagueList = query.list();
+		return leagueList;
+	}
+
+	@Override
+	public List<Seasons> getSeasonsList() {
+		String hql = "from Seasons";
+		Query query = session().createQuery(hql);
+		List<Seasons> seasonsList = query.list();
+		return seasonsList;
+	}
 }

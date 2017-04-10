@@ -3,8 +3,10 @@ package com.zulfi.springmvc.service;
 import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.User;
 
 public interface UserService {
@@ -14,6 +16,10 @@ public interface UserService {
 	public List<PlayerCtcl> getTeamPlayers();
 
 	public List<PlayerCtcl> getTeamPlayersCtcl();
+
+	public List<Leagues> getLeaguesList();
+
+	public List<Seasons> getSeasonsList();
 
 	User findBySSO(String sso);
 

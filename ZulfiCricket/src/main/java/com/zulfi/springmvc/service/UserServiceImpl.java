@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.UserDao;
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.User;
 
 @Service("userService")
@@ -78,6 +80,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<PlayerCtcl> getTeamPlayersCtcl() {
 		return dao.getTeamPlayersCtcl();
+	}
+
+	@Override
+	public List<Leagues> getLeaguesList() {
+		return dao.getLeaguesList();
+	}
+
+	@Override
+	public List<Seasons> getSeasonsList() {
+		return dao.getSeasonsList();
 	}
 
 	@Override

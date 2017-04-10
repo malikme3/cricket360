@@ -3,8 +3,10 @@ package com.zulfi.springmvc.dao;
 import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.User;
 
 public interface UserDao {
@@ -26,6 +28,10 @@ public interface UserDao {
 	List<PlayerCtcl> getTeamPlayers();
 
 	List<PlayerCtcl> getTeamPlayersCtcl();
+
+	List<Leagues> getLeaguesList();
+
+	List<Seasons> getSeasonsList();
 
 	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
 

@@ -101,6 +101,46 @@
 			});
 			return deferred.promise;
 		}
+		/* ****** Getting leagues List ********* */
+		service.getLeagues = function() {
+			console.log("In user.service: for getting leagues list");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/leagues/list', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting leagues list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
+		/* ****** Getting Season List ********* */
+		service.getSeasons = function() {
+			console.log("In user.service: for getting Seasons list");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/seasons/list', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting seasons list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
 		// For User Session
 		service.getUserSessionInfo = function() {
 			console.log("In service: For getUserSessionInfo");

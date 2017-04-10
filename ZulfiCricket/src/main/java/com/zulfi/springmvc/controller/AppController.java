@@ -31,8 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.model.UserSession;
@@ -256,6 +258,21 @@ public class AppController {
 		List<PlayerCtcl> players = userService.getTeamPlayersCtcl();
 		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.OK);
 	}
+
+	// Getting Leagues List
+		@RequestMapping(value = "/leagues/list", method = RequestMethod.GET)
+		public ResponseEntity<List<Leagues>> getLeagues() {
+			List<Leagues> league = userService.getLeaguesList();
+			return new ResponseEntity<List<Leagues>>(league, HttpStatus.OK);
+		}
+
+		// Getting Seasons List
+		@RequestMapping(value = "/seasons/list", method = RequestMethod.GET)
+		public ResponseEntity<List<Seasons>> getSeasons() {
+			List<Seasons> league = userService.getSeasonsList();
+			return new ResponseEntity<List<Seasons>>(league, HttpStatus.OK);
+		}
+
 	/*
 	 * -------------------Submitting availability for team
 	 * Selection--------------------------------------------------------
