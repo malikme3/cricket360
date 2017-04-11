@@ -35,6 +35,7 @@ import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.model.UserSession;
@@ -253,6 +254,7 @@ public class AppController {
 		List<PlayerCtcl> players = userService.getTeamPlayers();
 		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.OK);
 	}
+
 	@RequestMapping(value = "/playersCtcl/selection", method = RequestMethod.GET)
 	public ResponseEntity<List<PlayerCtcl>> getTeamPlayersCtcl() {
 		List<PlayerCtcl> players = userService.getTeamPlayersCtcl();
@@ -260,18 +262,25 @@ public class AppController {
 	}
 
 	// Getting Leagues List
-		@RequestMapping(value = "/leagues/list", method = RequestMethod.GET)
-		public ResponseEntity<List<Leagues>> getLeagues() {
-			List<Leagues> league = userService.getLeaguesList();
-			return new ResponseEntity<List<Leagues>>(league, HttpStatus.OK);
-		}
+	@RequestMapping(value = "/leagues/list", method = RequestMethod.GET)
+	public ResponseEntity<List<Leagues>> getLeagues() {
+		List<Leagues> league = userService.getLeaguesList();
+		return new ResponseEntity<List<Leagues>>(league, HttpStatus.OK);
+	}
 
-		// Getting Seasons List
-		@RequestMapping(value = "/seasons/list", method = RequestMethod.GET)
-		public ResponseEntity<List<Seasons>> getSeasons() {
-			List<Seasons> league = userService.getSeasonsList();
-			return new ResponseEntity<List<Seasons>>(league, HttpStatus.OK);
-		}
+	// Getting Seasons List
+	@RequestMapping(value = "/seasons/list", method = RequestMethod.GET)
+	public ResponseEntity<List<Seasons>> getSeasons() {
+		List<Seasons> league = userService.getSeasonsList();
+		return new ResponseEntity<List<Seasons>>(league, HttpStatus.OK);
+	}
+
+	// Getting Seasons List
+	@RequestMapping(value = "/teams/list", method = RequestMethod.GET)
+	public ResponseEntity<List<Teams>> getTeams() {
+		List<Teams> league = userService.getTeamsList();
+		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
+	}
 
 	/*
 	 * -------------------Submitting availability for team

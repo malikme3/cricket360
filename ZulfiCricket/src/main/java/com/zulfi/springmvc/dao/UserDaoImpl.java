@@ -19,6 +19,7 @@ import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 
 @Repository("userDao")
@@ -165,9 +166,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@Override
 	public List<Seasons> getSeasonsList() {
-		String hql = "from Seasons";
+		String hql = "from Seasons where seasonYear = :sYear ";
 		Query query = session().createQuery(hql);
+		query.setParameter("sYear", "2017");
 		List<Seasons> seasonsList = query.list();
+		return seasonsList;
+	}
+
+	@Override
+	public List<Teams> getTeamsList() {
+		String hql = "from Teams where TeamActive = :teamActive ";
+		Query query = session().createQuery(hql);
+		query.setParameter("teamActive", "1");
+		List<Teams> seasonsList = query.list();
 		return seasonsList;
 	}
 }

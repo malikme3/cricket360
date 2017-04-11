@@ -48,7 +48,7 @@
         <!-- Select a Visiting Team -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.visitingTeam.$invalid && !userForm.visitingTeam.$pristine }">
             <label>Select a Visiting Team*</label>
-            <select ng-options="visitingTeam for visitingTeam in scoreCardCtrl.selectSeasonOptions" placeholder="Please select Visiting Team here" type="text" name="visitingTeam" class="form-control" ng-model="scoreCardCtrl.visitingTeam" required>
+            <select ng-options="visitingTeam for visitingTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Visiting Team here" type="text" name="visitingTeam" class="form-control" ng-model="scoreCardCtrl.visitingTeam" required>
             </select>
             <p ng-show="userForm.visitingTeam.$invalid " class="help-block">Visiting Team selection is required.</p>
         </div>
@@ -56,7 +56,7 @@
         <!-- Select a Home Team -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.homeTeam.$invalid && !userForm.homeTeam.$pristine }">
             <label>Select a Home Team*</label>
-            <select ng-options="homeTeam for homeTeam in scoreCardCtrl.selectHomeTeamsOptions" placeholder="Please select Home Team here" type="text" name="homeTeam" class="form-control" ng-model="scoreCardCtrl.homeTeam" required>
+            <select ng-options="homeTeam for homeTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Home Team here" type="text" name="homeTeam" class="form-control" ng-model="scoreCardCtrl.homeTeam" required>
             </select>
             <p ng-show="userForm.homeTeam.$invalid " class="help-block">Home Team selection is required.</p>
         </div>
@@ -64,7 +64,7 @@
         <!-- Select a Umpiring Team -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.umpiringTeam.$invalid && !userForm.umpiringTeam.$pristine }">
             <label>Select a Umpiring Team*</label>
-            <select ng-options="umpiringTeam for umpiringTeam in scoreCardCtrl.selectUmpiringTeamsOptions" placeholder="Please select Umpiring Team here" type="text" name="umpiringTeam" class="form-control" ng-model="scoreCardCtrl.umpiringTeam" required>
+            <select ng-options="umpiringTeam for umpiringTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Umpiring Team here" type="text" name="umpiringTeam" class="form-control" ng-model="scoreCardCtrl.umpiringTeam" required>
             </select>
             <p ng-show="userForm.umpiringTeam.$invalid " class="help-block">Umpiring Team selection is required.</p>
         </div>
@@ -72,7 +72,7 @@
         <!-- Who won toss -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.whoWonToss.$invalid && !userForm.whoWonToss.$pristine }">
             <label>Select Team winning toss*</label>
-            <select ng-options="whoWonToss for whoWonToss in scoreCardCtrl.selectTeamTossWonOptions" placeholder="Please select: Who won toss Team here" type="text" name="whoWonToss" class="form-control" ng-model="scoreCardCtrl.whoWonToss" required>
+            <select ng-options="whoWonToss for whoWonToss in scoreCardCtrl.selectTeamsOptions" placeholder="Please select: Who won toss Team here" type="text" name="whoWonToss" class="form-control" ng-model="scoreCardCtrl.whoWonToss" required>
             </select>
             <p ng-show="userForm.whoWonToss.$invalid " class="help-block">Team winning toss is required.</p>
         </div>
@@ -80,7 +80,7 @@
         <!-- Team Batting First-->
         <div class="form-group" ng-class="{ 'has-error' : userForm.battingFirstTeam.$invalid && !userForm.battingFirstTeam.$pristine }">
             <label>Select Team Batting First Team*</label>
-            <select ng-options="battingFirstTeam for battingFirstTeam in scoreCardCtrl.selectBattingFirstTeamOptions" placeholder="Please select Batting First Team here" type="text" name="battingFirstTeam" class="form-control" ng-model="scoreCardCtrl.battingFirstTeam" required>
+            <select ng-options="battingFirstTeam for battingFirstTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Batting First Team here" type="text" name="battingFirstTeam" class="form-control" ng-model="scoreCardCtrl.battingFirstTeam" required>
             </select>
             <p ng-show="userForm.battingFirstTeam.$invalid " class="help-block">Team Batting First is required.</p>
         </div>
@@ -88,7 +88,7 @@
         <!-- Team Batting Second-->
         <div class="form-group" ng-class="{ 'has-error' : userForm.battingSecondTeam.$invalid && !userForm.battingSecondTeam.$pristine }">
             <label>Select Team Batting Second Team*</label>
-            <select ng-options="battingSecondTeam for battingSecondTeam in scoreCardCtrl.selectBattingSecondTeamOptions" placeholder="Please select Batting Second Team here" type="text" name="battingSecondTeam" class="form-control" ng-model="scoreCardCtrl.battingSecondTeam" required>
+            <select ng-options="battingSecondTeam for battingSecondTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Batting Second Team here" type="text" name="battingSecondTeam" class="form-control" ng-model="scoreCardCtrl.battingSecondTeam" required>
             </select>
             <p ng-show="userForm.battingSecondTeam.$invalid " class="help-block">Team Batting Second is required.</p>
         </div>
@@ -96,7 +96,7 @@
         <!-- Victorious  Team -->
         <div class="form-group" ng-class="{ 'has-error' : userForm.victoriousTeam.$invalid && !userForm.victoriousTeam.$pristine }">
             <label>Select Victorious Team *</label>
-            <select ng-options="victoriousTeam for victoriousTeam in scoreCardCtrl.selectvictoriousTeamOptions" placeholder="Please select Victorious Team here" type="text" name="victoriousTeam" class="form-control" ng-model="scoreCardCtrl.victoriousTeam" required>
+            <select ng-options="victoriousTeam for victoriousTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Victorious Team here" type="text" name="victoriousTeam" class="form-control" ng-model="scoreCardCtrl.victoriousTeam" required>
             </select>
             <p ng-show="userForm.victoriousTeam.$invalid " class="help-block">Victorious is required, only if a result occurred</p>
         </div>

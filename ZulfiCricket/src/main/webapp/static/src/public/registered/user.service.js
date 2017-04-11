@@ -141,6 +141,26 @@
 			return deferred.promise;
 		}
 
+		/* ****** Getting Teams List ********* */
+		service.getTeams = function() {
+			console.log("In user.service: for getting Teams list");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/teams/list', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting teams list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
 		// For User Session
 		service.getUserSessionInfo = function() {
 			console.log("In service: For getUserSessionInfo");

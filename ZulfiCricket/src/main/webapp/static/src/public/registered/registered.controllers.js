@@ -113,12 +113,14 @@
 				// For setting user Session
 				UserService.getUserSessionInfo().then(function(response) {
 					console.log("In Registered Controller : User session from middle tier is : " + response);
-					if (!response == undefined) {
+					if (response) {
 						UserSessionInfo.setUserSession(response);
+						//Fix for getting logged out message on initial page load
+						logInCtrl.userSession = UserSessionInfo.getUserSession();
 					}
 
 				});
-				logInCtrl.userSession = UserSessionInfo.getUserSession();
+
 			});
 		}
 

@@ -7,6 +7,7 @@
 		var scoreCardCtrl = this
 		scoreCardCtrl.selectLeagueOptions = [];
 		scoreCardCtrl.selectSeasonOptions = [];
+		scoreCardCtrl.selectTeamsOptions = [];
 
 		/*
 		 * function leagueList (){ console.log("wit Function"); }
@@ -25,6 +26,13 @@
 		UserService.getSeasons().then(function(response) {
 			angular.forEach(response, function(season) {
 				scoreCardCtrl.selectSeasonOptions.push(season.seasonName);
+			});
+		});
+
+		console.log("In Score card controller :: Submitting request for Teams");
+		UserService.getTeams().then(function(response) {
+			angular.forEach(response, function(team) {
+				scoreCardCtrl.selectTeamsOptions.push(team.teamAbbrev);
 			});
 		});
 

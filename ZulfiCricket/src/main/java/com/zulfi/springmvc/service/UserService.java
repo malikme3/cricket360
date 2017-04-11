@@ -7,6 +7,7 @@ import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 
 public interface UserService {
@@ -20,6 +21,8 @@ public interface UserService {
 	public List<Leagues> getLeaguesList();
 
 	public List<Seasons> getSeasonsList();
+	
+	public List<Teams> getTeamsList();
 
 	User findBySSO(String sso);
 

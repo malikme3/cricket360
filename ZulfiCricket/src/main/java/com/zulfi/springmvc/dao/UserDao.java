@@ -7,6 +7,7 @@ import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 
 public interface UserDao {
@@ -32,6 +33,8 @@ public interface UserDao {
 	List<Leagues> getLeaguesList();
 
 	List<Seasons> getSeasonsList();
+
+	List<Teams> getTeamsList();
 
 	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
 

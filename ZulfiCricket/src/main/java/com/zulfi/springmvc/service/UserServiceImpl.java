@@ -13,6 +13,7 @@ import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 
 @Service("userService")
@@ -91,6 +92,12 @@ public class UserServiceImpl implements UserService {
 	public List<Seasons> getSeasonsList() {
 		return dao.getSeasonsList();
 	}
+	
+	@Override
+	public List<Teams> getTeamsList() {
+		return dao.getTeamsList();
+	}
+
 
 	@Override
 	public List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player) {
