@@ -92,16 +92,26 @@ public class UserServiceImpl implements UserService {
 	public List<Seasons> getSeasonsList() {
 		return dao.getSeasonsList();
 	}
-	
+
 	@Override
 	public List<Teams> getTeamsList() {
 		return dao.getTeamsList();
 	}
 
+	@Override
+	public List<Teams> getScheduleList() {
+		return dao.getScheduleList();
+	}
 
 	@Override
 	public List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player) {
 		return dao.savePlayerForSelection(player);
+
+	}
+
+	@Override
+	public List<PlayerCtcl> openAvailability(PlayerCtcl player) {
+		return dao.openAvailability(player);
 
 	}
 

@@ -100,6 +100,13 @@
 				$ctrl.players = response;
 			});
 		}
+
+		$ctrl.openAvailability = function(availability) {
+			MenuService.openAvailability(availability).then(function(response) {
+				$ctrl.players = response;
+			});
+		}
+
 		$ctrl.submitSelection = function(player) {
 			angular.forEach(player, function(aPlayer) {
 				angular.forEach($ctrl.selectedPlayers, function(select) {

@@ -68,6 +68,27 @@
 			});
 			return deferred.promise;
 		}
+		// To submit player availability
+		service.openAvailability = function(availability) {
+			var deferred = $q.defer();
+
+			var playerAvailability = {
+				playerAvailability : availability
+			};
+
+			$http.post(ApiMVC + '/open/availability', playerAvailability, {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/json'
+				},
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('in Menu Service: Error while opening availability');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
 
 		// Submitting and retrieving selected player for Playing XI
 		service.submittingPlayingXI = function(player) {

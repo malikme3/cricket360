@@ -122,6 +122,22 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	}
 
+	// Opening Player availability
+	@Override
+	public List<PlayerCtcl> openAvailability(PlayerCtcl player) {
+
+		String hql = "Update PlayerCtcl set playerAvailability = :availability";
+		Query query = session().createQuery(hql);
+		query.setParameter("availability", player.getPlayerAvailability());
+		int result = query.executeUpdate();
+		if (result > 0) {
+			System.out.println("Update :  " + result + " rows");
+
+		}
+		return null;
+
+	}
+
 	@Override
 	public void savePlayerInfo(Player player) {
 
@@ -175,6 +191,15 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@Override
 	public List<Teams> getTeamsList() {
+		String hql = "from Teams where TeamActive = :teamActive ";
+		Query query = session().createQuery(hql);
+		query.setParameter("teamActive", "1");
+		List<Teams> seasonsList = query.list();
+		return seasonsList;
+	}
+
+	@Override
+	public List<Teams> getScheduleList() {
 		String hql = "from Teams where TeamActive = :teamActive ";
 		Query query = session().createQuery(hql);
 		query.setParameter("teamActive", "1");

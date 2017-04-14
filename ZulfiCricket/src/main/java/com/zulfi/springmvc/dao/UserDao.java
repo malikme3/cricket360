@@ -36,7 +36,11 @@ public interface UserDao {
 
 	List<Teams> getTeamsList();
 
+	List<Teams> getScheduleList();
+
 	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
+
+	List<PlayerCtcl> openAvailability(PlayerCtcl player);
 
 	List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player);
 

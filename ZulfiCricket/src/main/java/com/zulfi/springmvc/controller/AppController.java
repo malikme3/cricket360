@@ -282,6 +282,13 @@ public class AppController {
 		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
 	}
 
+	// Getting schedule
+		@RequestMapping(value = "/schedule", method = RequestMethod.GET)
+		public ResponseEntity<List<Teams>> getSchedule() {
+			List<Teams> league = userService.getScheduleList();
+			return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
+		}
+
 	/*
 	 * -------------------Submitting availability for team
 	 * Selection--------------------------------------------------------
@@ -291,6 +298,13 @@ public class AppController {
 	public ResponseEntity<List<PlayerCtcl>> submitPlayerForSelection(@RequestBody PlayerCtcl player, UriComponentsBuilder ucBuilder) {
 		System.out.println("In Spring MVC controller for Submitting availability for team Selection");
 		userService.savePlayerForSelection(player);
+		List<PlayerCtcl> players = userService.getTeamPlayers();
+		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.CREATED);
+	}
+	@RequestMapping(value = "/open/availability", method = RequestMethod.POST)
+	public ResponseEntity<List<PlayerCtcl>> openAvailability(@RequestBody PlayerCtcl player) {
+		System.out.println("In Spring MVC controller for open availability ");
+		userService.openAvailability(player);
 		List<PlayerCtcl> players = userService.getTeamPlayers();
 		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.CREATED);
 	}

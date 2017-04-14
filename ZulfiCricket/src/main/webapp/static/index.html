@@ -2,214 +2,162 @@
 <html lang="en">
 
 <head>
-<meta charset="utf-8">
-<meta
-	http-equiv="X-UA-Compatible"
-	content="IE=edge">
-<meta
-	name="viewport"
-	content="width=device-width, initial-scale=1">
-<title>Round Rock Cricket Club</title>
-<link
-	href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700'
-	rel='stylesheet'
-	type='text/css'>
-<link
-	href='https://fonts.googleapis.com/css?family=Lora'
-	rel='stylesheet'
-	type='text/css'>
-<link
-	rel="stylesheet"
-	href="css/style.css">
-<link
-	rel="stylesheet"
-	href="css/bootstrap.min.css">
-<link
-	rel="stylesheet"
-	href="css/restaurant.css">
-<link
-	href='https://fonts.googleapis.com/css?family=Oleo+Script'
-	rel='stylesheet'
-	type='text/css'>
-<link
-	href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css'
-	rel="stylesheet"
-	type="text/css" />
-<link
-	href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
-	rel="stylesheet">
-<link
-	rel="stylesheet"
-	href="css/common.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Round Rock Cricket Club</title>
+    <link href='https://fonts.googleapis.com/css?family=Oxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lora' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/restaurant.css">
+    <link href='https://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+    <link href='//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css' rel="stylesheet" type="text/css" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
 </head>
 
-<body
-	ng-app="cricketApp"
-	ng-strict-di>
-	<!-- Fixed position loading indicator -->
-	<loading class="loading-indicator"></loading>
-	<header>
-		<nav
-			id="header-nav"
-			class="navbar navbar-default">
-			<div class="container">
-				<div class="navbar-header">
-					<a
-						href="index.html"
-						class="pull-left visible-md visible-lg"> <img
-						src="images/cric.png"
-						alt="Logo image"
-						style="width: 30%; height: 30%"></img>
-					</a>
-					<div class="navbar-brand">
-						<a href="index.html"> <span class="glyphicon glyphicon-home"></span></a> <a href="index.html"><h1>Round Rock Cricket Club</h1></a>
-					</div>
-					<button
-						id="navbarToggle"
-						type="button"
-						class="navbar-toggle collapsed"
-						data-toggle="collapse"
-						data-target="#collapsable-nav"
-						aria-expanded="false">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-				</div>
-				<div
-					id="collapsable-nav"
-					class="collapse navbar-collapse">
-					<ul
-						id="nav-list"
-						class="nav navbar-nav navbar-right">
-						<li
-							id="navHomeButton"
-							class="visible-xs">
-							<a href="index.html"> <i class="glyphicon glyphicon-home"></i> Home
-							</a>
-						</li>
-						<li
-							id="navMenuButton"
-							ui-sref-active="active">
-							<a ui-sref="public.home"> <i class="fa fa-trophy"></i> <br class="hidden-xs"> Teams
-							</a>
-						</li>
-						<li
-							id="navMenuButton"
-							ui-sref-active="active">
-							<a ui-sref="public.matches"> <i
-								class="fa fa-folder-open-o"
-								aria-hidden="true"></i> <br class="hidden-xs"> Results
-							</a>
-						</li>
-						<li
-							id="navMenuButton"
-							ui-sref-active="active">
-							<a ui-sref="public.availability"> <i
-								class="fa fa-thumbs-o-up"
-								aria-hidden="true"></i> <br class="hidden-xs"> Availability
-							</a>
-						</li>
-						<li>
-							<a ui-sref="public.login"> <i class="fa fa-sign-in"></i> <br class="hidden-xs">Log In
-							</a>
-						</li>
-						<li>
-							<a ui-sref="public.scorecard"> <i class="fa fa-sign-in"></i> <br class="hidden-xs">Score Card
-							</a>
-						</li>
-						<li>
-							<a ui-sref="public.signup"> <i class="glyphicon glyphicon-certificate"></i> <br class="hidden-xs"> Sign Up
-							</a>
-						</li>
-					</ul>
-					<!-- #nav-list -->
-				</div>
-				<!-- .collapse .navbar-collapse -->
-			</div>
-			<!-- .container -->
-		</nav>
-		<!-- #header-nav -->
-	</header>
-	<div
-		id="call-btn"
-		class="visible-xs">
-		<a
-			class="btn"
-			href="tel:708-515-0998"> <span class="glyphicon glyphicon-earphone"></span> 708-515-0998
-		</a>
-	</div>
-	<ui-view>
-	<div class="text-center initial-loading">
-		<h2>Loading Site...</h2>
-	</div>
-	</ui-view>
-	<footer class="panel-footer">
-		<div class="container">
-			<div class="row">
-				<section
-					id="hours"
-					class="col-sm-4">
-					<span>Upcoming Events</span>
-					<br> Sunday: TigerPro vs Panthor <br> Saturday: Lions vs Tiger <br> Tuesday-Thursday Practics @ 4:30 pm
-					<hr class="visible-xs">
-				</section>
-				<section
-					id="address"
-					class="col-sm-4">
-					<span>Recent Results</span>
-					<br> TigerPro Won by 25 runs !! <br> Lion won by 2 wickets !!
-					<p>"Brilliant Rossouw-Sarfraz stand maintains Quetta's perfect record"</p>
-					<hr class="visible-xs">
-				</section>
-				<section
-					id="testimonials"
-					class="col-sm-4">
-					<p>"Brilliant Rossouw-Sarfraz stand maintains Quetta's perfect record"</p>
-					<p>"Peshawar Zalmi limped over the line against the Lahore Qalandars in one of the more extraordinary contests in franchise T20 history. After skittling Lahore for 59 in 10.2 overs"</p>
-				</section>
-			</div>
-			<div class="text-center">
-				&copy; Austin Cricket Club 2017 | <a ui-sref="admin.auth">Admin</a>
-			</div>
-		</div>
-	</footer>
-	<!-- Libs -->
-	<script src="lib/jquery-2.1.4.min.js"></script>
-	<script src="lib/bootstrap.min.js"></script>
-	<script src="lib/angular.min.js"></script>
-	<script src="lib/angular-ui-router.min.js"></script>
-	<!-- Main Cricket Module -->
-	<script src="src/cricket.module.js"></script>
-	<!-- Common Module -->
-	<script src="src/common/common.module.js"></script>
-	<script src="src/common/data-store.service.js"></script>
-	<script src="src/common/loading/loading.component.js"></script>
-	<script src="src/common/loading/loading.interceptor.js"></script>
-	<script src="src/common/menu.service.js"></script>
-	<!-- Table Grid -->
-	<script src="src/common/table-grid/table-match.component.js"></script>
-	<!-- Public Module -->
-	<script src="src/public/public.module.js"></script>
-	<script src="src/public/public.routes.js"></script>
-	<script src="src/public/menu/menu.controller.js"></script>
-	<script src="src/common/teams/teams.service.js"></script>
-	<script src="src/public/team/team.controller.js"></script>
-	<script src="src/public/menu-category/menu-category.component.js"></script>
-	<script src="src/public/menu-items/menu-items.controller.js"></script>
-	<script src="src/public/menu-item/menu-item.component.js"></script>
-	<script src="src/public/registered/user.service.js"></script>
-	<script src="src/public/results/results.controller.js"></script>
-	<script src="src/public/registered/registered.controllers.js"></script>
-	<script src="src/public/home/home.controller.js"></script>
-	<!-- <script src="src/public/registered/signup-input.component.js"></script> -->
-	<script src="src/public/availability/availability.controller.js"></script>
-	<script src="src/public/score-card/scorecard.controllers.js"></script>
-	<script src="src/public/timer.js"></script>
+<body ng-app="cricketApp" ng-strict-di>
+    <!-- Fixed position loading indicator -->
+    <loading class="loading-indicator"></loading>
+    <header>
+        <nav id="header-nav" class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="index.html" class="pull-left visible-md visible-lg"> <img src="images/cric.png" alt="Logo image" style="width: 30%; height: 30%"></img>
+                    </a>
+                    <div class="navbar-brand">
+                        <a href="index.html"> <span class="glyphicon glyphicon-home"></span></a> <a href="index.html"><h1>Round Rock Cricket Club</h1></a>
+                    </div>
+                    <button id="navbarToggle" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapsable-nav" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div id="collapsable-nav" class="collapse navbar-collapse">
+                    <ul id="nav-list" class="nav navbar-nav navbar-right">
+                        <li id="navHomeButton" class="visible-xs">
+                            <a href="index.html"> <i class="glyphicon glyphicon-home"></i> Home
+                            </a>
+                        </li>
+                        <li id="navMenuButton" ui-sref-active="active">
+                            <a ui-sref="public.home"> <i class="fa fa-trophy"></i>
+                                <br class="hidden-xs"> Teams
+                            </a>
+                        </li>
+                        <li id="navMenuButton" ui-sref-active="active">
+                            <a ui-sref="public.matches"> <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                                <br class="hidden-xs"> Results
+                            </a>
+                        </li>
+                        <li id="navMenuButton" ui-sref-active="active">
+                            <a ui-sref="public.availability"> <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                <br class="hidden-xs"> Availability
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="public.scorecard"> <i class="fa fa-sign-in"></i>
+                                <br class="hidden-xs">Score Card
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="public.schedule"> <i class="fa fa-sign-in"></i>
+                                <br class="hidden-xs">Schedule
+                            </a>
+                        </li>
+                        <li>
+                            <a ui-sref="public.login"> <i class="fa fa-sign-in"></i>
+                                <br class="hidden-xs">Log In
+                            </a>
+                        </li>
 
-	<!-- ADMIN SITE -->
-	<!--Application files -->
+                        <li>
+                            <a ui-sref="public.signup"> <i class="glyphicon glyphicon-certificate"></i>
+                                <br class="hidden-xs"> Sign Up
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- #nav-list -->
+                </div>
+                <!-- .collapse .navbar-collapse -->
+            </div>
+            <!-- .container -->
+        </nav>
+        <!-- #header-nav -->
+    </header>
+    <div id="call-btn" class="visible-xs">
+        <a class="btn" href="tel:708-515-0998"> <span class="glyphicon glyphicon-earphone"></span> 708-515-0998
+        </a>
+    </div>
+    <ui-view>
+        <div class="text-center initial-loading">
+            <h2>Loading Site...</h2>
+        </div>
+    </ui-view>
+    <footer class="panel-footer">
+        <div class="container">
+            <div class="row">
+                <section id="hours" class="col-sm-4">
+                    <span>Upcoming Events</span>
+                    <br> Sunday: TigerPro vs Panthor
+                    <br> Saturday: Lions vs Tiger
+                    <br> Tuesday-Thursday Practics @ 4:30 pm
+                    <hr class="visible-xs">
+                </section>
+                <section id="address" class="col-sm-4">
+                    <span>Recent Results</span>
+                    <br> TigerPro Won by 25 runs !!
+                    <br> Lion won by 2 wickets !!
+                    <p>"Brilliant Rossouw-Sarfraz stand maintains Quetta's perfect record"</p>
+                    <hr class="visible-xs">
+                </section>
+                <section id="testimonials" class="col-sm-4">
+                    <p>"Brilliant Rossouw-Sarfraz stand maintains Quetta's perfect record"</p>
+                    <p>"Peshawar Zalmi limped over the line against the Lahore Qalandars in one of the more extraordinary contests in franchise T20 history. After skittling Lahore for 59 in 10.2 overs"</p>
+                </section>
+            </div>
+            <div class="text-center">
+                &copy; Austin Cricket Club 2017 | <a ui-sref="admin.auth">Admin</a>
+            </div>
+        </div>
+    </footer>
+    <!-- Libs -->
+    <script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-ui-router.min.js"></script>
+    <!-- Main Cricket Module -->
+    <script src="src/cricket.module.js"></script>
+    <!-- Common Module -->
+    <script src="src/common/common.module.js"></script>
+    <script src="src/common/data-store.service.js"></script>
+    <script src="src/common/loading/loading.component.js"></script>
+    <script src="src/common/loading/loading.interceptor.js"></script>
+    <script src="src/common/menu.service.js"></script>
+    <!-- Table Grid -->
+    <script src="src/common/table-grid/table-match.component.js"></script>
+    <!-- Public Module -->
+    <script src="src/public/public.module.js"></script>
+    <script src="src/public/public.routes.js"></script>
+    <script src="src/public/menu/menu.controller.js"></script>
+    <script src="src/common/teams/teams.service.js"></script>
+    <script src="src/public/team/team.controller.js"></script>
+    <script src="src/public/menu-category/menu-category.component.js"></script>
+    <script src="src/public/menu-items/menu-items.controller.js"></script>
+    <script src="src/public/menu-item/menu-item.component.js"></script>
+    <script src="src/public/registered/user.service.js"></script>
+    <script src="src/public/results/results.controller.js"></script>
+    <script src="src/public/registered/registered.controllers.js"></script>
+    <script src="src/public/home/home.controller.js"></script>
+    <!-- <script src="src/public/registered/signup-input.component.js"></script> -->
+    <script src="src/public/availability/availability.controller.js"></script>
+    <script src="src/public/schedule/schedule.controllers.js"></script>
+    <script src="src/public/timer.js"></script>
+
+    <!-- ADMIN SITE -->
+    <!--Application files -->
 </body>
 
 </html>

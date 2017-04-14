@@ -21,8 +21,10 @@ public interface UserService {
 	public List<Leagues> getLeaguesList();
 
 	public List<Seasons> getSeasonsList();
-	
+
 	public List<Teams> getTeamsList();
+
+	public List<Teams> getScheduleList();
 
 	User findBySSO(String sso);
 
@@ -41,6 +43,8 @@ public interface UserService {
 	boolean isUserSSOUnique(Integer id, String sso);
 
 	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
+
+	List<PlayerCtcl> openAvailability(PlayerCtcl player);
 
 	List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player);
 

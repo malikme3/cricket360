@@ -161,6 +161,26 @@
 			return deferred.promise;
 		}
 
+		/* ****** Getting Schedule List ********* */
+		service.getSchedule = function() {
+			console.log("In user.service: for matches schedule list");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/schedule', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting schedule list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
 		// For User Session
 		service.getUserSessionInfo = function() {
 			console.log("In service: For getUserSessionInfo");
