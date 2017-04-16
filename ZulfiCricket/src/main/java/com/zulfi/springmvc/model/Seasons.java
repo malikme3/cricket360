@@ -16,7 +16,7 @@ public class Seasons implements Serializable {
 	private int SeasonID;
 	private String SeasonName;
 	private String SeasonYear;
-	private int SeasonLeague;
+	public  int SeasonLeague;
 
 	public int getSeasonID() {
 		return SeasonID;

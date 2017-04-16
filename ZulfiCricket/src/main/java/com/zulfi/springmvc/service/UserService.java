@@ -3,6 +3,7 @@ package com.zulfi.springmvc.service;
 import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
@@ -25,6 +26,8 @@ public interface UserService {
 	public List<Teams> getTeamsList();
 
 	public List<Teams> getScheduleList();
+
+	public List<Ladder> getTeamPoints(String team, String season);
 
 	User findBySSO(String sso);
 

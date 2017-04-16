@@ -3,6 +3,7 @@ package com.zulfi.springmvc.dao;
 import java.util.List;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
@@ -37,6 +38,8 @@ public interface UserDao {
 	List<Teams> getTeamsList();
 
 	List<Teams> getScheduleList();
+
+	List<Ladder> getTeamPoints(String team, String season);
 
 	List<PlayerCtcl> savePlayerForSelection(PlayerCtcl player);
 

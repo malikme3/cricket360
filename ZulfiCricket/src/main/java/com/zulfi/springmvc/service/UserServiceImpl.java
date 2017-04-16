@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.UserDao;
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
@@ -101,6 +102,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Teams> getScheduleList() {
 		return dao.getScheduleList();
+	}
+
+	@Override
+	public List<Ladder> getTeamPoints(String team, String season) {
+		return dao.getTeamPoints(team, season);
 	}
 
 	@Override

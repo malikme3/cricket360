@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
@@ -283,12 +284,18 @@ public class AppController {
 	}
 
 	// Getting schedule
-		@RequestMapping(value = "/schedule", method = RequestMethod.GET)
-		public ResponseEntity<List<Teams>> getSchedule() {
-			List<Teams> league = userService.getScheduleList();
-			return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
-		}
+	@RequestMapping(value = "/schedule", method = RequestMethod.GET)
+	public ResponseEntity<List<Teams>> getSchedule() {
+		List<Teams> league = userService.getScheduleList();
+		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
+	}
 
+	// Getting points
+	@RequestMapping(value = "/team/ptable", method = RequestMethod.POST)
+	public ResponseEntity<List<Ladder>> teamPoints(@RequestBody Ladder postion) {
+		List<Ladder> points = userService.getTeamPoints(postion.getTeamName(), "2017 35 Overs League");
+		return new ResponseEntity<List<Ladder>>(points, HttpStatus.OK);
+	}
 	/*
 	 * -------------------Submitting availability for team
 	 * Selection--------------------------------------------------------
@@ -301,6 +308,7 @@ public class AppController {
 		List<PlayerCtcl> players = userService.getTeamPlayers();
 		return new ResponseEntity<List<PlayerCtcl>>(players, HttpStatus.CREATED);
 	}
+
 	@RequestMapping(value = "/open/availability", method = RequestMethod.POST)
 	public ResponseEntity<List<PlayerCtcl>> openAvailability(@RequestBody PlayerCtcl player) {
 		System.out.println("In Spring MVC controller for open availability ");

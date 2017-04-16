@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Availability;
+import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
@@ -205,5 +206,52 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 		query.setParameter("teamActive", "1");
 		List<Teams> seasonsList = query.list();
 		return seasonsList;
+	}
+
+	@Override
+	public List<Ladder> getTeamPoints(String team, String season) {
+		int seasonId = 0;
+		int teamId = 0;
+		// TODO
+		team = "";
+		Query query;
+		String teamName = null;
+		List<Seasons> seasonList = getSeasonsList();
+		for (Seasons seasonVal : seasonList) {
+			if (seasonVal.getSeasonName().equalsIgnoreCase(season)) {
+				seasonId = seasonVal.getSeasonID();
+			}
+		}
+		;
+
+		List<Teams> teamsList = getTeamsList();
+		for (Teams teamVal : teamsList) {
+			if (teamVal.getTeamAbbrev().equalsIgnoreCase(team) && teamVal.getTeamActive().equals("1")) {
+				teamName = teamVal.getTeamAbbrev();
+				teamId = teamVal.getTeamID();
+			}
+		}
+		;
+		String hql = "from Ladder";
+
+		if (team.isEmpty()) {
+			hql = "from Ladder where season = :seasonId ";
+			teamId = 0;
+			query = session().createQuery(hql);
+			query.setParameter("seasonId", seasonId);
+
+		} else {
+			hql = "from Ladder where team = :teamId and season = :seasonId ";
+			query = session().createQuery(hql);
+			query.setParameter("teamId", teamId);
+			query.setParameter("seasonId", seasonId);
+		}
+
+		List<Ladder> pointList = query.list();
+		for (Ladder pointVal : pointList) {
+			pointVal.setTeamName(teamName);
+
+		}
+		return pointList;
 	}
 }
