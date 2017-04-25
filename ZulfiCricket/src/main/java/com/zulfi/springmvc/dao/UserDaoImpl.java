@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
@@ -182,10 +181,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 	}
 
 	@Override
-	public List<Seasons> getSeasonsList() {
+	public List<Seasons> getSeasonsList(String seasonYear) {
 		String hql = "from Seasons where seasonYear = :sYear ";
 		Query query = session().createQuery(hql);
-		query.setParameter("sYear", "2017");
+		query.setParameter("sYear", seasonYear);
+		List<Seasons> seasonsList = query.list();
+		return seasonsList;
+	}
+
+	@Override
+	public List<Seasons> getSeason(String seasonYear, String seasonName) {
+		String hql = "from Seasons where seasonYear = :sYear ";
+		Query query = session().createQuery(hql);
+		query.setParameter("sYear", seasonYear);
 		List<Seasons> seasonsList = query.list();
 		return seasonsList;
 	}
@@ -210,48 +218,19 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
 	@Override
 	public List<Ladder> getTeamPoints(String team, String season) {
-		int seasonId = 0;
-		int teamId = 0;
-		// TODO
-		team = "";
-		Query query;
-		String teamName = null;
-		List<Seasons> seasonList = getSeasonsList();
-		for (Seasons seasonVal : seasonList) {
-			if (seasonVal.getSeasonName().equalsIgnoreCase(season)) {
-				seasonId = seasonVal.getSeasonID();
-			}
-		}
-		;
+		String Ladder = "from Ladder where team = :teamID ";
+		Query query = session().createQuery(Ladder);
+		query.setParameter("teamID", 47);
+		List<Ladder> list = query.list();
+		return list;
+	}
 
-		List<Teams> teamsList = getTeamsList();
-		for (Teams teamVal : teamsList) {
-			if (teamVal.getTeamAbbrev().equalsIgnoreCase(team) && teamVal.getTeamActive().equals("1")) {
-				teamName = teamVal.getTeamAbbrev();
-				teamId = teamVal.getTeamID();
-			}
-		}
-		;
-		String hql = "from Ladder";
-
-		if (team.isEmpty()) {
-			hql = "from Ladder where season = :seasonId ";
-			teamId = 0;
-			query = session().createQuery(hql);
-			query.setParameter("seasonId", seasonId);
-
-		} else {
-			hql = "from Ladder where team = :teamId and season = :seasonId ";
-			query = session().createQuery(hql);
-			query.setParameter("teamId", teamId);
-			query.setParameter("seasonId", seasonId);
-		}
-
-		List<Ladder> pointList = query.list();
-		for (Ladder pointVal : pointList) {
-			pointVal.setTeamName(teamName);
-
-		}
-		return pointList;
+	@Override
+	public List<Teams> getTeamByTeamAbbrev(String teamAbbrev) {
+		String Ladder = "from Teams where TeamAbbrev = :teamAbbrev ";
+		Query query = session().createQuery(Ladder);
+		query.setParameter("teamAbbrev", teamAbbrev);
+		List<Teams> list = query.list();
+		return list;
 	}
 }

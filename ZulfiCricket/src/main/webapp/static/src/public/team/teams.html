@@ -1,11 +1,35 @@
 <div id="main-content" class="container">
 
-	<div id="home-tiles" class="col-md-12 row">
-		<div id="map-tile" align="middle">
-			<img src="{{teamsCtrl.team}}" alt="LagaanLogo"></img> <span>{{teamsCtrl.name}}</span>
-		</div>
-	</div>
+    <div id="home-tiles" class="col-md-12 row">
+        <div id="map-tile" align="middle">
+            <img src="{{teamsCtrl.team}}" alt="LagaanLogo"></img>
+            <span>{{teamsCtrl.name}}</span>
+        </div>
+    </div>
 
-	<match-table data="teamsCtrl.matchResults"></match-table>
-	<point-table data="teamsCtrl.matchResults"></point-table>
-	<div>
+    <!-- <match-table data="teamsCtrl.matchResults"></match-table> -->
+
+    <div class="col-md-12 row " id="home-tiles" align="middle" ">
+
+            <h3 > 20 Overs - Group A</h3>
+
+            <point-table data="teamsCtrl.team_group_20_A "></point-table>
+
+            <h3 >20 Overs - Group B</h3>
+
+            <point-table data="teamsCtrl.team_group_20_B "></point-table>
+
+            <h3 > 35 Overs - Group Red</h3>
+
+            <point-table data="teamsCtrl.team_group_35_red "></point-table>
+
+            <h3 >35 Overs - Group Blue</h3>
+
+            <point-table data="teamsCtrl.team_group_35_blue "></point-table>
+
+            <h3 >35 Overs - Group White</h3>
+
+            <point-table data="teamsCtrl.team_group_35_white "></point-table>
+    </div>
+
+</div>

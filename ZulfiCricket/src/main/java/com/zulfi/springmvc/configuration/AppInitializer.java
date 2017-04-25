@@ -16,7 +16,6 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 	}
  
 	@Override
-	@CrossOrigin(origins = "http://localhost:3000")
 	protected String[] getServletMappings() {
 		return new String[] { "/" };
 	}

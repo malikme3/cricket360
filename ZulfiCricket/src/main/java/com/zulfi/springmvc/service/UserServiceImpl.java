@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.UserDao;
-import com.zulfi.springmvc.model.Availability;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
@@ -90,8 +89,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Seasons> getSeasonsList() {
-		return dao.getSeasonsList();
+	public List<Seasons> getSeasonsList(String seasonYear) {
+		return dao.getSeasonsList(seasonYear);
 	}
 
 	@Override
@@ -136,6 +135,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<PlayerCtcl> saveplayingXI(PlayerCtcl[] player) {
 		return dao.saveplayingXI(player);
+	}
+
+	@Override
+	public List<Teams> getTeamByTeamAbbrev(String TeamAbbrev) {
+		return dao.getTeamByTeamAbbrev(TeamAbbrev);
 	}
 
 }

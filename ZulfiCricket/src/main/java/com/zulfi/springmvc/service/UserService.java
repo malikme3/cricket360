@@ -21,9 +21,11 @@ public interface UserService {
 
 	public List<Leagues> getLeaguesList();
 
-	public List<Seasons> getSeasonsList();
+	public List<Seasons> getSeasonsList(String seasonYear);
 
 	public List<Teams> getTeamsList();
+
+	public List<Teams> getTeamByTeamAbbrev(String TeamAbbrev);
 
 	public List<Teams> getScheduleList();
 

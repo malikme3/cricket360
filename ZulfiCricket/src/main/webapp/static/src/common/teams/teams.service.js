@@ -118,22 +118,96 @@
 		};
 
 		// To get the Team players from Registered roster
-		service.getTeamPoints = function(team, season) {
+
+		service.getTeamPositionByGroup = function(seasonYear, seasonName) {
+			console.log("In user.service: for getting getTeamPositionByGroup");
 			var deferred = $q.defer();
 
-			var ladder = {
-				teamName : team,
-				season : season
-			};
-			$http.post(ApiMVC + '/team/ptable', ladder, {
+			$http.get(ApiMVC + '/team/position/', {
 				headers : {
 					'Access-Control-Allow-Origin' : '*',
-					'Content-Type' : 'application/json'
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				},
+				params : {
+					seasonYear : seasonYear,
+					seasonName : seasonName
 				}
+			}, {
+				cache : true
 			}).then(function(response) {
 				deferred.resolve(response.data);
 			}, function(errResponse) {
-				console.error('Error while getting getting point table for teams');
+				console.error('Error while getting Team list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
+		// To get the Team players from Registered roster
+
+		service.getTeamsIdTeamsAbbrv = function(seasonYear, seasonName) {
+			console.log("In user.service: for getting getTeamsIdTeamsAbbrv");
+			var deferred = $q.defer();
+
+			$http.get(ApiMVC + '/team/teamsIdTeamsAbbrv/', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				},
+				params : {
+					seasonYear : seasonYear,
+					seasonName : seasonName
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting Team list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
+		service.getSeasons = function(seasonYear) {
+			console.log("In user.service: for getting getSeasons");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/seasons/list', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				},
+				params : {
+					seasonYear : seasonYear
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting season list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+		service.getLeagues = function(team, season) {
+			console.log("In user.service: for getting leagues list");
+			var deferred = $q.defer();
+			$http.get(ApiMVC + '/leagues/list', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				},
+				params : {
+					team : team,
+					season : season
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getting leagues list');
 				deferred.reject(errResponse);
 			});
 			return deferred.promise;

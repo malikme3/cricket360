@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.zulfi.springmvc.model.Ladder;
@@ -37,10 +40,12 @@ import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.Teams;
+import com.zulfi.springmvc.model.Teams2;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.model.UserSession;
 import com.zulfi.springmvc.security.CustomUserDetailsService;
+import com.zulfi.springmvc.service.TeamService;
 import com.zulfi.springmvc.service.UserProfileService;
 import com.zulfi.springmvc.service.UserService;
 
@@ -57,6 +62,9 @@ public class AppController {
 	UserProfileService userProfileService;
 
 	@Autowired
+	TeamService teamServicetest;
+
+	@Autowired
 	UserSession userSession;
 
 	@Autowired
@@ -71,6 +79,8 @@ public class AppController {
 
 	@Autowired
 	AuthenticationTrustResolver authenticationTrustResolver;
+
+	static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
 	/**
 	 * This method will list all existing users.
@@ -265,22 +275,40 @@ public class AppController {
 	// Getting Leagues List
 	@RequestMapping(value = "/leagues/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Leagues>> getLeagues() {
+		String test = "GoGO";
+		logger.info("Nawa	 !!!");
+		System.out.println("YK !!!!!!!!!!!!!!!! ####################### @@@@@@@@@@@@@@@@@@@@@@@@@@@@ !!!!!!!!!!!!!");
+
 		List<Leagues> league = userService.getLeaguesList();
 		return new ResponseEntity<List<Leagues>>(league, HttpStatus.OK);
 	}
 
 	// Getting Seasons List
 	@RequestMapping(value = "/seasons/list", method = RequestMethod.GET)
-	public ResponseEntity<List<Seasons>> getSeasons() {
-		List<Seasons> league = userService.getSeasonsList();
+	public ResponseEntity<List<Seasons>> getSeasons(@RequestParam String seasonYear) {
+		List<Seasons> league = userService.getSeasonsList(seasonYear);
 		return new ResponseEntity<List<Seasons>>(league, HttpStatus.OK);
 	}
 
-	// Getting Seasons List
+	// Getting team List
 	@RequestMapping(value = "/teams/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Teams>> getTeams() {
 		List<Teams> league = userService.getTeamsList();
 		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
+	}
+
+	// Getting team List
+	@RequestMapping(value = { "/team/position/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Ladder>> TeamPosition(@RequestParam String seasonYear, String seasonName) {
+		List<Ladder> position = teamServicetest.getTeamPosition(seasonYear, seasonName);
+		return new ResponseEntity<List<Ladder>>(position, HttpStatus.OK);
+	}
+
+	// Getting team Id and teams abbrv name
+	@RequestMapping(value = { "/team/teamsIdTeamsAbbrv/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Ladder>> teamsIdTeamsAbbrv(@RequestParam String seasonYear, String seasonName) {
+		List<Ladder> position = teamServicetest.getTeamsIdTeamsAbbrv(seasonYear, seasonName);
+		return new ResponseEntity<List<Ladder>>(position, HttpStatus.OK);
 	}
 
 	// Getting schedule
@@ -291,8 +319,8 @@ public class AppController {
 	}
 
 	// Getting points
-	@RequestMapping(value = "/team/ptable", method = RequestMethod.POST)
-	public ResponseEntity<List<Ladder>> teamPoints(@RequestBody Ladder postion) {
+	@RequestMapping(value = "/team/ptable", method = RequestMethod.GET)
+	public ResponseEntity<List<Ladder>> teamPoints(@PathVariable Ladder postion) {
 		List<Ladder> points = userService.getTeamPoints(postion.getTeamName(), "2017 35 Overs League");
 		return new ResponseEntity<List<Ladder>>(points, HttpStatus.OK);
 	}

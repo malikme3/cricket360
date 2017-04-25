@@ -33,9 +33,13 @@ public interface UserDao {
 
 	List<Leagues> getLeaguesList();
 
-	List<Seasons> getSeasonsList();
+	List<Seasons> getSeasonsList(String seasonYear);
+
+	List<Seasons> getSeason(String seasonYear, String seasonName);
 
 	List<Teams> getTeamsList();
+
+	List<Teams> getTeamByTeamAbbrev(String teamAbbrev);
 
 	List<Teams> getScheduleList();
 

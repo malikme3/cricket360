@@ -35,6 +35,8 @@ public class Ladder implements Serializable {
 	private int manualrank;
 	@Transient
 	private String teamName;
+	@Transient
+	private String conferenceAbbrev;
 
 	public int getId() {
 		return id;
@@ -156,11 +158,19 @@ public class Ladder implements Serializable {
 		this.teamName = teamName;
 	}
 
+	public String getConferenceAbbrev() {
+		return conferenceAbbrev;
+	}
+
+	public void setConferenceAbbrev(String conferenceAbbrev) {
+		this.conferenceAbbrev = conferenceAbbrev;
+	}
+
 	@Override
 	public String toString() {
 		return "Ladder [id=" + id + ", season=" + season + ", conference=" + conference + ", team=" + team + ", played=" + played + ", won=" + won + ", tied=" + tied + ", lost=" + lost + ", nrr="
-				+ nrr + ", points=" + points + ", penalty=" + penalty + ", bonus=" + bonus + ", totalpoints=" + totalpoints + ", manualrank=" + manualrank + ", teamName=" + teamName + "]";
+				+ nrr + ", points=" + points + ", penalty=" + penalty + ", bonus=" + bonus + ", totalpoints=" + totalpoints + ", manualrank=" + manualrank + ", teamName=" + teamName
+				+ ", conferenceAbbrev=" + conferenceAbbrev + "]";
 	}
-
 
 }
