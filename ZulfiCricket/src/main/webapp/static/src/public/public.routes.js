@@ -33,7 +33,7 @@
 			url : '/matches',
 			templateUrl : 'src/public/results/result.html',
 			controller : 'ResultController',
-			controllerAs : 'menuCtrl',
+			controllerAs : 'scoreCardCtrl',
 			resolve : {
 				results : [ 'MenuService', function(MenuService) {
 					return MenuService.getMatchesResult();

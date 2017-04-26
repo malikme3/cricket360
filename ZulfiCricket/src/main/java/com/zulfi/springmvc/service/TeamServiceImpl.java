@@ -8,8 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
+import com.zulfi.springmvc.model.ScoreCardBasic;
 
-@Service("teamServicetest")
+@Service("teamServiceMatch")
 @Transactional
 public class TeamServiceImpl implements TeamService {
 
@@ -24,6 +25,11 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<Ladder> getTeamsIdTeamsAbbrv(String seasonYear, String seasonName) {
 		return teamDao.getTeamsIdTeamsAbbrv(seasonYear, seasonName);
+	}
+
+	@Override
+	public List<ScoreCardBasic> getbasicScoreCard(int seasonId) {
+		return teamDao.getbasicScoreCard(seasonId);
 	}
 
 }

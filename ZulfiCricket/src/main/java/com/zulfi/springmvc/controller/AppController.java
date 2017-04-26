@@ -38,6 +38,7 @@ import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
@@ -61,7 +62,7 @@ public class AppController {
 	UserProfileService userProfileService;
 
 	@Autowired
-	TeamService teamServicetest;
+	TeamService teamServiceMatch;
 
 	@Autowired
 	UserSession userSession;
@@ -274,9 +275,6 @@ public class AppController {
 	// Getting Leagues List
 	@RequestMapping(value = "/leagues/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Leagues>> getLeagues() {
-		String test = "GoGO";
-		logger.info("Nawa	 !!!");
-		System.out.println("YK !!!!!!!!!!!!!!!! ####################### @@@@@@@@@@@@@@@@@@@@@@@@@@@@ !!!!!!!!!!!!!");
 
 		List<Leagues> league = userService.getLeaguesList();
 		return new ResponseEntity<List<Leagues>>(league, HttpStatus.OK);
@@ -299,14 +297,14 @@ public class AppController {
 	// Getting team List
 	@RequestMapping(value = { "/team/position/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Ladder>> TeamPosition(@RequestParam String seasonYear, String seasonName) {
-		List<Ladder> position = teamServicetest.getTeamPosition(seasonYear, seasonName);
+		List<Ladder> position = teamServiceMatch.getTeamPosition(seasonYear, seasonName);
 		return new ResponseEntity<List<Ladder>>(position, HttpStatus.OK);
 	}
 
 	// Getting team Id and teams abbrv name
 	@RequestMapping(value = { "/team/teamsIdTeamsAbbrv/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Ladder>> teamsIdTeamsAbbrv(@RequestParam String seasonYear, String seasonName) {
-		List<Ladder> position = teamServicetest.getTeamsIdTeamsAbbrv(seasonYear, seasonName);
+		List<Ladder> position = teamServiceMatch.getTeamsIdTeamsAbbrv(seasonYear, seasonName);
 		return new ResponseEntity<List<Ladder>>(position, HttpStatus.OK);
 	}
 
@@ -367,6 +365,15 @@ public class AppController {
 		System.out.println("IN App Controller : getPlayerInfo Mathod");
 		List<Player> existingPlayer = userService.getPlayerInfo(player);
 		return new ResponseEntity<List<Player>>(existingPlayer, HttpStatus.OK);
+	}
+
+	// Match Basic score information
+
+	@RequestMapping(value = { "/basic/scorecard/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<ScoreCardBasic>> basicScoreCard(@RequestParam int seasonId) {
+		logger.info("In AppController.basicScoreCard("+seasonId+")");
+		List<ScoreCardBasic> position = teamServiceMatch.getbasicScoreCard(seasonId);
+		return new ResponseEntity<List<ScoreCardBasic>>(position, HttpStatus.OK);
 	}
 
 	// Getting session for existing player

@@ -1,23 +1,27 @@
-(function () {
-"use strict";
+(function() {
+	"use strict";
 
-angular.module('public')
-//.controller('TeamsController', TeamsController)
-.controller('ResultController', ResultController);
+	angular.module('public')
+	// .controller('TeamsController', TeamsController)
+	.controller('ResultController', ResultController);
 
-ResultController.$inject = ['results'];
-function ResultController(results) {
-  var $ctrl = this;
-  $ctrl.matchResults = results;
-};
+	ResultController.$inject = [ 'results', 'TeamService' ];
+	function ResultController(results, TeamService) {
+		var $ctrl = this;
+		$ctrl.matchResults = results;
 
-// TeamsController.$inject = ['results', 'team'];
-// function TeamsController(results, team) {
-//   var $ctrl = this;
-//   $ctrl.teamName="";
-//   $ctrl.matchResults = results;
-//   $ctrl.team = team;
-// }
+		var seasonId = 31;
+		TeamService.getBasicScoreCard(seasonId).then(function(response) {
+			$ctrl.basicScoreCard_t35 = response;
 
+		});
+
+		var seasonId = 30;
+		TeamService.getBasicScoreCard(seasonId).then(function(response) {
+			$ctrl.basicScoreCard_t20 = response;
+
+		});
+	}
+	;
 
 })();

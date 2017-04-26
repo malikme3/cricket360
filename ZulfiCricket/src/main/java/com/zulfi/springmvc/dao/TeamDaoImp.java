@@ -1,6 +1,7 @@
 package com.zulfi.springmvc.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Ladder;
+import com.zulfi.springmvc.model.ScoreCardBasic;
 
 @Repository("teamDao")
 public class TeamDaoImp implements TeamDao {
@@ -82,10 +84,36 @@ public class TeamDaoImp implements TeamDao {
 			teamPoints.setTeamName((String) row.get("TeamAbbrev"));
 			teamsNames.add(teamPoints);
 		}
-		;
 
 		return teamsNames;
 
 	};
+
+	public List<ScoreCardBasic> getbasicScoreCard(int seasonId) {
+
+		List<ScoreCardBasic> teamsNames = new ArrayList<ScoreCardBasic>();
+		String sql = " SELECT  s.game_date, p.playerFName,p.playerLName,  s.result,a.TeamAbbrev AS AwayAbbrev, h.TeamAbbrev AS HomeAbbrev FROM  world.scorecard_game_details s INNER JOIN  world.teams a ON s.awayteam = a.TeamID"
+				+ "	INNER JOIN  world.teams h ON s.hometeam = h.TeamID INNER JOIN world.players p on s.mom = p.playerID	WHERE  s.season= ? AND s.isactive=0	ORDER BY  s.week, s.game_date, s.game_id";
+
+		jdbcTemplate = new JdbcTemplate(dataSource);
+
+		List<Map<String, Object>> teamNames = jdbcTemplate.queryForList(sql, new Object[] { seasonId });
+
+		for (Map row : teamNames) {
+
+			ScoreCardBasic teamPoints = new ScoreCardBasic();
+
+			teamPoints.setGuest_team((String) row.get("AwayAbbrev"));
+			teamPoints.setHost_team((String) row.get("HomeAbbrev"));
+			teamPoints.setPlayer_first_name((String) row.get("playerFName"));
+			teamPoints.setPlayer_last_name((String) row.get("playerLName"));
+			teamPoints.setMatch_date((Date) row.get("game_date"));
+			teamPoints.setMatch_status((String) row.get("result"));
+
+			teamsNames.add(teamPoints);
+		}
+
+		return teamsNames;
+	}
 
 }

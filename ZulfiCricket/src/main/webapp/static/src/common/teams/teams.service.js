@@ -163,7 +163,30 @@
 			}).then(function(response) {
 				deferred.resolve(response.data);
 			}, function(errResponse) {
-				console.error('Error while getting Team list');
+				console.error('Error while getTeamsIdTeamsAbbrv list');
+				deferred.reject(errResponse);
+			});
+			return deferred.promise;
+		}
+
+		service.getBasicScoreCard = function(seasonId) {
+			console.log("In user.service: for getBasicScoreCard");
+			var deferred = $q.defer();
+
+			$http.get(ApiMVC + '/basic/scorecard/', {
+				headers : {
+					'Access-Control-Allow-Origin' : '*',
+					'Content-Type' : 'application/x-www-form-urlencoded'
+				},
+				params : {
+					seasonId : seasonId
+				}
+			}, {
+				cache : true
+			}).then(function(response) {
+				deferred.resolve(response.data);
+			}, function(errResponse) {
+				console.error('Error while getBasicScoreCard');
 				deferred.reject(errResponse);
 			});
 			return deferred.promise;
