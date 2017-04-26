@@ -1,45 +1,22 @@
-(function () {
-    "use strict";
-    angular.module('public').controller('HomeController', HomeController);
-    //HomeController.$inject = [''];
-    function HomeController() {
-        var $ctrl = this;
-        $ctrl.tableData = [
-            {
-                "id": "1"
-                , "name": "ZABAIR"
-                , "team": "Lion"
-                , "score": 123
-                , "matches": 8
-                , "average": "30.2"
-  }
-            , {
-                "id": "2"
-                , "name": "MAJID"
-                , "team": "Tiger Pro"
-                , "score": 157
-                , "matches": 9
-                , "average": "25.5"
-  }
-            , {
-                "id": "3"
-                , "name": "BASIT"
-                , "team": "Tiger Pro"
-                , "score": 112
-                , "matches": 11
-                , "average": "22.9"
-  }
-]
-        $ctrl.tableHeader = [
-            {
-                "id": "Postion"
-                , "name": "Name"
-                , "team": "Team"
-                , "score": "Score"
-                , "matches": "Matches"
-                , "average": "Average"
-  }
-]
-        $ctrl.tableType = "most-runs";
-    };
+(function() {
+	"use strict";
+	angular.module('public').controller('HomeController', HomeController);
+	HomeController.$inject = [ 'DataStoreService', 'PointsDataService' ];
+	function HomeController(DataStoreService, PointsDataService) {
+		var $ctrl = this;
+
+		$ctrl.tableType = "Shabash !"
+		$ctrl.tableHeader = PointsDataService.getTableHeader();
+
+		// 20 overs
+		$ctrl.team_group_20_A = PointsDataService.getTablePoints_2O_A();
+		$ctrl.team_group_20_B = PointsDataService.getTablePoints_2O_B();
+
+		// 30 overs
+		$ctrl.team_group_35_red = PointsDataService.getTablePoints_35_red();
+		$ctrl.team_group_35_blue = PointsDataService.getTablePoints_35_blue();
+		$ctrl.team_group_35_white = PointsDataService.getTablePoints_35_white();
+
+	}
+	;
 })();

@@ -40,7 +40,6 @@ import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.Teams;
-import com.zulfi.springmvc.model.Teams2;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
 import com.zulfi.springmvc.model.UserSession;
