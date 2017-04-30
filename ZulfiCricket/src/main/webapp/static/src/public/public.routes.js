@@ -101,6 +101,13 @@
 			controllerAs : 'scheduleCtrl'
 		})
 		// For Submitting Score Card- First Step
+		.state('public.livescore', {
+			url : '/live/score',
+			templateUrl : 'src/public/score-card/liveScore.html',
+			controller : 'LiveScoreController',
+			controllerAs : 'liveScoreCtrl'
+		})
+		// For online scoring
 		.state('public.scorecard', {
 			url : '/submitScoreCard/step1',
 			templateUrl : 'src/public/score-card/submitScore.html',
