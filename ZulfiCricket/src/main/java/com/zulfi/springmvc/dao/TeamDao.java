@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.Seasons;
 
 public interface TeamDao {
 
@@ -12,5 +13,7 @@ public interface TeamDao {
 	List<Ladder> getTeamsIdTeamsAbbrv(String seasonYear, String seasonName);
 
 	List<ScoreCardBasic> getbasicScoreCard(int seasonId);
+
+	List<Seasons> getSeasonGroups(String year);
 
 }

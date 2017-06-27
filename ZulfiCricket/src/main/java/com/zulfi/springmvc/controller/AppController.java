@@ -51,7 +51,8 @@ import com.zulfi.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/")
-@CrossOrigin(origins = "https://malikme3.github.io")
+// @CrossOrigin(origins = "https://319f2e16.ngrok.io")
+@CrossOrigin(origins = "http://localhost:4200")
 // @SessionAttributes("roles")
 public class AppController {
 
@@ -294,7 +295,16 @@ public class AppController {
 		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
 	}
 
+	// Getting season groups
+	@RequestMapping(value = "/season/groups", method = RequestMethod.GET)
+	public ResponseEntity<List<Seasons>> seasonGroups() {
+		String year = "2017";
+		List<Seasons> league = teamServiceMatch.getSeasonGroups(year);
+		return new ResponseEntity<List<Seasons>>(league, HttpStatus.OK);
+	}
+
 	// Getting team List
+	// @CrossOrigin(origins = "http://localhost:319f2e16.ngrok.io")
 	@RequestMapping(value = { "/team/position/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Ladder>> TeamPosition(@RequestParam String seasonYear, String seasonName) {
 		List<Ladder> position = teamServiceMatch.getTeamPosition(seasonYear, seasonName);
@@ -371,7 +381,7 @@ public class AppController {
 
 	@RequestMapping(value = { "/basic/scorecard/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<ScoreCardBasic>> basicScoreCard(@RequestParam int seasonId) {
-		logger.info("In AppController.basicScoreCard("+seasonId+")");
+		logger.info("In AppController.basicScoreCard(" + seasonId + ")");
 		List<ScoreCardBasic> position = teamServiceMatch.getbasicScoreCard(seasonId);
 		return new ResponseEntity<List<ScoreCardBasic>>(position, HttpStatus.OK);
 	}

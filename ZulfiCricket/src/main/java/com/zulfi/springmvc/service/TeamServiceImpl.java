@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.Seasons;
 
 @Service("teamServiceMatch")
 @Transactional
@@ -30,6 +31,11 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<ScoreCardBasic> getbasicScoreCard(int seasonId) {
 		return teamDao.getbasicScoreCard(seasonId);
+	}
+
+	@Override
+	public List<Seasons> getSeasonGroups(String year) {
+		return teamDao.getSeasonGroups(year);
 	}
 
 }

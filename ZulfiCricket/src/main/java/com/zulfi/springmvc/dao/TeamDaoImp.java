@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.Seasons;
 
 @Repository("teamDao")
 public class TeamDaoImp implements TeamDao {
@@ -114,6 +115,26 @@ public class TeamDaoImp implements TeamDao {
 		}
 
 		return teamsNames;
+	}
+
+	@Override
+	public List<Seasons> getSeasonGroups(String year) {
+		List<Seasons> groups = new ArrayList<Seasons>();
+		String sql = "SELECT DISTINCT co.conferenceAbbrev, s.seasonName from  WORLD.conferencemanagement co INNER JOIN WORLD.ladder la ON la.conference = co.ConferenceID INNER JOIN WORLD.SEASONS s on s.seasonId = la.season where  s.seasonYear = ? ";
+		jdbcTemplate = new JdbcTemplate(dataSource);
+
+		List<Map<String, Object>> sGroups = jdbcTemplate.queryForList(sql, new Object[] { year });
+
+		for (Map row : sGroups) {
+			Seasons seasonGroups = new Seasons();
+			seasonGroups.setSeasonName((String) row.get("seasonName"));
+			seasonGroups.setGroupCategory((String) row.get("conferenceAbbrev"));
+
+			groups.add(seasonGroups);
+
+		}
+
+		return groups;
 	}
 
 }
