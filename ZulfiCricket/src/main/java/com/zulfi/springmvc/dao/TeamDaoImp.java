@@ -34,8 +34,11 @@ public class TeamDaoImp implements TeamDao {
 	@Override
 	public List<Ladder> getTeamPosition(String conferenceAbbrev, String seasonName) {
 
-		String sql = "SELECT la.*, co.* FROM world.ladder la INNER JOIN world.conferencemanagement co ON la.conference = co.ConferenceID "
-				+ "WHERE la.season in (select SeasonId from world.seasons where seasonName = ? ) and  conferenceAbbrev = ? ORDER BY la.team";
+		String sql = "SELECT t.teamAbbrev , la.*, co.* FROM world.ladder la "
+				+ "INNER JOIN world.conferencemanagement co ON la.conference = co.ConferenceID "
+				+ "INNER JOIN world.teams t on la.team = t.teamId "
+				+ "WHERE la.season in (select SeasonId from world.seasons s where s.seasonName = ? ) "
+				+ "and  co.conferenceAbbrev = ? ORDER BY la.team";
 
 		List<Ladder> teamsPoints = new ArrayList<Ladder>();
 
@@ -47,6 +50,7 @@ public class TeamDaoImp implements TeamDao {
 			Ladder teamPoints = new Ladder();
 
 			teamPoints.setTeam((int) row.get("team"));
+			teamPoints.setTeamAbbrev((String) row.get("teamAbbrev"));
 			teamPoints.setPlayed((int) row.get("played"));
 			teamPoints.setWon((int) row.get("won"));
 			teamPoints.setLost((int) row.get("lost"));
