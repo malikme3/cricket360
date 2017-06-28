@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
+import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
 
@@ -36,6 +37,11 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<Seasons> getSeasonGroups(String year) {
 		return teamDao.getSeasonGroups(year);
+	}
+
+	@Override
+	public List<Schedule> getSchedule() {
+		return teamDao.getSchedule();
 	}
 
 }

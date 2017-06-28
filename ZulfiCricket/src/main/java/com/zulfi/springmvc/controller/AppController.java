@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.controller;
 
+import java.time.Month;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +39,7 @@ import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
+import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.Teams;
@@ -323,6 +325,14 @@ public class AppController {
 	public ResponseEntity<List<Teams>> getSchedule() {
 		List<Teams> league = userService.getScheduleList();
 		return new ResponseEntity<List<Teams>>(league, HttpStatus.OK);
+	}
+
+	// Getting season groups
+	@RequestMapping(value = "/matches/schedule", method = RequestMethod.GET)
+	public ResponseEntity<List<Schedule>> MatchesSchedule() {
+
+		List<Schedule> schedule = teamServiceMatch.getSchedule();
+		return new ResponseEntity<List<Schedule>>(schedule, HttpStatus.OK);
 	}
 
 	// Getting points

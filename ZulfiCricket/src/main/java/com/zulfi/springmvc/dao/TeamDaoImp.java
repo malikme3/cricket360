@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.dao;
 
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.zulfi.springmvc.model.Ladder;
+import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
 
@@ -34,10 +36,8 @@ public class TeamDaoImp implements TeamDao {
 	@Override
 	public List<Ladder> getTeamPosition(String conferenceAbbrev, String seasonName) {
 
-		String sql = "SELECT t.teamAbbrev , la.*, co.* FROM world.ladder la "
-				+ "INNER JOIN world.conferencemanagement co ON la.conference = co.ConferenceID "
-				+ "INNER JOIN world.teams t on la.team = t.teamId "
-				+ "WHERE la.season in (select SeasonId from world.seasons s where s.seasonName = ? ) "
+		String sql = "SELECT t.teamAbbrev , la.*, co.* FROM world.ladder la " + "INNER JOIN world.conferencemanagement co ON la.conference = co.ConferenceID "
+				+ "INNER JOIN world.teams t on la.team = t.teamId " + "WHERE la.season in (select SeasonId from world.seasons s where s.seasonName = ? ) "
 				+ "and  co.conferenceAbbrev = ? ORDER BY la.team";
 
 		List<Ladder> teamsPoints = new ArrayList<Ladder>();
@@ -139,6 +139,35 @@ public class TeamDaoImp implements TeamDao {
 		}
 
 		return groups;
+	}
+
+	@Override
+	public List<Schedule> getSchedule() {
+		List<Schedule> schedule = new ArrayList<Schedule>();
+		String sql = " SELECT s.seasonName,t.teamabbrev as awayteam, th.teamAbbrev as hometeam, p.playerFname as umpireFName, p.playerLName as umpireLName,sch.date,DATE_FORMAT(sch.date, '%b %e') as "
+				+ "formatted_date,s.seasonId, sch.week, grn.GroundName as ground FROM WORLD.schedule sch " + "INNER JOIN WORLD.players p on sch.umpire1 =  p.playerID "
+				+ "INNER JOIN WORLD.teams t on sch.awayteam = t.teamId " + "INNER JOIN WORLD.teams th on sch.hometeam = th.teamId "
+				+ "INNER JOIN WORLD.seasons s on sch.season = s.seasonId , WORLD.grounds grn WHERE  sch.venue = grn.GroundID AND sch.date >= NOW() ORDER BY sch.date, sch.id ";
+
+		jdbcTemplate = new JdbcTemplate(dataSource);
+
+		List<Map<String, Object>> listSchedule = jdbcTemplate.queryForList(sql, new Object[] {});
+		for (Map row : listSchedule) {
+			Schedule schd = new Schedule();
+			schd.setSeasonName((String) row.get("seasonName"));
+			schd.setAwayTeam((String) row.get("awayteam"));
+			schd.setHomeTeam((String) row.get("hometeam"));
+			schd.setUmpireFName((String) row.get("umpireFName"));
+			schd.setUmpireLName((String) row.get("umpireLName"));
+			schd.setDate((Date) row.get("date"));
+			schd.setFormattedDate((String) row.get("formatted_date"));
+			schd.setSeasonId((int) row.get("seasonId"));
+			schd.setWeek((int) row.get("week"));
+			schd.setGround((String) row.get("ground"));
+			schedule.add(schd);
+		}
+		return schedule;
+
 	}
 
 }
