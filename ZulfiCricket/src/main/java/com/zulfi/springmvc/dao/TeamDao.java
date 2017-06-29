@@ -17,6 +17,6 @@ public interface TeamDao {
 
 	List<Seasons> getSeasonGroups(String year);
 
-	List<Schedule> getSchedule();
+	List<Schedule> getSchedule(String seasonId);
 
 }

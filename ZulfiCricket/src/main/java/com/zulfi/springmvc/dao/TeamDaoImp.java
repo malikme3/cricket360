@@ -142,16 +142,19 @@ public class TeamDaoImp implements TeamDao {
 	}
 
 	@Override
-	public List<Schedule> getSchedule() {
+	public List<Schedule> getSchedule(String seasonId) {
+		if(seasonId.equalsIgnoreCase("null")){
+		seasonId = null;
+		}
 		List<Schedule> schedule = new ArrayList<Schedule>();
 		String sql = " SELECT s.seasonName,t.teamabbrev as awayteam, th.teamAbbrev as hometeam, p.playerFname as umpireFName, p.playerLName as umpireLName,sch.date,DATE_FORMAT(sch.date, '%b %e') as "
 				+ "formatted_date,s.seasonId, sch.week, grn.GroundName as ground FROM WORLD.schedule sch " + "INNER JOIN WORLD.players p on sch.umpire1 =  p.playerID "
 				+ "INNER JOIN WORLD.teams t on sch.awayteam = t.teamId " + "INNER JOIN WORLD.teams th on sch.hometeam = th.teamId "
-				+ "INNER JOIN WORLD.seasons s on sch.season = s.seasonId , WORLD.grounds grn WHERE  sch.venue = grn.GroundID AND sch.date >= NOW() ORDER BY sch.date, sch.id ";
+				+ "INNER JOIN WORLD.seasons s on sch.season = s.seasonId , WORLD.grounds grn WHERE  sch.venue = grn.GroundID AND sch.date >= NOW() and s.seasonId = IFNULL(?, s.seasonId ) ORDER BY sch.date, sch.id ";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
 
-		List<Map<String, Object>> listSchedule = jdbcTemplate.queryForList(sql, new Object[] {});
+		List<Map<String, Object>> listSchedule = jdbcTemplate.queryForList(sql, new Object[] { seasonId });
 		for (Map row : listSchedule) {
 			Schedule schd = new Schedule();
 			schd.setSeasonName((String) row.get("seasonName"));

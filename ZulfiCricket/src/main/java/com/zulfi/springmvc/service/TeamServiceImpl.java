@@ -40,8 +40,8 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public List<Schedule> getSchedule() {
-		return teamDao.getSchedule();
+	public List<Schedule> getSchedule(String seasonId) {
+		return teamDao.getSchedule(seasonId);
 	}
 
 }

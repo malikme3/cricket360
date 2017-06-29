@@ -329,9 +329,9 @@ public class AppController {
 
 	// Getting season groups
 	@RequestMapping(value = "/matches/schedule", method = RequestMethod.GET)
-	public ResponseEntity<List<Schedule>> MatchesSchedule() {
+	public ResponseEntity<List<Schedule>> MatchesSchedule(@RequestParam String seasonId) {
 
-		List<Schedule> schedule = teamServiceMatch.getSchedule();
+		List<Schedule> schedule = teamServiceMatch.getSchedule(seasonId);
 		return new ResponseEntity<List<Schedule>>(schedule, HttpStatus.OK);
 	}
 
