@@ -4,6 +4,7 @@ import java.time.Month;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -59,31 +60,31 @@ import com.zulfi.springmvc.service.UserService;
 public class AppController {
 
 	@Autowired
-	UserService userService;
+	UserService								userService;
 
 	@Autowired
-	UserProfileService userProfileService;
+	UserProfileService						userProfileService;
 
 	@Autowired
-	TeamService teamServiceMatch;
+	TeamService								teamServiceMatch;
 
 	@Autowired
-	UserSession userSession;
+	UserSession								userSession;
 
 	@Autowired
-	MessageSource messageSource;
+	MessageSource							messageSource;
 
 	/*
 	 * @Autowired CustomUserDetailsService customUserDetailsService;
 	 */
 
 	@Autowired
-	PersistentTokenBasedRememberMeServices persistentTokenBasedRememberMeServices;
+	PersistentTokenBasedRememberMeServices	persistentTokenBasedRememberMeServices;
 
 	@Autowired
-	AuthenticationTrustResolver authenticationTrustResolver;
+	AuthenticationTrustResolver				authenticationTrustResolver;
 
-	static final Logger logger = LoggerFactory.getLogger(AppController.class);
+	static final Logger						logger	= LoggerFactory.getLogger(AppController.class);
 
 	/**
 	 * This method will list all existing users.
@@ -149,21 +150,21 @@ public class AppController {
 		 * Preferred way to achieve uniqueness of field [sso] should be
 		 * implementing custom @Unique annotation and applying it on field [sso]
 		 * of Model class [User].
-		 * 
 		 * Below mentioned peace of code [if block] is to demonstrate that you
 		 * can fill custom errors outside the validation framework as well while
 		 * still using internationalized messages.
-		 * 
 		 */
 		if (!userService.isUserSSOUnique(user.getId(), user.getSsoId())) {
-			FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId", new String[] { user.getSsoId() }, Locale.getDefault()));
+			FieldError ssoError = new FieldError("user", "ssoId", messageSource.getMessage("non.unique.ssoId",
+					new String[] { user.getSsoId() }, Locale.getDefault()));
 			result.addError(ssoError);
 			return "registration";
 		}
 
 		userService.saveUser(user);
 
-		model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " registered successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		// return "success";
 		return "registrationsuccess";
@@ -205,7 +206,8 @@ public class AppController {
 
 		userService.updateUser(user);
 
-		model.addAttribute("success", "User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
+		model.addAttribute("success",
+				"User " + user.getFirstName() + " " + user.getLastName() + " updated successfully");
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registrationsuccess";
 	}
@@ -347,7 +349,8 @@ public class AppController {
 	 */
 
 	@RequestMapping(value = "/submit/availability", method = RequestMethod.POST)
-	public ResponseEntity<List<PlayerCtcl>> submitPlayerForSelection(@RequestBody PlayerCtcl player, UriComponentsBuilder ucBuilder) {
+	public ResponseEntity<List<PlayerCtcl>> submitPlayerForSelection(@RequestBody PlayerCtcl player,
+			UriComponentsBuilder ucBuilder) {
 		System.out.println("In Spring MVC controller for Submitting availability for team Selection");
 		userService.savePlayerForSelection(player);
 		List<PlayerCtcl> players = userService.getTeamPlayers();
@@ -394,6 +397,22 @@ public class AppController {
 		logger.info("In AppController.basicScoreCard(" + seasonId + ")");
 		List<ScoreCardBasic> position = teamServiceMatch.getbasicScoreCard(seasonId);
 		return new ResponseEntity<List<ScoreCardBasic>>(position, HttpStatus.OK);
+	}
+
+	// Match Detailed score information
+	@RequestMapping(value = { "/detailed/scorecard/batting" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> detailedScoreCard(@RequestParam int gameId) {
+		logger.info("In AppController.basicScoreCard(" + gameId + ")");
+		List<Map<String, Object>> detailedScore = teamServiceMatch.getDetailedScore(gameId);
+		return new ResponseEntity<List<Map<String, Object>>>(detailedScore, HttpStatus.OK);
+	}
+
+	// Match Detailed bowling information
+	@RequestMapping(value = { "/detailed/scorecard/bowling/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> bowlingDetails(@RequestParam int gameId) {
+		logger.info("In AppController.bowlingDetails(" + gameId + ")");
+		List<Map<String, Object>> detailedBowling = teamServiceMatch.getBowlingDetails(gameId);
+		return new ResponseEntity<List<Map<String, Object>>>(detailedBowling, HttpStatus.OK);
 	}
 
 	// Getting session for existing player

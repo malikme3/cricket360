@@ -11,7 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="PERSISTENT_LOGINS")
+@Table(name="CRICKET.PERSISTENT_LOGINS")
 public class PersistentLogin implements Serializable{
 
 	@Id

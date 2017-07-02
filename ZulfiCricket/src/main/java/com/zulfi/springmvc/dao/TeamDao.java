@@ -1,6 +1,7 @@
 package com.zulfi.springmvc.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
@@ -18,5 +19,9 @@ public interface TeamDao {
 	List<Seasons> getSeasonGroups(String year);
 
 	List<Schedule> getSchedule(String seasonId);
+
+	List<Map<String, Object>> getDetailedScore(int gameId);
+
+	List<Map<String, Object>> getBowlingDetails(int gameId);
 
 }

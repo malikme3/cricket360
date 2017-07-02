@@ -4,13 +4,22 @@ import java.util.Date;
 
 public class ScoreCardBasic {
 
-	private Date match_date;
-	private String host_team;
-	private String guest_team;
-	private String player_first_name;
-	private String player_last_name;
-	private String man_of_the_match;
-	private String match_status;
+	private int		game_id;
+	private Date	match_date;
+	private String	host_team;
+	private String	guest_team;
+	private String	player_first_name;
+	private String	player_last_name;
+	private String	man_of_the_match;
+	private String	match_status;
+
+	public int getGame_id() {
+		return game_id;
+	}
+
+	public void setGame_id(int game_id) {
+		this.game_id = game_id;
+	}
 
 	public Date getMatch_date() {
 		return match_date;
@@ -70,7 +79,8 @@ public class ScoreCardBasic {
 
 	@Override
 	public String toString() {
-		return "ScoreCardBasic [match_date=" + match_date + ", host_team=" + host_team + ", guest_team=" + guest_team + ", player_first_name=" + player_first_name + ", player_last_name="
+		return "ScoreCardBasic [game_id=" + game_id + ", match_date=" + match_date + ", host_team=" + host_team
+				+ ", guest_team=" + guest_team + ", player_first_name=" + player_first_name + ", player_last_name="
 				+ player_last_name + ", man_of_the_match=" + man_of_the_match + ", match_status=" + match_status + "]";
 	}
 

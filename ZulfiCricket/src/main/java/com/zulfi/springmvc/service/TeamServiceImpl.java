@@ -1,6 +1,7 @@
 package com.zulfi.springmvc.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,16 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public List<Schedule> getSchedule(String seasonId) {
 		return teamDao.getSchedule(seasonId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getDetailedScore(int gameId) {
+		return teamDao.getDetailedScore(gameId);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBowlingDetails(int gameId) {
+		return teamDao.getBowlingDetails(gameId);
 	}
 
 }

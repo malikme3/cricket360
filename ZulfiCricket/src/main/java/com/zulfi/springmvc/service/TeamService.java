@@ -1,6 +1,7 @@
 package com.zulfi.springmvc.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
@@ -17,6 +18,10 @@ public interface TeamService {
 
 	public List<Seasons> getSeasonGroups(String year);
 
-	List<Schedule> getSchedule(String seasonId);
+	public List<Schedule> getSchedule(String seasonId);
+	
+	public List<Map<String, Object>> getDetailedScore(int gameId);
+	
+	public List<Map<String, Object>> getBowlingDetails(int gameId);
 
 }
