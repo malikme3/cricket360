@@ -415,6 +415,14 @@ public class AppController {
 		return new ResponseEntity<List<Map<String, Object>>>(detailedBowling, HttpStatus.OK);
 	}
 
+	// Match Detailed extra score information
+	@RequestMapping(value = { "/detailed/scorecard/extras/" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> extrasScoreDetails(@RequestParam int gameId) {
+		logger.info("In AppController.extrasScoreDetails(" + gameId + ")");
+		List<Map<String, Object>> extrasDetails = teamServiceMatch.getExtraScoreDetails(gameId);
+		return new ResponseEntity<List<Map<String, Object>>>(extrasDetails, HttpStatus.OK);
+	}
+
 	// Getting session for existing player
 	@RequestMapping(value = { "/user/session" }, method = RequestMethod.POST)
 	public ResponseEntity<UserSession> getUserSessionInfo() {

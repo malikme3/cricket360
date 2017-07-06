@@ -55,4 +55,9 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.getBowlingDetails(gameId);
 	}
 
+	@Override
+	public List<Map<String, Object>> getExtraScoreDetails(int gameId) {
+		return teamDao.getExtraScoreDetails(gameId);
+	}
+
 }

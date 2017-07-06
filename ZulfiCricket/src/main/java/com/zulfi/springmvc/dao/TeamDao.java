@@ -24,4 +24,6 @@ public interface TeamDao {
 
 	List<Map<String, Object>> getBowlingDetails(int gameId);
 
+	List<Map<String, Object>> getExtraScoreDetails(int gameId);
+
 }

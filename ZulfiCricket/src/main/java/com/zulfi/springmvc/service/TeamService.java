@@ -19,9 +19,11 @@ public interface TeamService {
 	public List<Seasons> getSeasonGroups(String year);
 
 	public List<Schedule> getSchedule(String seasonId);
-	
+
 	public List<Map<String, Object>> getDetailedScore(int gameId);
-	
+
 	public List<Map<String, Object>> getBowlingDetails(int gameId);
+
+	List<Map<String, Object>> getExtraScoreDetails(int gameId);
 
 }

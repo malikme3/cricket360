@@ -35,10 +35,10 @@ public class TeamDaoImp implements TeamDao {
 	@Override
 	public List<Ladder> getTeamPosition(String conferenceAbbrev, String seasonName) {
 
-		String sql = "SELECT t.teamAbbrev , la.*, co.* FROM world.ladder la "
-				+ "INNER JOIN world.conferencemanagement co ON la.conference = co.ConferenceID "
-				+ "INNER JOIN world.teams t on la.team = t.teamId "
-				+ "WHERE la.season in (select SeasonId from world.seasons s where s.seasonName = ? ) "
+		String sql = "SELECT t.teamAbbrev , la.*, co.* FROM ladder la "
+				+ "INNER JOIN conferencemanagement co ON la.conference = co.ConferenceID "
+				+ "INNER JOIN teams t on la.team = t.teamId "
+				+ "WHERE la.season in (select SeasonId from seasons s where s.seasonName = ? ) "
 				+ "and  co.conferenceAbbrev = ? ORDER BY la.team";
 
 		List<Ladder> teamsPoints = new ArrayList<Ladder>();
@@ -77,8 +77,8 @@ public class TeamDaoImp implements TeamDao {
 	public List<Ladder> getTeamsIdTeamsAbbrv(String seasonYear, String seasonName) {
 		List<Ladder> teamsNames = new ArrayList<Ladder>();
 
-		String sql = "SELECT t.teamId, t.teamAbbrev from world.teams t where t.teamID in (SELECT l.team FROM world.Ladder l"
-				+ " where  season in (Select seasonID from world.seasons where seasonYear = ? and seasonName = ? )) "
+		String sql = "SELECT t.teamId, t.teamAbbrev from teams t where t.teamID in (SELECT l.team FROM Ladder l"
+				+ " where  season in (Select seasonID from seasons where seasonYear = ? and seasonName = ? )) "
 				+ "ORDER BY t.teamId ";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
@@ -101,10 +101,10 @@ public class TeamDaoImp implements TeamDao {
 
 		List<ScoreCardBasic> teamsNames = new ArrayList<ScoreCardBasic>();
 		String sql = " SELECT  s.game_id, s.game_date, p.playerFName,p.playerLName,  s.result,a.TeamAbbrev AS AwayAbbrev, h.TeamAbbrev AS HomeAbbrev "
-				+ "FROM  world.scorecard_game_details s "
-				+ "INNER JOIN  world.teams a ON s.awayteam = a.TeamID "
-				+ "INNER JOIN  world.teams h ON s.hometeam = h.TeamID "
-				+ "INNER JOIN world.players p on s.mom = p.playerID	"
+				+ "FROM  scorecard_game_details s "
+				+ "INNER JOIN  teams a ON s.awayteam = a.TeamID "
+				+ "INNER JOIN  teams h ON s.hometeam = h.TeamID "
+				+ "INNER JOIN players p on s.mom = p.playerID	"
 				+ "WHERE  s.season= ? AND s.isactive=0	"
 				+ "ORDER BY  s.week, s.game_date, s.game_id";
 
@@ -133,22 +133,29 @@ public class TeamDaoImp implements TeamDao {
 	@Override
 	public List<Map<String, Object>> getDetailedScore(int gameId) {
 
-		String sql = " SELECT t.teamAbbrev as batting_team, te.teamAbbrev as bowling_team, "
-				+ "s.game_id, s.innings_id, s.batting_position, s.runs, s.balls, s.fours, s.sixes, "
-				+ "p.PlayerID AS BatterID, p.PlayerLName AS BatterLName, p.PlayerFName AS BatterFName, "
-				+ "LEFT(p.PlayerFName,1) AS BatterFInitial, h.HowOutID, h.HowOutName, h.HowOutAbbrev, "
-				+ "a.PlayerLName AS AssistLName, a.PlayerFName AS AssistFName, LEFT(a.PlayerFName,1) "
-				+ "AS AssistFInitial, b.PlayerLName AS BowlerLName, b.PlayerFName AS BowlerFName, LEFT(b.PlayerFName,1) "
-				+ "AS BowlerFInitial "
-				+ "FROM world.scorecard_batting_details s "
+		String sql = "SELECT bf.TeamAbbrev AS BatFirst, bs.TeamAbbrev AS BatSecond, sc.result, tea.teamAbbrev AS WonToss,g.GroundName, "
+				+ "CONCAT(pl.PlayerFName ,' ' ,pl.PlayerLName) as PlayerFullName, t.teamAbbrev as batting_team, te.teamAbbrev as bowling_team, "
+				+ "s.game_id, s.innings_id, s.batting_position, s.runs, s.balls, s.fours, s.sixes, p.PlayerID AS BatterID, "
+				+ "CONCAT(p.PlayerFName,' ',p.PlayerLName) AS BatterFullName, LEFT(p.PlayerFName,1) AS BatterFInitial, h.HowOutID, h.HowOutName,"
+				+ " h.HowOutAbbrev, CONCAT(a.PlayerFName,' ',a.PlayerLName) AS AssistFullName, LEFT(a.PlayerFName,1) AS AssistFInitial, "
+				+ "CONCAT(b.PlayerLName , ' ',b.PlayerFName) AS BowlerFullName, "
+				+ "sco.wickets,sco.total,sco.overs, "
+				+ "LEFT(b.PlayerFName,1) AS BowlerFInitial "
+				+ "FROM scorecard_batting_details s "
 				+ "INNER JOIN teams t on s.team = t.teamid "
+				+ "INNER JOIN scorecard_game_details sc on sc.game_id = s.game_id "
+				+ "INNER JOIN teams tea on sc.toss_won_id = tea.teamid "
 				+ "INNER JOIN teams te on s.opponent = te.teamid "
+				+ "INNER JOIN teams bf ON sc.batting_first_id = bf.TeamID "
+				+ "INNER JOIN teams bs ON sc.batting_second_id = bs.TeamID "
+				+ "INNER JOIN grounds g ON sc.ground_id = g.GroundID "
+				+ "INNER JOIN scorecard_total_details sco on sc.game_id = sco.game_id "
+				+ "LEFT JOIN players pl ON sc.mom = pl.PlayerID "
 				+ "LEFT JOIN players a ON a.PlayerID = s.assist "
 				+ "LEFT JOIN players p ON p.PlayerID = s.player_id "
 				+ "LEFT JOIN players b ON b.PlayerID = s.bowler "
-				+ "INNER JOIN howout h ON h.HowOutID = s.how_out "
-				+ "WHERE s.game_id = ? AND s.how_out <> 1 "
-				+ "ORDER BY s.batting_position";
+				+ "INNER JOIN howout h ON h.HowOutID = s.how_out WHERE s.game_id = ? AND s.how_out <> 1 "
+				+ "ORDER BY s.batting_position ;";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> detailed_score = jdbcTemplate.queryForList(sql, new Object[] { gameId });
@@ -174,12 +181,33 @@ public class TeamDaoImp implements TeamDao {
 	}
 
 	@Override
+	public List<Map<String, Object>> getExtraScoreDetails(int gameId) {
+		String sql = "SELECT s.game_id, s.innings_id, s.batting_position, "
+				+ "CONCAT(p.PlayerLName , ' ',p.PlayerFName) AS batsmanFullName, "
+				+ "LEFT(p.PlayerFName,1) AS batsmanFInitial, ex.legbyes, ex.byes, ex.wides, ex.noballs, ex.total as extraTotal, tot.wickets as totalWickets, tot.total as totalRuns, tot.overs as totalOvers "
+				+ "FROM scorecard_batting_details s "
+				+ "LEFT JOIN scorecard_total_details tot ON tot.game_id = s.game_id and tot.innings_id = s.innings_id "
+				+ "LEFT JOIN scorecard_extras_details ex ON ex.game_id = s.game_id and ex.innings_id = s.innings_id "
+				+ "LEFT JOIN players a ON a.PlayerID = s.assist LEFT JOIN players p ON p.PlayerID = s.player_id "
+				+ "LEFT JOIN players b ON b.PlayerID = s.bowler INNER JOIN howout h ON h.HowOutID = s.how_out "
+				+ "WHERE s.game_id = ? "
+				+ "AND s.how_out = 1 "
+				+ "ORDER BY s.innings_id , "
+				+ "s.batting_position ;";
+
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> extras = jdbcTemplate.queryForList(sql, new Object[] { gameId });
+		return extras;
+
+	};
+
+	@Override
 	public List<Seasons> getSeasonGroups(String year) {
 		List<Seasons> groups = new ArrayList<Seasons>();
 		String sql = "SELECT DISTINCT co.conferenceAbbrev, s.seasonName "
-				+ "from  WORLD.conferencemanagement co "
-				+ "INNER JOIN WORLD.ladder la ON la.conference = co.ConferenceID "
-				+ "INNER JOIN WORLD.SEASONS s on s.seasonId = la.season where  s.seasonYear = ? ";
+				+ "from  conferencemanagement co "
+				+ "INNER JOIN ladder la ON la.conference = co.ConferenceID "
+				+ "INNER JOIN SEASONS s on s.seasonId = la.season where  s.seasonYear = ? ";
 		jdbcTemplate = new JdbcTemplate(dataSource);
 
 		List<Map<String, Object>> sGroups = jdbcTemplate.queryForList(sql, new Object[] { year });
@@ -204,11 +232,11 @@ public class TeamDaoImp implements TeamDao {
 		List<Schedule> schedule = new ArrayList<Schedule>();
 		String sql = " SELECT s.seasonName,t.teamabbrev as awayteam, th.teamAbbrev as hometeam, p.playerFname as umpireFName, p.playerLName as umpireLName,sch.date,DATE_FORMAT(sch.date, '%b %e') as "
 				+ "formatted_date,s.seasonId, sch.week, grn.GroundName as ground "
-				+ "FROM WORLD.schedule sch "
-				+ "INNER JOIN WORLD.players p on sch.umpire1 =  p.playerID "
-				+ "INNER JOIN WORLD.teams t on sch.awayteam = t.teamId "
-				+ "INNER JOIN WORLD.teams th on sch.hometeam = th.teamId "
-				+ "INNER JOIN WORLD.seasons s on sch.season = s.seasonId , WORLD.grounds grn "
+				+ "FROM schedule sch "
+				+ "INNER JOIN players p on sch.umpire1 =  p.playerID "
+				+ "INNER JOIN teams t on sch.awayteam = t.teamId "
+				+ "INNER JOIN teams th on sch.hometeam = th.teamId "
+				+ "INNER JOIN seasons s on sch.season = s.seasonId , grounds grn "
 				+ "WHERE  sch.venue = grn.GroundID AND sch.date >= NOW() and s.seasonId = IFNULL(?, s.seasonId ) ORDER BY sch.date, sch.id ";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
