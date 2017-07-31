@@ -43,6 +43,7 @@ import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SubmitResults;
 import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
 import com.zulfi.springmvc.model.UserProfile;
@@ -417,11 +418,38 @@ public class AppController {
 
 	// Match Detailed extra score information
 	@RequestMapping(value = { "/detailed/scorecard/extras/" }, method = RequestMethod.GET)
-	public ResponseEntity<List<Map<String, Object>>> extrasScoreDetails(@RequestParam int gameId) {
+	public ResponseEntity<List<Map<String, Object>>> extrasScoreDetails(@RequestParam int gameId) throws Exception {
 		logger.info("In AppController.extrasScoreDetails(" + gameId + ")");
 		List<Map<String, Object>> extrasDetails = teamServiceMatch.getExtraScoreDetails(gameId);
 		return new ResponseEntity<List<Map<String, Object>>>(extrasDetails, HttpStatus.OK);
 	}
+	
+	@RequestMapping(value = { "/teams/namue/list" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> teamsName() throws Exception {
+//		logger.info("In AppController.extrasScoreDetails(" + gameId + ")");
+		List<Map<String, Object>> extrasDetails = teamServiceMatch.getTeamsName();
+		return new ResponseEntity<List<Map<String, Object>>>(extrasDetails, HttpStatus.OK);
+	}
+
+	/************************ Start **********************************/
+	/************* Submitting Game score details **********************/
+	/************************ Start **********************************/
+
+	@RequestMapping(value = { "/submit/score/step1" }, method = RequestMethod.POST)
+	public ResponseEntity<Void> submitScore_step1(@RequestBody SubmitResults home_team, SubmitResults away_team) {
+		System.out.println("In App Controller : submitScore_step1 Mathod");
+
+		// submitting details for home teams
+		teamServiceMatch.submitResults(home_team);
+		// submitting details for away teams
+		teamServiceMatch.submitResults(away_team);
+
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	/************************ End **********************************/
+	/************* Submitting Game score details **********************/
+	/************************ End **********************************/
 
 	// Getting session for existing player
 	@RequestMapping(value = { "/user/session" }, method = RequestMethod.POST)

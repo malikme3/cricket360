@@ -15,7 +15,6 @@
 		$ctrl.team = team;
 		$ctrl.teamName = $stateParams.teamName;
 
-		$ctrl.tableType = "Shabash !"
 		$ctrl.tableHeader = PointsDataService.getTableHeader();
 
 		// 20 overs

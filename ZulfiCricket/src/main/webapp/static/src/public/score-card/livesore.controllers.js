@@ -8,24 +8,46 @@
 		liveScoreCtrl.selectLeagueOptions = [];
 		liveScoreCtrl.selectSeasonOptions = [];
 		liveScoreCtrl.selectTeamsOptions = [];
-		liveScoreCtrl.playerAvailablity = "Available";
-		liveScoreCtrl.options = [ "Available", "Not-Available", "Tentive", "Out of town" ];
-		
-		liveScoreCtrl.batsmanSelected = "Select Batsman";
+		var ball = 0;
+
+		/** ** Start Bowler *** */
+		liveScoreCtrl.bowlerRecord = [ {
+			bowlerOvers : 0,
+			bowlerScores : 0,
+			bowlerWickets: 0,
+			bowlerExtras:0
+		}
+
+		];
+		liveScoreCtrl.bowlerBalls = 0;
+
+		/** ** Start End *** */
+
+		liveScoreCtrl.currentOver = {
+			inningss : "Select Innings",
+			batsmanSelected : "Select Batsman",
+			bowlerSelected : "Select Bowler",
+			overSelected : "Select Over",
+			scoreSelected : "Select Score",
+			inningsSelected : "Select Innings"
+		}
+
+		liveScoreCtrl.innings = [ "Select Innings", "1st Innings", "2nd Innings" ];
 		liveScoreCtrl.batsman = [ "Select Batsman", "Ahmad", "Majid" ];
-		
-		liveScoreCtrl.bowlerSelected = "Select Bowler"
 		liveScoreCtrl.bowler = [ "Select Bowler", "Akmal", "Zubair" ];
-		
-		liveScoreCtrl.overSelected = "Select Over";
-		liveScoreCtrl.over = [ "Select Over",'1', '2', '3', '4', '5', '6' ];
-		
-		liveScoreCtrl.scoreSelected = "Select Score";
+		liveScoreCtrl.over = [ "Select Over", '1', '2', '3', '4', '5', '6' ];
 		liveScoreCtrl.score = [ "Select Score", '1', '2', '3', '4', 'four', 'six' ];
 
 		/*
 		 * function leagueList (){ console.log("wit Function"); }
 		 */
+		liveScoreCtrl.submitOver = function submitOver(currentOver) {
+			ball++;
+			liveScoreCtrl.bowlerRecord.bowlerOvers = ball;
+			liveScoreCtrl.bowlerRecord.bowlerScores = currentOver.scoreSelected;
+
+			console.log("Over contains" + currentOver);
+		};
 
 		console.log("In Score card controller :: Submitting request for League");
 		UserService.getLeagues().then(function(response) {
@@ -35,5 +57,5 @@
 				liveScoreCtrl.selectLeagueOptions.push(league.leagueAbbrev);
 			});
 		});
-		
+	}
 })();

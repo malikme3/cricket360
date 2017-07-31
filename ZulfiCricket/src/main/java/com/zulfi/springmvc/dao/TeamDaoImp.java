@@ -12,25 +12,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SubmitResults;
 
-@Repository("teamDao")
+@Repository
 public class TeamDaoImp implements TeamDao {
 
-	static final Logger		logger	= LoggerFactory.getLogger(TeamDaoImp.class);
-	@Autowired
-	private DataSource		dataSource;
-	private JdbcTemplate	jdbcTemplate;
-	@Autowired
-	private UserDao			dao;
+	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
 	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
+		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
+
+	static final Logger logger = LoggerFactory.getLogger(TeamDaoImp.class);
 
 	@Override
 	public List<Ladder> getTeamPosition(String conferenceAbbrev, String seasonName) {
@@ -42,8 +42,6 @@ public class TeamDaoImp implements TeamDao {
 				+ "and  co.conferenceAbbrev = ? ORDER BY la.team";
 
 		List<Ladder> teamsPoints = new ArrayList<Ladder>();
-
-		jdbcTemplate = new JdbcTemplate(dataSource);
 
 		List<Map<String, Object>> teamStanding = jdbcTemplate.queryForList(sql,
 				new Object[] { seasonName, conferenceAbbrev });
@@ -81,8 +79,6 @@ public class TeamDaoImp implements TeamDao {
 				+ " where  season in (Select seasonID from seasons where seasonYear = ? and seasonName = ? )) "
 				+ "ORDER BY t.teamId ";
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
-
 		List<Map<String, Object>> teamNames = jdbcTemplate.queryForList(sql, new Object[] { seasonYear, seasonName });
 
 		for (Map row : teamNames) {
@@ -107,8 +103,6 @@ public class TeamDaoImp implements TeamDao {
 				+ "INNER JOIN players p on s.mom = p.playerID	"
 				+ "WHERE  s.season= ? AND s.isactive=0	"
 				+ "ORDER BY  s.week, s.game_date, s.game_id";
-
-		jdbcTemplate = new JdbcTemplate(dataSource);
 
 		List<Map<String, Object>> teamNames = jdbcTemplate.queryForList(sql, new Object[] { seasonId });
 
@@ -157,8 +151,16 @@ public class TeamDaoImp implements TeamDao {
 				+ "INNER JOIN howout h ON h.HowOutID = s.how_out WHERE s.game_id = ? AND s.how_out <> 1 "
 				+ "ORDER BY s.batting_position ;";
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> detailed_score = jdbcTemplate.queryForList(sql, new Object[] { gameId });
+		return detailed_score;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getTeamsName() {
+
+		String sql = "select teamabbrev as label, teamid as value from Teams where TeamActive = '1'";
+
+		List<Map<String, Object>> detailed_score = jdbcTemplate.queryForList(sql);
 		return detailed_score;
 	}
 
@@ -175,7 +177,6 @@ public class TeamDaoImp implements TeamDao {
 				+ "WHERE s.game_id = ? "
 				+ "ORDER BY s.bowling_position and innings_id;";
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> detailed_score = jdbcTemplate.queryForList(sql, new Object[] { gameId });
 		return detailed_score;
 	}
@@ -195,8 +196,16 @@ public class TeamDaoImp implements TeamDao {
 				+ "ORDER BY s.innings_id , "
 				+ "s.batting_position ;";
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> extras = jdbcTemplate.queryForList(sql, new Object[] { gameId });
+
+		/*
+		 * updatFname();
+		 * try{
+		 * updatLname();
+		 * } catch (Exception e){
+		 * throw e;
+		 * }
+		 */
 		return extras;
 
 	};
@@ -208,7 +217,6 @@ public class TeamDaoImp implements TeamDao {
 				+ "from  conferencemanagement co "
 				+ "INNER JOIN ladder la ON la.conference = co.ConferenceID "
 				+ "INNER JOIN SEASONS s on s.seasonId = la.season where  s.seasonYear = ? ";
-		jdbcTemplate = new JdbcTemplate(dataSource);
 
 		List<Map<String, Object>> sGroups = jdbcTemplate.queryForList(sql, new Object[] { year });
 
@@ -239,8 +247,6 @@ public class TeamDaoImp implements TeamDao {
 				+ "INNER JOIN seasons s on sch.season = s.seasonId , grounds grn "
 				+ "WHERE  sch.venue = grn.GroundID AND sch.date >= NOW() and s.seasonId = IFNULL(?, s.seasonId ) ORDER BY sch.date, sch.id ";
 
-		jdbcTemplate = new JdbcTemplate(dataSource);
-
 		List<Map<String, Object>> listSchedule = jdbcTemplate.queryForList(sql, new Object[] { seasonId });
 		for (Map row : listSchedule) {
 			Schedule schd = new Schedule();
@@ -258,6 +264,35 @@ public class TeamDaoImp implements TeamDao {
 		}
 
 		return schedule;
+
+	}
+
+	@SuppressWarnings("unused")
+	@Override
+	public void updatFname() {
+		String sql = "UPDATE players SET PlayerFName = 'Malik', PlayerLName = 'Shayan10' WHERE PlayerID = 1";
+
+		int rows = jdbcTemplate.update(sql);
+		System.out.println("rows are ::" + rows);
+
+	}
+
+	@SuppressWarnings("unused")
+	@Override
+	public void updatLname() {
+
+		String sql = "UPDATE players SET PlayerLNfame = 'f-786', PlayerLName = 'l-786' WHERE PlayerID = 1";
+		int rows = jdbcTemplate.update(sql);
+		System.out.println("rows are ::" + rows);
+	}
+
+	@Override
+	public void submitResults(SubmitResults scoreDetails) {
+		String sql = "UPDATE RESULTS set played=played+?, won=won+?, lost=lost+?, tied=tied+?, nr=nr+? where team_id = ?";
+		Object param = new Object[] { scoreDetails.getPlayed(), scoreDetails.getWon(), scoreDetails.getLost(),
+				scoreDetails.getTied(), scoreDetails.getNr(), scoreDetails.getTeamID() };
+		int rows = jdbcTemplate.update(sql, param);
+		System.out.println("rows are ::" + rows);
 
 	}
 

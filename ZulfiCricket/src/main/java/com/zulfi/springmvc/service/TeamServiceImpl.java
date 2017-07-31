@@ -5,16 +5,18 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SubmitResults;
 
 @Service("teamServiceMatch")
-@Transactional
 public class TeamServiceImpl implements TeamService {
 
 	@Autowired
@@ -49,6 +51,11 @@ public class TeamServiceImpl implements TeamService {
 	public List<Map<String, Object>> getDetailedScore(int gameId) {
 		return teamDao.getDetailedScore(gameId);
 	}
+	
+	@Override
+	public List<Map<String, Object>> getTeamsName() {
+		return teamDao.getTeamsName();
+	}
 
 	@Override
 	public List<Map<String, Object>> getBowlingDetails(int gameId) {
@@ -56,8 +63,38 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getExtraScoreDetails(int gameId) {
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
+	public List<Map<String, Object>> getExtraScoreDetails(int gameId) throws Exception {
+		/*try {
+			update();
+			insert();
+		} catch (Exception ex) {
+			System.out.println(ex);
+			throw ex;
+		}*/
 		return teamDao.getExtraScoreDetails(gameId);
+	}
+
+	// @Transactional(propagation=Propagation.REQUIRED, rollbackFor =
+	// {Exception.class})
+	public void update() throws Exception {
+		teamDao.updatFname();
+	}
+
+	// @Transactional(propagation=Propagation.REQUIRED, rollbackFor =
+	// {Exception.class})
+	public void insert() throws Exception {
+		try {
+			teamDao.updatLname();
+		} catch (Exception ex) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			throw ex;
+		}
+	}
+
+	@Override
+	public void submitResults(SubmitResults scoreDetails) {
+		teamDao.submitResults(scoreDetails);
 	}
 
 }

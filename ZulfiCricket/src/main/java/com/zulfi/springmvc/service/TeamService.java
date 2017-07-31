@@ -7,6 +7,7 @@ import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SubmitResults;
 
 public interface TeamService {
 
@@ -24,6 +25,9 @@ public interface TeamService {
 
 	public List<Map<String, Object>> getBowlingDetails(int gameId);
 
-	List<Map<String, Object>> getExtraScoreDetails(int gameId);
+	public List<Map<String, Object>> getExtraScoreDetails(int gameId) throws Exception;
+	public List<Map<String, Object>> getTeamsName() throws Exception;
+	
+	public void submitResults(SubmitResults scoreDetails);
 
 }
