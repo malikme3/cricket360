@@ -17,8 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardGameDetails;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.SubmitResults;
+import com.zulfi.springmvc.model.Teams;
 
 @Repository
 public class TeamDaoImp implements TeamDao {
@@ -154,7 +156,7 @@ public class TeamDaoImp implements TeamDao {
 		List<Map<String, Object>> detailed_score = jdbcTemplate.queryForList(sql, new Object[] { gameId });
 		return detailed_score;
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> getTeamsName() {
 
@@ -273,7 +275,7 @@ public class TeamDaoImp implements TeamDao {
 		String sql = "UPDATE players SET PlayerFName = 'Malik', PlayerLName = 'Shayan10' WHERE PlayerID = 1";
 
 		int rows = jdbcTemplate.update(sql);
-		System.out.println("rows are ::" + rows);
+		logger.info("rows are ::" + rows);
 
 	}
 
@@ -283,17 +285,61 @@ public class TeamDaoImp implements TeamDao {
 
 		String sql = "UPDATE players SET PlayerLNfame = 'f-786', PlayerLName = 'l-786' WHERE PlayerID = 1";
 		int rows = jdbcTemplate.update(sql);
-		System.out.println("rows are ::" + rows);
+		logger.info("rows are ::" + rows);
 	}
 
 	@Override
 	public void submitResults(SubmitResults scoreDetails) {
 		String sql = "UPDATE RESULTS set played=played+?, won=won+?, lost=lost+?, tied=tied+?, nr=nr+? where team_id = ?";
-		Object param = new Object[] { scoreDetails.getPlayed(), scoreDetails.getWon(), scoreDetails.getLost(),
-				scoreDetails.getTied(), scoreDetails.getNr(), scoreDetails.getTeamID() };
-		int rows = jdbcTemplate.update(sql, param);
-		System.out.println("rows are ::" + rows);
+		int rows = jdbcTemplate.update(sql, scoreDetails.getPlayed(), scoreDetails.getWon(), scoreDetails.getLost(),
+				scoreDetails.getTied(), scoreDetails.getNr(), scoreDetails.getTeamID());
+		logger.info("rows are ::" + rows);
 
+	}
+
+	@Override
+	public void submitScore_gameDetails(ScorecardGameDetails gameDetails) {
+		String sql = "INSERT INTO scorecard_game_details (league_id,season,week,awayteam,hometeam,game_date,result_won_id,"
+				+ "forfeit,mom,umpire1,umpire2,maxovers,isactive) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,0)";
+
+		Object param = new Object[] { gameDetails.getLeagueId(), gameDetails.getSeason(), gameDetails.getWeek(),
+				gameDetails.getAwayteam(), gameDetails.getHometeam(),
+				gameDetails.getGameDate(), gameDetails.getResultWonId(), gameDetails.getForfeit(),
+				gameDetails.getMom(), gameDetails.getUmpire1(), gameDetails.getUmpire2(),
+				gameDetails.getMaxovers() };
+
+		int rows = jdbcTemplate.update(sql, param);
+		logger.info("rows are ::" + rows);
+	}
+
+	@Override
+	public List<Map<String, Object>> findPlayerByTeamId(String teamId) {
+		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players where playerTeam = IFNULL(?, playerTeam ) and isactive = 0 ORDER BY PlayerFName,PlayerLName";
+
+		List<Map<String, Object>> playersList = jdbcTemplate.queryForList(sql, teamId);
+		return playersList;
+	}
+
+	@Override
+	public List<Map<String, Object>> findPlayer() {
+		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players WHERE isactive = 0 ORDER BY PlayerFName,PlayerLName";
+
+		List<Map<String, Object>> playersList = jdbcTemplate.queryForList(sql);
+		return playersList;
+	}
+
+	@Override
+	public int updateScorecardGameDetails(ScorecardGameDetails details) {
+		String sql = "INSERT INTO scorecard_game_details "
+				+ "(league_id,season,week,awayteam,hometeam,game_date,result_won_id,forfeit,mom,umpire1,umpire2,maxovers,isactive) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,0)";
+
+		int rows = jdbcTemplate.update(sql, details.getLeagueId(), details.getSeason(), details.getWeek(),
+				details.getAwayteam(), details.getHometeam(),
+				details.getGameDate(), details.getResultWonId(), details.getForfeit(), details.getMom(),
+				details.getUmpire1(),
+				details.getUmpire2(), details.getMaxovers());
+		return rows;
 	}
 
 }

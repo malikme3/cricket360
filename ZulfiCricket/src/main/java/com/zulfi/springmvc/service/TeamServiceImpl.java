@@ -13,6 +13,7 @@ import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardGameDetails;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.SubmitResults;
 
@@ -51,7 +52,7 @@ public class TeamServiceImpl implements TeamService {
 	public List<Map<String, Object>> getDetailedScore(int gameId) {
 		return teamDao.getDetailedScore(gameId);
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> getTeamsName() {
 		return teamDao.getTeamsName();
@@ -65,13 +66,15 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class })
 	public List<Map<String, Object>> getExtraScoreDetails(int gameId) throws Exception {
-		/*try {
-			update();
-			insert();
-		} catch (Exception ex) {
-			System.out.println(ex);
-			throw ex;
-		}*/
+		/*
+		 * try {
+		 * update();
+		 * insert();
+		 * } catch (Exception ex) {
+		 * System.out.println(ex);
+		 * throw ex;
+		 * }
+		 */
 		return teamDao.getExtraScoreDetails(gameId);
 	}
 
@@ -95,6 +98,30 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public void submitResults(SubmitResults scoreDetails) {
 		teamDao.submitResults(scoreDetails);
+	}
+
+	@Override
+	public void submitScore_gameDetails(ScorecardGameDetails gameDetails) {
+		teamDao.submitScore_gameDetails(gameDetails);
+
+	}
+
+	@Override
+	public List<Map<String, Object>> findPlayerByTeamId(String teamId) {
+		return teamDao.findPlayerByTeamId(teamId);
+
+	}
+
+	@Override
+	public List<Map<String, Object>> findPlayer() {
+		return teamDao.findPlayer();
+
+	}
+
+	@Override
+	public int updateScorecardGameDetails(ScorecardGameDetails details) {
+		return teamDao.updateScorecardGameDetails(details);
+
 	}
 
 }

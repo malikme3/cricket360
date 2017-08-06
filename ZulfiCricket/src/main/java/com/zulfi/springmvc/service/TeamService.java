@@ -6,6 +6,7 @@ import java.util.Map;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardGameDetails;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.SubmitResults;
 
@@ -26,8 +27,17 @@ public interface TeamService {
 	public List<Map<String, Object>> getBowlingDetails(int gameId);
 
 	public List<Map<String, Object>> getExtraScoreDetails(int gameId) throws Exception;
+
 	public List<Map<String, Object>> getTeamsName() throws Exception;
-	
+
 	public void submitResults(SubmitResults scoreDetails);
+
+	public void submitScore_gameDetails(ScorecardGameDetails gameDetails);
+
+	List<Map<String, Object>> findPlayerByTeamId(String teamId);
+
+	List<Map<String, Object>> findPlayer();
+
+	int updateScorecardGameDetails(ScorecardGameDetails details);
 
 }

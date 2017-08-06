@@ -36,12 +36,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.zulfi.springmvc.model.Hero;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardGameDetails;
 import com.zulfi.springmvc.model.Seasons;
 import com.zulfi.springmvc.model.SubmitResults;
 import com.zulfi.springmvc.model.Teams;
@@ -55,7 +57,6 @@ import com.zulfi.springmvc.service.UserService;
 
 @Controller
 @RequestMapping("/")
-// @CrossOrigin(origins = "https://319f2e16.ngrok.io")
 @CrossOrigin(origins = "http://localhost:4200")
 // @SessionAttributes("roles")
 public class AppController {
@@ -90,7 +91,6 @@ public class AppController {
 	/**
 	 * This method will list all existing users.
 	 */
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = { "/", "/list" }, method = RequestMethod.GET, produces = "application/json")
 	public ResponseEntity<List<User>> listUsers(Model model) {
 
@@ -102,7 +102,6 @@ public class AppController {
 		return new ResponseEntity(model, HttpStatus.OK);
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = { "user/sign" }, method = RequestMethod.POST)
 	public String userLogin() {
 		String userr = "Ahmad";
@@ -253,7 +252,6 @@ public class AppController {
 		}
 	}
 
-	@CrossOrigin(origins = "http://localhost:3000")
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ResponseEntity<List<Player>> getAllPlayers() {
 		// List<Player> users = userService.getAllPlayers();
@@ -309,7 +307,6 @@ public class AppController {
 	}
 
 	// Getting team List
-	// @CrossOrigin(origins = "http://localhost:319f2e16.ngrok.io")
 	@RequestMapping(value = { "/team/position/" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Ladder>> TeamPosition(@RequestParam String seasonYear, String seasonName) {
 		List<Ladder> position = teamServiceMatch.getTeamPosition(seasonYear, seasonName);
@@ -423,10 +420,10 @@ public class AppController {
 		List<Map<String, Object>> extrasDetails = teamServiceMatch.getExtraScoreDetails(gameId);
 		return new ResponseEntity<List<Map<String, Object>>>(extrasDetails, HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = { "/teams/namue/list" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, Object>>> teamsName() throws Exception {
-//		logger.info("In AppController.extrasScoreDetails(" + gameId + ")");
+		// logger.info("In AppController.extrasScoreDetails(" + gameId + ")");
 		List<Map<String, Object>> extrasDetails = teamServiceMatch.getTeamsName();
 		return new ResponseEntity<List<Map<String, Object>>>(extrasDetails, HttpStatus.OK);
 	}
@@ -436,16 +433,121 @@ public class AppController {
 	/************************ Start **********************************/
 
 	@RequestMapping(value = { "/submit/score/step1" }, method = RequestMethod.POST)
-	public ResponseEntity<Void> submitScore_step1(@RequestBody SubmitResults home_team, SubmitResults away_team) {
-		System.out.println("In App Controller : submitScore_step1 Mathod");
+	public ResponseEntity<Void> submitScore_step1(@RequestBody ScorecardGameDetails gameDetails,
+			SubmitResults home_team, SubmitResults away_team) {
+		System.out.println("In App Controller : submitScore_step1 Method");
 
+		// Insert into the scorecard_game_details table
+		teamServiceMatch.updateScorecardGameDetails(gameDetails);
 		// submitting details for home teams
-		teamServiceMatch.submitResults(home_team);
+		home_team.setTeamID(gameDetails.getHometeam());
+		away_team.setTeamID(gameDetails.getAwayteam());
+
+		// When game is ForFeit
+		if (gameDetails.getForfeit() == 1) {
+			home_team.setPlayed(1);
+			away_team.setPlayed(1);
+
+			if (gameDetails.getResultWonId() != 0) {
+				home_team.setTied(0);
+				home_team.setNr(0);
+				away_team.setTied(0);
+				away_team.setNr(0);
+			}
+
+			if (gameDetails.getResultWonId() == gameDetails.getHometeam()) {
+				home_team.setWon(1);
+				home_team.setLost(0);
+				away_team.setWon(0);
+				away_team.setLost(1);
+
+			} else if (gameDetails.getResultWonId() == gameDetails.getAwayteam()) {
+				home_team.setWon(0);
+				home_team.setLost(1);
+				away_team.setWon(1);
+				away_team.setLost(0);
+
+			}
+			teamServiceMatch.submitResults(home_team);
+			teamServiceMatch.submitResults(away_team);
+		}
+
 		// submitting details for away teams
-		teamServiceMatch.submitResults(away_team);
 
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+
+	// Retrieving players for score card
+	@RequestMapping(value = { "/submit/score/scorecardGameDetails" }, method = RequestMethod.POST)
+	public ResponseEntity<Void> updateScorecardGameDetails(@RequestBody ScorecardGameDetails gameDetails)
+			throws Exception {
+		logger.info("In AppController.updateScorecardGameDetails" + gameDetails);
+		int rows = teamServiceMatch.updateScorecardGameDetails(gameDetails);
+		logger.info("rows#  " + rows);
+
+		SubmitResults home_team = new SubmitResults();
+		SubmitResults away_team = new SubmitResults();
+
+		home_team.setTeamID(gameDetails.getHometeam());
+		away_team.setTeamID(gameDetails.getAwayteam());
+		/********* Default Values **********/
+		/** HOME TEAM **/
+		home_team.setPlayed(1);
+		home_team.setWon(0);
+		home_team.setLost(0);
+		home_team.setTied(0);
+		home_team.setNr(0);
+		/** AWAY TEAM **/
+		away_team.setPlayed(1);
+		away_team.setWon(0);
+		away_team.setLost(0);
+		away_team.setTied(0);
+		away_team.setNr(0);
+
+		// Completed, ForFeit , Cancelled , Cancelled with some play or TIED
+		if (gameDetails.getForfeit() == 1 || gameDetails.getCompleted() == 1) {
+			if (gameDetails.getResultWonId() == gameDetails.getHometeam()) {
+				home_team.setWon(1);
+				away_team.setLost(1);
+			} else if (gameDetails.getResultWonId() == gameDetails.getAwayteam()) {
+				home_team.setLost(1);
+				away_team.setWon(1);
+			}
+		} else if (gameDetails.getCancelled() == 1 || gameDetails.getCancelledplay() == 1) {
+			home_team.setNr(1);
+			away_team.setNr(1);
+
+		} else if (gameDetails.getTied() == 1) {
+			home_team.setTied(1);
+			away_team.setTied(1);
+		}
+
+		teamServiceMatch.submitResults(home_team);
+		teamServiceMatch.submitResults(away_team);
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// Retrieving players for score card
+	@RequestMapping(value = { "/submit/score/players" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> playersById() throws Exception {
+		logger.info("In AppController.playersById");
+		List<Map<String, Object>> playersList = teamServiceMatch.findPlayer();
+		;
+		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
+	}
+
+	/*
+	 * @RequestMapping(value = { "/submit/score/step1/gameDetails" }, method =
+	 * RequestMethod.POST)
+	 * public ResponseEntity<Void> submitScore_step1_gameDetails(@RequestBody
+	 * ScorecardGameDetails gameDetails, SubmitResults away_team) {
+	 * System.out.println(
+	 * "In App Controller : submitScore_step1_gameDetails Method");
+	 * // Insert into the scorecard_game_details table
+	 * teamServiceMatch.submitScore_step1(gameDetails);
+	 * return new ResponseEntity<Void>(HttpStatus.OK);
+	 * }
+	 */
 
 	/************************ End **********************************/
 	/************* Submitting Game score details **********************/

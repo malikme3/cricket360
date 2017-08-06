@@ -25,9 +25,9 @@ import com.zulfi.springmvc.model.User;
 @Repository("userDao")
 public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
 
-	static final Logger logger = LoggerFactory.getLogger(UserDaoImpl.class);
+	static final Logger		logger	= LoggerFactory.getLogger(UserDaoImpl.class);
 	@Autowired
-	private SessionFactory sessionFactory;
+	private SessionFactory	sessionFactory;
 
 	public Session session() {
 		return sessionFactory.getCurrentSession();
