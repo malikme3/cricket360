@@ -129,5 +129,11 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.updateScorecardGameDetails(details);
 
 	}
+	
+	@Override
+	public List<Map<String, Object>> findHowOut() {
+		return teamDao.findHowOut();
+
+	}
 
 }

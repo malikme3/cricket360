@@ -535,6 +535,15 @@ public class AppController {
 		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
 	}
 
+	// Retrieving how out  for score card
+	@RequestMapping(value = { "/submit/score/howout" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> howOut() throws Exception {
+		logger.info("In AppController.playersById");
+		List<Map<String, Object>> howOut = teamServiceMatch.findHowOut();
+		return new ResponseEntity<List<Map<String, Object>>>(howOut, HttpStatus.OK);
+	}
+
+
 	@RequestMapping(value = { "/teams/players/teamsIds" }, method = RequestMethod.POST)
 	public ResponseEntity<List<Map<String, Object>>> playerByIds(@RequestBody List<Integer> ids) throws Exception {
 		logger.info("In AppController.playersByIds");

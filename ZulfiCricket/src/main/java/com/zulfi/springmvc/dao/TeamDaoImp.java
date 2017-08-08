@@ -358,4 +358,13 @@ public class TeamDaoImp implements TeamDao {
 		return rows;
 	}
 
+	@Override
+	public List<Map<String, Object>> findHowOut() {
+		String sql = "SELECT * FROM howout ORDER BY HowOutID";
+		List<Map<String, Object>> howOutList = jdbcTemplate.queryForList(sql);
+		return howOutList;
+
+	}
+	}
+
 }

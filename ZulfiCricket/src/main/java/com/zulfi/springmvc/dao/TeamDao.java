@@ -46,4 +46,6 @@ public interface TeamDao {
 
 	List<Map<String, Object>> findPlayerByIds(List<Integer> ids);
 
+	List<Map<String, Object>> findHowOut();
+
 }
