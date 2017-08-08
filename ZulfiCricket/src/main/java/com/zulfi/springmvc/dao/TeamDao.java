@@ -44,4 +44,6 @@ public interface TeamDao {
 
 	int updateScorecardGameDetails(ScorecardGameDetails details);
 
+	List<Map<String, Object>> findPlayerByIds(List<Integer> ids);
+
 }

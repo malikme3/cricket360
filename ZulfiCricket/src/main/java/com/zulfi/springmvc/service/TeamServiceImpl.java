@@ -119,6 +119,12 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
+	public List<Map<String, Object>> findPlayerByIds(List<Integer> ids) {
+		return teamDao.findPlayerByIds(ids);
+
+	}
+
+	@Override
 	public int updateScorecardGameDetails(ScorecardGameDetails details) {
 		return teamDao.updateScorecardGameDetails(details);
 

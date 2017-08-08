@@ -40,4 +40,6 @@ public interface TeamService {
 
 	int updateScorecardGameDetails(ScorecardGameDetails details);
 
+	List<Map<String, Object>> findPlayerByIds(List<Integer> ids);
+
 }

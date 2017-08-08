@@ -1,6 +1,8 @@
 package com.zulfi.springmvc.dao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -325,6 +329,18 @@ public class TeamDaoImp implements TeamDao {
 		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players WHERE isactive = 0 ORDER BY PlayerFName,PlayerLName";
 
 		List<Map<String, Object>> playersList = jdbcTemplate.queryForList(sql);
+		return playersList;
+	}
+
+	@Override
+	public List<Map<String, Object>> findPlayerByIds(List<Integer> ids) {
+		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players WHERE playerTeam IN (:teamsIds)  and isactive = 0 ORDER BY PlayerFName,PlayerLName";
+
+		Map<String, List<Integer>> paramMap = Collections.singletonMap("teamsIds", ids);
+		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
+
+		List<Map<String, Object>> playersList = template.queryForList(sql, paramMap);
+		logger.info("PlayersList is :: " + playersList);
 		return playersList;
 	}
 

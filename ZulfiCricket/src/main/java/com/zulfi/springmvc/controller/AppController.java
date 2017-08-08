@@ -532,7 +532,13 @@ public class AppController {
 	public ResponseEntity<List<Map<String, Object>>> playersById() throws Exception {
 		logger.info("In AppController.playersById");
 		List<Map<String, Object>> playersList = teamServiceMatch.findPlayer();
-		;
+		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/teams/players/teamsIds" }, method = RequestMethod.POST)
+	public ResponseEntity<List<Map<String, Object>>> playerByIds(@RequestBody List<Integer> ids) throws Exception {
+		logger.info("In AppController.playersByIds");
+		List<Map<String, Object>> playersList = teamServiceMatch.findPlayerByIds(ids);
 		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
 	}
 
