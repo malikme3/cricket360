@@ -6,8 +6,13 @@ import java.util.Map;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardBattingDetails;
+import com.zulfi.springmvc.model.ScorecardBowlingDetails;
+import com.zulfi.springmvc.model.ScorecardFowDetails;
 import com.zulfi.springmvc.model.ScorecardGameDetails;
+import com.zulfi.springmvc.model.ScorecardTotalDetails;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SorecardExtrasDetails;
 import com.zulfi.springmvc.model.SubmitResults;
 
 public interface TeamDao {
@@ -47,5 +52,15 @@ public interface TeamDao {
 	List<Map<String, Object>> findPlayerByIds(List<Integer> ids);
 
 	List<Map<String, Object>> findHowOut();
+
+	int updateScorecardExtrasDetails(SorecardExtrasDetails details);
+
+	int updateScorecardTotalDetails(ScorecardTotalDetails details);
+
+	int updateScorecardFowDetails(ScorecardFowDetails details);
+
+	int updateScorecardBattingDetails(ScorecardBattingDetails details);
+
+	int updateScorecardBowlingDetails(ScorecardBowlingDetails details);
 
 }

@@ -13,8 +13,13 @@ import com.zulfi.springmvc.dao.TeamDao;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardBattingDetails;
+import com.zulfi.springmvc.model.ScorecardBowlingDetails;
+import com.zulfi.springmvc.model.ScorecardFowDetails;
 import com.zulfi.springmvc.model.ScorecardGameDetails;
+import com.zulfi.springmvc.model.ScorecardTotalDetails;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SorecardExtrasDetails;
 import com.zulfi.springmvc.model.SubmitResults;
 
 @Service("teamServiceMatch")
@@ -129,11 +134,36 @@ public class TeamServiceImpl implements TeamService {
 		return teamDao.updateScorecardGameDetails(details);
 
 	}
-	
+
 	@Override
 	public List<Map<String, Object>> findHowOut() {
 		return teamDao.findHowOut();
 
+	}
+
+	@Override
+	public int updateScorecardExtrasDetails(SorecardExtrasDetails details) {
+		return teamDao.updateScorecardExtrasDetails(details);
+	}
+
+	@Override
+	public int updateScorecardTotalDetails(ScorecardTotalDetails details) {
+		return teamDao.updateScorecardTotalDetails(details);
+	}
+
+	@Override
+	public int updateScorecardFowDetails(ScorecardFowDetails details) {
+		return teamDao.updateScorecardFowDetails(details);
+	}
+
+	@Override
+	public int updateScorecardBattingDetails(ScorecardBattingDetails details) {
+		return teamDao.updateScorecardBattingDetails(details);
+	}
+
+	@Override
+	public int updateScorecardBowlingDetails(ScorecardBowlingDetails details) {
+		return teamDao.updateScorecardBowlingDetails(details);
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.zulfi.springmvc.dao;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -13,18 +12,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardBattingDetails;
+import com.zulfi.springmvc.model.ScorecardBowlingDetails;
+import com.zulfi.springmvc.model.ScorecardFowDetails;
 import com.zulfi.springmvc.model.ScorecardGameDetails;
+import com.zulfi.springmvc.model.ScorecardTotalDetails;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SorecardExtrasDetails;
 import com.zulfi.springmvc.model.SubmitResults;
-import com.zulfi.springmvc.model.Teams;
 
 @Repository
 public class TeamDaoImp implements TeamDao {
@@ -303,8 +304,9 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public void submitScore_gameDetails(ScorecardGameDetails gameDetails) {
-		String sql = "INSERT INTO scorecard_game_details (league_id,season,week,awayteam,hometeam,game_date,result_won_id,"
-				+ "forfeit,mom,umpire1,umpire2,maxovers,isactive) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,0)";
+		String sql = "INSERT INTO scorecard_game_details "
+				+ "(league_id,season,week,awayteam,hometeam,game_date,result_won_id,forfeit,mom,umpire1,umpire2,maxovers,isactive) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,0)";
 
 		Object param = new Object[] { gameDetails.getLeagueId(), gameDetails.getSeason(), gameDetails.getWeek(),
 				gameDetails.getAwayteam(), gameDetails.getHometeam(),
@@ -318,7 +320,8 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findPlayerByTeamId(String teamId) {
-		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players where playerTeam = IFNULL(?, playerTeam ) and isactive = 0 ORDER BY PlayerFName,PlayerLName";
+		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value "
+				+ "FROM players where playerTeam = IFNULL(?, playerTeam ) and isactive = 0 ORDER BY PlayerFName,PlayerLName";
 
 		List<Map<String, Object>> playersList = jdbcTemplate.queryForList(sql, teamId);
 		return playersList;
@@ -326,7 +329,9 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findPlayer() {
-		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players WHERE isactive = 0 ORDER BY PlayerFName,PlayerLName";
+		String sql = "SELECT CONCAT(p.PlayerFName, ' ', p.PlayerLName) as label, p.playerId as value  "
+				+ "FROM PLAYERS p INNER JOIN TEAMS t ON t.TeamID = p.PlayerTeam "
+				+ "WHERE p.isactive = 0  ORDER BY p.PlayerFName,p.PlayerLName;";
 
 		List<Map<String, Object>> playersList = jdbcTemplate.queryForList(sql);
 		return playersList;
@@ -334,7 +339,9 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findPlayerByIds(List<Integer> ids) {
-		String sql = "SELECT  concat(PlayerFName, ' ', PlayerLName) as label, playerId as value FROM players WHERE playerTeam IN (:teamsIds)  and isactive = 0 ORDER BY PlayerFName,PlayerLName";
+		String sql = "SELECT CONCAT(p.PlayerFName, ' ', p.PlayerLName) as label, p.PlayerId as value  "
+				+ "FROM PLAYERS p INNER JOIN TEAMS t ON t.TeamID = p.PlayerTeam "
+				+ "WHERE p.playerTeam IN (:teamsIds)  and p.isactive = 0 ORDER BY PlayerFName,PlayerLName";
 
 		Map<String, List<Integer>> paramMap = Collections.singletonMap("teamsIds", ids);
 		NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(jdbcTemplate);
@@ -360,11 +367,59 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findHowOut() {
-		String sql = "SELECT * FROM howout ORDER BY HowOutID";
+		String sql = "SELECT howOutName as label , howOutId as value from howout order by howOutId";
 		List<Map<String, Object>> howOutList = jdbcTemplate.queryForList(sql);
 		return howOutList;
 
 	}
+
+	@Override
+	public int updateScorecardExtrasDetails(SorecardExtrasDetails details) {
+		String sql = "INSERT INTO scorecard_extras_details "
+				+ "(game_id,innings_id,legbyes,byes,wides,noballs,total) "
+				+ "VALUES (?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql);
+		logger.info("rows are ::" + rows);
+		return rows;
 	}
 
+	@Override
+	public int updateScorecardTotalDetails(ScorecardTotalDetails details) {
+		String sql = "INSERT INTO scorecard_extras_details "
+				+ "(game_id,innings_id,team,wickets,total,overs) "
+				+ "VALUES (?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql);
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateScorecardFowDetails(ScorecardFowDetails details) {
+		String sql = "INSERT INTO SCORECARD_FOW_DETAILS "
+				+ "(game_id,innings_id,fow1,fow2,fow3,fow4,fow5,fow6,fow7,fow8,fow9,fow10) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql);
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateScorecardBattingDetails(ScorecardBattingDetails details) {
+		String sql = "scorecard_batting_details "
+				+ "(game_id,season,innings_id,player_id,batting_position,how_out,runs,assist,bowler,balls,fours,sixes,notout,team,opponent) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql);
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateScorecardBowlingDetails(ScorecardBowlingDetails details) {
+		String sql = "INSERT INTO scorecard_bowling_details "
+				+ "(game_id,season,innings_id,player_id,bowling_position,overs,maidens,runs,wickets,noballs,wides,team,opponent) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql);
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
 }

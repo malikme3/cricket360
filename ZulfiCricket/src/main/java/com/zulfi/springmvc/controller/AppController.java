@@ -1,6 +1,5 @@
 package com.zulfi.springmvc.controller;
 
-import java.time.Month;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -36,15 +35,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.zulfi.springmvc.model.Hero;
 import com.zulfi.springmvc.model.Ladder;
 import com.zulfi.springmvc.model.Leagues;
 import com.zulfi.springmvc.model.Player;
 import com.zulfi.springmvc.model.PlayerCtcl;
 import com.zulfi.springmvc.model.Schedule;
 import com.zulfi.springmvc.model.ScoreCardBasic;
+import com.zulfi.springmvc.model.ScorecardBattingDetails;
+import com.zulfi.springmvc.model.ScorecardBowlingDetails;
+import com.zulfi.springmvc.model.ScorecardFowDetails;
 import com.zulfi.springmvc.model.ScorecardGameDetails;
+import com.zulfi.springmvc.model.ScorecardTotalDetails;
 import com.zulfi.springmvc.model.Seasons;
+import com.zulfi.springmvc.model.SorecardExtrasDetails;
 import com.zulfi.springmvc.model.SubmitResults;
 import com.zulfi.springmvc.model.Teams;
 import com.zulfi.springmvc.model.User;
@@ -535,14 +538,13 @@ public class AppController {
 		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
 	}
 
-	// Retrieving how out  for score card
+	// Retrieving how out for score card
 	@RequestMapping(value = { "/submit/score/howout" }, method = RequestMethod.GET)
 	public ResponseEntity<List<Map<String, Object>>> howOut() throws Exception {
 		logger.info("In AppController.playersById");
 		List<Map<String, Object>> howOut = teamServiceMatch.findHowOut();
 		return new ResponseEntity<List<Map<String, Object>>>(howOut, HttpStatus.OK);
 	}
-
 
 	@RequestMapping(value = { "/teams/players/teamsIds" }, method = RequestMethod.POST)
 	public ResponseEntity<List<Map<String, Object>>> playerByIds(@RequestBody List<Integer> ids) throws Exception {
@@ -551,7 +553,47 @@ public class AppController {
 		return new ResponseEntity<List<Map<String, Object>>>(playersList, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = { "/updateScorecardExtrasDetails" }, method = RequestMethod.PUT)
+	public ResponseEntity<Integer> updateScorecardExtrasDetails(@RequestBody SorecardExtrasDetails details)
+			throws Exception {
+		logger.info("In AppController.updateScorecardExtrasDetails");
+		int playersList = teamServiceMatch.updateScorecardExtrasDetails(details);
+		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/updateScorecardTotalDetails" }, method = RequestMethod.PUT)
+	public ResponseEntity<Integer> updateScorecardTotalDetails(@RequestBody ScorecardTotalDetails details)
+			throws Exception {
+		logger.info("In AppController.updateScorecardTotalDetails");
+		int playersList = teamServiceMatch.updateScorecardTotalDetails(details);
+		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/updateScorecardFowDetails" }, method = RequestMethod.PUT)
+	public ResponseEntity<Integer> updateScorecardFowDetails(@RequestBody ScorecardFowDetails details)
+			throws Exception {
+		logger.info("In AppController.updateScorecardFowDetails");
+		int playersList = teamServiceMatch.updateScorecardFowDetails(details);
+		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/updateScorecardBattingDetailss" }, method = RequestMethod.PUT)
+	public ResponseEntity<Integer> updateScorecardBattingDetails(@RequestBody ScorecardBattingDetails details)
+			throws Exception {
+		logger.info("In AppController.ScorecardBattingDetails");
+		int playersList = teamServiceMatch.updateScorecardBattingDetails(details);
+		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = { "/updateScorecardBowlingDetails" }, method = RequestMethod.PUT)
+	public ResponseEntity<Integer> updateScorecardBowlingDetails(@RequestBody ScorecardBowlingDetails details)
+			throws Exception {
+		logger.info("In AppController.ScorecardBowlingDetails");
+		int playersList = teamServiceMatch.updateScorecardBowlingDetails(details);
+		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
+	}
 	/*
+	 * updateScorecardExtrasDetails
 	 * @RequestMapping(value = { "/submit/score/step1/gameDetails" }, method =
 	 * RequestMethod.POST)
 	 * public ResponseEntity<Void> submitScore_step1_gameDetails(@RequestBody
