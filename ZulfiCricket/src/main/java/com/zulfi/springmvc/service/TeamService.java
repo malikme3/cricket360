@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +39,8 @@ public interface TeamService {
 	public void submitResults(SubmitResults scoreDetails);
 
 	public void submitScore_gameDetails(ScorecardGameDetails gameDetails);
+
+	List<Map<String, Object>> findMatchByDate(int homeTeam, int awayTeam, Date matchDate);
 
 	List<Map<String, Object>> findPlayerByTeamId(String teamId);
 

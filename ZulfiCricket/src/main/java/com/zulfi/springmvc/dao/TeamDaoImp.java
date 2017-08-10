@@ -1,8 +1,8 @@
 package com.zulfi.springmvc.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -316,6 +316,25 @@ public class TeamDaoImp implements TeamDao {
 
 		int rows = jdbcTemplate.update(sql, param);
 		logger.info("rows are ::" + rows);
+	}
+
+	@Override
+	public List<Map<String, Object>> findMatchByDate(int homeTeam, int awayTeam, Date matchDate) {
+		String sql = "SELECT s.*, a.TeamID AS AwayID, a.TeamName AS AwayName, a.TeamAbbrev AS AwayAbbrev, h.TeamID AS HomeID, h.TeamName AS HomeName, "
+				+ "h.TeamAbbrev AS HomeAbbrev, u.TeamID AS UmpireID, u.TeamName AS UmpireName, u.TeamAbbrev AS UmpireAbbrev, t.TeamID AS WonTossID, "
+				+ "t.TeamName AS WonTossName, t.TeamAbbrev AS WonTossAbbrev, b.TeamID AS BatFirstID, b.TeamName AS BatFirstName, b.TeamAbbrev AS BatFirstAbbrev, "
+				+ "n.TeamID AS BatSecondID, n.TeamName AS BatSecondName, n.TeamAbbrev AS BatSecondAbbrev, g.GroundID, g.GroundName "
+				+ "FROM scorecard_game_details s "
+				+ "INNER JOIN grounds g ON s.ground_id = g.GroundID "
+				+ "INNER JOIN teams a ON s.awayteam = a.TeamID "
+				+ "INNER JOIN teams h ON s.hometeam = h.TeamID "
+				+ "LEFT JOIN teams u ON s.umpires = u.TeamID "
+				+ "LEFT JOIN teams t ON s.toss_won_id = t.TeamID "
+				+ "INNER JOIN teams b ON s.batting_first_id = b.TeamID "
+				+ "INNER JOIN teams n ON s.batting_second_id = n.TeamID "
+				+ "WHERE  s.hometeam = ? AND s.awayteam = ? AND s.game_date = ? ";
+		List<Map<String, Object>> match = jdbcTemplate.queryForList(sql, homeTeam, awayTeam, matchDate);
+		return match;
 	}
 
 	@Override

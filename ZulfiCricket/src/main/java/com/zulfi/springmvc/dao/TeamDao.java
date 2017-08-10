@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.dao;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +51,8 @@ public interface TeamDao {
 	int updateScorecardGameDetails(ScorecardGameDetails details);
 
 	List<Map<String, Object>> findPlayerByIds(List<Integer> ids);
+
+	List<Map<String, Object>> findMatchByDate(int homeTeam, int awayTeam, Date matchDate);
 
 	List<Map<String, Object>> findHowOut();
 

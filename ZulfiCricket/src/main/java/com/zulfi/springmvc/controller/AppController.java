@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.controller;
 
+import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -480,7 +481,6 @@ public class AppController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
-	// Retrieving players for score card
 	@RequestMapping(value = { "/submit/score/scorecardGameDetails" }, method = RequestMethod.POST)
 	public ResponseEntity<Void> updateScorecardGameDetails(@RequestBody ScorecardGameDetails gameDetails)
 			throws Exception {
@@ -528,6 +528,15 @@ public class AppController {
 		teamServiceMatch.submitResults(home_team);
 		teamServiceMatch.submitResults(away_team);
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+
+	// Retrieving Match for next submit level i.e. to get game id
+	@RequestMapping(value = { "/findMatchByPlayingTeamsAndDate" }, method = RequestMethod.GET)
+	public ResponseEntity<List<Map<String, Object>>> findMatchByPlayingTeamsAndDate(@RequestParam int homeTeam,
+			int awayTeam, Date matchDate) throws Exception {
+		logger.info("In AppController.findMatchByPlayingTeamsAndDate(" + matchDate + ")");
+		List<Map<String, Object>> match = teamServiceMatch.findMatchByDate(homeTeam, awayTeam, matchDate);
+		return new ResponseEntity<List<Map<String, Object>>>(match, HttpStatus.OK);
 	}
 
 	// Retrieving players for score card

@@ -1,5 +1,6 @@
 package com.zulfi.springmvc.service;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -132,6 +133,12 @@ public class TeamServiceImpl implements TeamService {
 	@Override
 	public int updateScorecardGameDetails(ScorecardGameDetails details) {
 		return teamDao.updateScorecardGameDetails(details);
+
+	}
+
+	@Override
+	public List<Map<String, Object>> findMatchByDate(int homeTeam, int awayTeam, Date matchDate) {
+		return teamDao.findMatchByDate(homeTeam, awayTeam, matchDate);
 
 	}
 
