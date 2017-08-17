@@ -1,0 +1,26 @@
+<div id="map-tile" align="middle">
+    <TABLE BORDER="5" WIDTH="100%" CELLPADDING="8" CELLSPACING="8" hight=auto>
+        <TR ALIGN="CENTER" CELLPADDING="8" bgcolor="green">
+            <TH>Team Name</TH>
+            <TH>Played</TH>
+            <TH>Won</TH>
+            <TH>Loss</TH>
+            <TH>Tied</TH>
+            <TH>NRR</TH>
+            <TH>Total Points</TH>
+            <TH>Penalty</TH>
+        </TR>
+        <tbody ng-repeat="record in $ctrl.data">
+            <TR>
+
+                <TD>{{record.team}}</TD>
+                <TD>{{record.played}}</TD>
+                <TD>{{record.won}}</TD>
+                <TD>{{record.lost}}</TD>
+                <TD>{{record.tied}}</TD>
+                <TD>{{record.nrr}}</TD>
+                <TD>{{record.totalpoints}}</TD>
+                <TD>{{record.penalty}}</TD>
+
+    </TABLE>
+</div>

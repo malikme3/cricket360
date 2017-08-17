@@ -1,0 +1,40 @@
+<div class="personalInfo" ng-if="myInfCtrl.existing()">
+Not Signed Up Yet. <a ui-sref=public.signup>Sign up Now!</a>
+
+</div>
+<div class="personalInfo" ng-if="!myInfCtrl.existing()">
+    <div class="panel panel-default personalInfo">
+    <div class="panel-header">
+<h3 class="center">Your registiration details are as follows: </h3>
+    </div>
+    <div class="panel-body">
+
+<div>
+<span class="sit-before">Name:</span> {{myInfCtrl.userInfo.firstName}}
+</div>
+<div>
+    <span class="sit-before">Surname:</span> {{myInfCtrl.userInfo.lastName}}
+</div>
+<div>
+    <span class="sit-before">
+    Email: {{myInfCtrl.userInfo.email}}
+    </span>
+</div>
+<div>
+    <span class="sit-before">
+    Phone: {{myInfCtrl.userInfo.phone}}
+    </span>
+</div>
+<div>
+    <span class="sit-before">
+    Your Team: {{myInfCtrl.userInfo.fave}}
+    </span>
+        <div>{{myInfCtrl.userInfo.short_name}}</div>
+        <img class="img-responsive" width="250" height="150" ng-src="{{myInfCtrl.userInfo.imgPath}}" alt="{{myInfCtrl.userInfo.name}}">
+        <h3 class="menu-item-title">{{myInfCtrl.userInfo.name}}</h3>
+       <p class="menu-item-details">{{myInfCtrl.userInfo.description}}</p>
+</div>
+    </div>
+
+</div>
+</div>

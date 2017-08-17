@@ -1,0 +1,14 @@
+package com.cricket.austin.zulfi.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AppController {
+	@RequestMapping("/hello")
+	public String sayHello() {
+		System.out.println(" hello from zulfi");
+		return "hi how are you";
+	};
+
+}

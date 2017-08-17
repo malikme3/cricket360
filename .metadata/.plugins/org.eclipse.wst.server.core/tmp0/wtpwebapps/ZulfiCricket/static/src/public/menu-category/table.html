@@ -1,0 +1,43 @@
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: grey;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #167F92;
+        color: #024457;
+    }
+    th {
+        background-color: #4CAF50;
+        color: #024457;
+    }
+</style>
+
+<table align="left|right|center|justify|char">
+    <th>Match Date</th>
+    <th>Host Team</th>
+    <th>Guest Team</th>
+    <th>Man of the Match</th>
+    <th>Match Status</th>
+    <tr ng-repeat="match in $ctrl.category | limitTo : '10'">
+        <td>{{match.match_date | date : longDate}}</td>
+        <td>{{match.host_team}}</td>
+        <td>{{match.guest_team}}</td>
+        <td>{{match.player_first_name}} &nbsp; {{match.player_last_name}}</td>
+        <td>{{match.match_status}}</th>
+
+    </tr>
+</table>

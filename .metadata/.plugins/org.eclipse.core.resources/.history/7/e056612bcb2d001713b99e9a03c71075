@@ -1,0 +1,50 @@
+(function() {
+	'use strict';
+	angular.module('common').controller('LiveScoreController', LiveScoreController);
+
+	LiveScoreController.$inject = [ 'UserService', 'DataStoreService' ];
+	function LiveScoreController(UserService, DataStoreService) {
+		var liveScoreCtrl = this
+		liveScoreCtrl.selectLeagueOptions = [];
+		liveScoreCtrl.selectSeasonOptions = [];
+		liveScoreCtrl.selectTeamsOptions = [];
+		liveScoreCtrl.bowlerRecord = [];
+
+		liveScoreCtrl.currentOver = {
+			inningss : "Select Innings",
+			batsmanSelected : "Select Batsman",
+			bowlerSelected : "Select Bowler",
+			scoreSelected : "Select Over",
+			scoreSelected : "Select Score",
+			inningsSelected : "Select Innings"
+		}
+
+		liveScoreCtrl.innings = [ "Select Innings", "1st Innings", "2nd Innings" ];
+		liveScoreCtrl.batsman = [ "Select Batsman", "Ahmad", "Majid" ];
+		liveScoreCtrl.bowler = [ "Select Bowler", "Akmal", "Zubair" ];
+		liveScoreCtrl.over = [ "Select Over", '1', '2', '3', '4', '5', '6' ];
+		liveScoreCtrl.score = [ "Select Score", '1', '2', '3', '4', 'four', 'six' ];
+
+		/*
+		 * function leagueList (){ console.log("wit Function"); }
+		 */
+		liveScoreCtrl.submitOver = function submitOver(over) {
+			
+			console.log("Over contains" + over);
+			liveScoreCtrl.bowlerStatics(over);
+		};
+		liveScoreCtrl.bowlerStatics = function bowlerStatics(inningsOver) {
+			//liveScoreCtrl.bowlerOvers = bowlerRecord.push();
+			//liveScoreCtrl.bowlerWickets = inningsOver.wickets;
+			liveScoreCtrl.bowlerScore = bowlerRecord.push(inningsOver.score);
+		};
+		console.log("In Score card controller :: Submitting request for League");
+		UserService.getLeagues().then(function(response) {
+			// liveScoreCtrl.selectLeagueOptions =
+			// liveScoreCtrl.selectLeagueOptions.push(response);
+			angular.forEach(response, function(league) {
+				liveScoreCtrl.selectLeagueOptions.push(league.leagueAbbrev);
+			});
+		});
+	}
+})();

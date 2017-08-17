@@ -1,0 +1,84 @@
+<table BORDER="5" align="left|right|center|justify|char" CELLPADDING="8" CELLSPACING="8" id="map-tile">
+    <thead ALIGN="CENTER" CELLPADDING="8" bgcolor="green">
+        <tr ng-repeat="header in $ctrl.header ">
+            <th>{{header.column_1}}</th>
+            <th>{{header.column_2}}</th>
+            <th>{{header.column_3}}</th>
+            <th>{{header.column_4}}</th>
+            <th>{{header.column_5}}</th>
+            <th>{{header.column_6}}</th>
+            <th>{{header.column_7}}</th>
+            <th>{{header.column_8}}</th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="header in $ctrl.header ">
+        <tr ng-repeat="row in $ctrl.tables">
+            <td data-label="{{header.column_1}}">{{row.team}}</td>
+            <td data-label="{{header.column_2}}">{{row.played}}</td>
+            <td data-label="{{header.column_3}}">{{row.won}}</td>
+            <td data-label="{{header.column_4}}">{{row.lost}}</td>
+            <td data-label="{{header.column_5}}">{{row.tied}}</td>
+            <td data-label="{{header.column_6}}">{{row.nrr}}</td>
+            <td data-label="{{header.column_7}}">{{row.totalpoints}}</td>
+            <td data-label="{{header.column_8}}">{{row.penalty}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Style Start-->
+<style src="javascript/css">
+    table {
+        border: 1px solid #ccc;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+    
+    table tr {
+        border: 1px solid #ddd;
+        padding: 5px;
+    }
+    
+    table th,
+    table td {
+        padding: 10px;
+        text-align: center;
+    }
+    
+    table th {
+        text-transform: uppercase;
+        font-size: 14px;
+        letter-spacing: 1px;
+    }
+    
+    @media screen and (max-width: 600px) {
+        table {
+            border: 0;
+        }
+        table thead {
+            display: none;
+        }
+        table tr {
+            margin-bottom: 10px;
+            display: block;
+            border-bottom: 2px solid #ddd;
+        }
+        table td {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            border-bottom: 1px dotted #ccc;
+        }
+        table td:last-child {
+            border-bottom: 0;
+        }
+        table td:before {
+            content: attr(data-label);
+            float: left;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+    }
+</style>

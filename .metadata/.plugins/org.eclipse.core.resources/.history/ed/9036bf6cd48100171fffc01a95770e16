@@ -1,0 +1,13 @@
+package com.cricket.austin.zulfi.controller;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AppController {
+
+	public String sayHello() {
+		System.out.println(" hello from zulfi");
+		return "hi how are you";
+	};
+
+}

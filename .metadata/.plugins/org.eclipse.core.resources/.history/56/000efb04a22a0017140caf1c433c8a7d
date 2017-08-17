@@ -1,0 +1,22 @@
+<div>Live Score work begins @ 26 April 20017</div>
+
+<div class="form-group">
+	<form ng-submit="liveScoreCtrl.submitAvailability(liveScoreCtrl.playerAvailablity)">
+		<div class="form-group">
+
+			<div class="form-group">
+				Availability:
+				<select
+					ng-model="liveScoreCtrl.playerAvailablity"
+					ng-options="person for person in liveScoreCtrl.options"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+				<input
+					ng-if="liveScoreCtrl.submittButton"
+					type="submit"
+					name="please"
+					class="button">
+			</div>
+		</div>
+	</form>
+</div>

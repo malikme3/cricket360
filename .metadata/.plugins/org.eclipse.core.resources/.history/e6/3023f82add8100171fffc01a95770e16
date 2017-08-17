@@ -1,0 +1,9 @@
+package com.cricket.austin.zulfi.dao;
+
+import java.util.List;
+import java.util.Map;
+
+public interface TeamDao {
+	List<Map<String, Object>> findHowOut();
+
+}

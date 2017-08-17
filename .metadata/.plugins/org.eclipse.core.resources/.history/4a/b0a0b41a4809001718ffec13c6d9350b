@@ -1,0 +1,26 @@
+<div class="container">
+	<h1 color="white">Welcome to Lion Team</h1>
+	<form ng-submit="availabilityCtrl.playerForSelection(availabilityCtrl.key_search, availabilityCtrl.playerAvailablity)">
+		<div class="form-group">
+
+			Your Name: <input id="" type="text" ng-model="availabilityCtrl.key_search" placeholder="Please add your name here" class="form-control">
+			<ul ng-if="availabilityCtrl.key_search" ng-repeat="name in availabilityCtrl.playerName  | filter : availabilityCtrl.key_search | limitTo:5">
+				<li ng-click="availabilityCtrl.submitPlayer(name)" ng-hide="name.player_name==availabilityCtrl.key_search">{{name.player_name}}</li>
+			</ul>
+			<div class="form-group">
+				Availability: <select ng-model="availabilityCtrl.playerAvailablity" ng-options="person for person in availabilityCtrl.options" placeholder="Please add your availability here" class="form-control"></select>
+
+			</div>
+			<button class="button" ng-click="">Reset</button>
+			<input ng-if="availabilityCtrl.key_search && availabilityCtrl.playerAvailablity" type="submit" name="please" class="button">
+	</form>
+
+</div>
+<div class="form-group">
+	<class ="glyphicon glyphicon-plane" ng-repeat="player in availabilityCtrl.playerName"> {{player.player_id}} - {{player.player_name}} &nbsp&nbsp hi {{player.player_availability}} </br>
+</div>
+Total available players: {{availabilityCtrl.playersList.length}}
+</br>
+
+<div class="form-group"></div>
+

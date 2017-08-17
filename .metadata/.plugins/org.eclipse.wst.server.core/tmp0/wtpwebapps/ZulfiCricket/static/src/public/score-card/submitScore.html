@@ -1,0 +1,212 @@
+<div class="container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <h1>Submit Score Card !</h1></div>
+
+    <!-- =================================================================== -->
+    <!-- FORM ============================================================== -->
+    <!-- =================================================================== -->
+
+    <!-- pass in the variable if our form is valid or invalid -->
+    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+
+        <!-- Select a League -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.league.$invalid && !userForm.league.$pristine }">
+            <label>Select a League*</label>
+            <select ng-options="league for league in scoreCardCtrl.selectLeagueOptions" placeholder="Please select league here" type="text" name="league" class="form-control" ng-model="scoreCardCtrl.league" required>
+                <option value="" disabled="" selected="">Select League</option>
+
+            </select>
+            <p ng-show="userForm.league.$invalid " class="help-block">League selection is required.</p>
+        </div>
+
+        <!-- Select a League -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+            <label>Select a Season*</label>
+            <select ng-options="season for season in scoreCardCtrl.selectSeasonOptions" placeholder="Please select Season here" type="text" name="season" class="form-control" ng-model="scoreCardCtrl.season" required>
+                <option value="" disabled="" selected="">Select Season</option>
+            </select>
+            <p ng-show="userForm.season.$invalid " class="help-block">Season selection is required.</p>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.week.$invalid && !userForm.week.$pristine }">
+            <label>Date</label>
+            <input type="text" name="week" class="form-control" ng-model="user.username" ng-minlength="1" ng-maxlength="3">
+            <p ng-show="userForm.week.$error.minlength" class="help-block">Date value is too short.</p>
+            <p ng-show="userForm.week.$error.maxlength" class="help-block">Date value is too long.</p>
+        </div>
+
+        <!-- Date -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.date.$invalid && !userForm.date.$pristine }">
+            <label>Date</label>
+            <input type="text" name="date" class="form-control" ng-model="user.username" ng-minlength="1" ng-maxlength="3">
+            <p ng-show="userForm.date.$error.minlength" class="help-block">Date value is too short.</p>
+            <p ng-show="userForm.date.$error.maxlength" class="help-block">Date value is too long.</p>
+        </div>
+        <!-- Select a Visiting Team -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.visitingTeam.$invalid && !userForm.visitingTeam.$pristine }">
+            <label>Select a Visiting Team*</label>
+            <select ng-options="visitingTeam for visitingTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Visiting Team here" type="text" name="visitingTeam" class="form-control" ng-model="scoreCardCtrl.visitingTeam" required>
+            </select>
+            <p ng-show="userForm.visitingTeam.$invalid " class="help-block">Visiting Team selection is required.</p>
+        </div>
+
+        <!-- Select a Home Team -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.homeTeam.$invalid && !userForm.homeTeam.$pristine }">
+            <label>Select a Home Team*</label>
+            <select ng-options="homeTeam for homeTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Home Team here" type="text" name="homeTeam" class="form-control" ng-model="scoreCardCtrl.homeTeam" required>
+            </select>
+            <p ng-show="userForm.homeTeam.$invalid " class="help-block">Home Team selection is required.</p>
+        </div>
+
+        <!-- Select a Umpiring Team -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.umpiringTeam.$invalid && !userForm.umpiringTeam.$pristine }">
+            <label>Select a Umpiring Team*</label>
+            <select ng-options="umpiringTeam for umpiringTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Umpiring Team here" type="text" name="umpiringTeam" class="form-control" ng-model="scoreCardCtrl.umpiringTeam" required>
+            </select>
+            <p ng-show="userForm.umpiringTeam.$invalid " class="help-block">Umpiring Team selection is required.</p>
+        </div>
+
+        <!-- Who won toss -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.whoWonToss.$invalid && !userForm.whoWonToss.$pristine }">
+            <label>Select Team winning toss*</label>
+            <select ng-options="whoWonToss for whoWonToss in scoreCardCtrl.selectTeamsOptions" placeholder="Please select: Who won toss Team here" type="text" name="whoWonToss" class="form-control" ng-model="scoreCardCtrl.whoWonToss" required>
+            </select>
+            <p ng-show="userForm.whoWonToss.$invalid " class="help-block">Team winning toss is required.</p>
+        </div>
+
+        <!-- Team Batting First-->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.battingFirstTeam.$invalid && !userForm.battingFirstTeam.$pristine }">
+            <label>Select Team Batting First Team*</label>
+            <select ng-options="battingFirstTeam for battingFirstTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Batting First Team here" type="text" name="battingFirstTeam" class="form-control" ng-model="scoreCardCtrl.battingFirstTeam" required>
+            </select>
+            <p ng-show="userForm.battingFirstTeam.$invalid " class="help-block">Team Batting First is required.</p>
+        </div>
+
+        <!-- Team Batting Second-->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.battingSecondTeam.$invalid && !userForm.battingSecondTeam.$pristine }">
+            <label>Select Team Batting Second Team*</label>
+            <select ng-options="battingSecondTeam for battingSecondTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Batting Second Team here" type="text" name="battingSecondTeam" class="form-control" ng-model="scoreCardCtrl.battingSecondTeam" required>
+            </select>
+            <p ng-show="userForm.battingSecondTeam.$invalid " class="help-block">Team Batting Second is required.</p>
+        </div>
+
+        <!-- Victorious  Team -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.victoriousTeam.$invalid && !userForm.victoriousTeam.$pristine }">
+            <label>Select Victorious Team *</label>
+            <select ng-options="victoriousTeam for victoriousTeam in scoreCardCtrl.selectTeamsOptions" placeholder="Please select Victorious Team here" type="text" name="victoriousTeam" class="form-control" ng-model="scoreCardCtrl.victoriousTeam" required>
+            </select>
+            <p ng-show="userForm.victoriousTeam.$invalid " class="help-block">Victorious is required, only if a result occurred</p>
+        </div>
+
+        <!-- Match Venu -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.venueMatch.$invalid && !userForm.venueMatch.$pristine }">
+            <label>Select Venue *</label>
+            <select ng-options="venue for venue in scoreCardCtrl.selectvictoriousTeamOptions" placeholder="Please select venue here" type="text" name="venue" class="form-control" ng-model="scoreCardCtrl.venueMatch" required>
+            </select>
+            <p ng-show="userForm.venueMatch.$invalid " class="help-block">Venue is required, only if a result occurred</p>
+        </div>
+
+        <!-- USERNAME -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+            <label>Username</label>
+            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+            <p ng-show="userForm.username.$error.minlength" class="help-block">Username is too short.</p>
+            <p ng-show="userForm.username.$error.maxlength" class="help-block">Username is too long.</p>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="user.email">
+            <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+    <!--     ===================================================================
+    VALIDATION TABLES =================================================
+    ===================================================================
+    <div class="page-header"><h1>Validation Tables</h1></div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <h3>Form</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.$valid, danger: userForm.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.$pristine, danger: !userForm.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.$dirty }">Dirty</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <h3>Name</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.name.$valid, danger: userForm.name.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.name.$pristine, danger: !userForm.name.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.name.$dirty }">Dirty</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.name.$touched }">Touched</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <h3>Username</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.username.$valid, danger: userForm.username.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.username.$pristine, danger: !userForm.username.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.username.$dirty }">Dirty</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.username.$touched }">Touched</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-3">
+            <h3>Email</h3>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td ng-class="{ success: userForm.email.$valid, danger: userForm.email.$invalid }">Valid</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.email.$pristine, danger: !userForm.email.$pristine }">Pristine</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.email.$dirty }">Dirty</td>
+                    </tr>
+                    <tr>
+                        <td ng-class="{ success: userForm.email.$touched }">Touched</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div> -->
+</div>
+
+</div>

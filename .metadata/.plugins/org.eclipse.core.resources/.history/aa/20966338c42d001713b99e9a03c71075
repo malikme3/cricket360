@@ -1,0 +1,44 @@
+<div>Live Score work begins @ 26 April 20017</div>
+Test:{{liveScoreCtrl.currentOver}}
+<div class="form-group">
+	<form ng-submit="liveScoreCtrl.submitOver(over)">
+		<div class="form-group">
+
+			<div class="form-group">
+				Live Scoring -:):
+				<select
+					ng-model="liveScoreCtrl.over.innings"
+					ng-options="field for field in liveScoreCtrl.over.options"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+				<select
+					ng-model="liveScoreCtrl.over.bowlerSelected"
+					ng-options="field for field in liveScoreCtrl.bowler"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+				{{liveScoreCtrl.bowlerSelected}} -->Overs{{}}- Runs{{}}/{{}}
+				<select
+					ng-model="liveScoreCtrl.over.batsmanSelected"
+					ng-options="field for field in liveScoreCtrl.batsman"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+				<select
+					ng-model="liveScoreCtrl.over.overSelected"
+					ng-options="field for field in liveScoreCtrl.over"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+				<select
+					ng-model="liveScoreCtrl.over.scoreSelected"
+					ng-options="field for field in liveScoreCtrl.score"
+					placeholder="Please add your availability here"
+					class="form-control"></select>
+
+
+				<input
+					type="submit"
+					name="please"
+					class="button">
+			</div>
+		</div>
+	</form>
+</div>

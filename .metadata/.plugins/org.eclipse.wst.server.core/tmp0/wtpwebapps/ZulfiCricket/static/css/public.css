@@ -1,0 +1,346 @@
+/* HOME PAGE */
+.container .jumbotron {
+  box-shadow: 0 0 50px #3F0C1F;
+  border: 2px solid #3F0C1F;
+}
+
+#menu-tile, #specials-tile, #map-tile {
+  height: 250px;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  border: 2px solid #3F0C1F;
+  overflow: hidden;
+}
+/*Home start*/
+#menu-tile, #specials-tile, #map-tile-home {
+  height: 250px;
+  width: 100%;
+  margin-bottom: 15px;
+  position: relative;
+  border: 2px solid #3F0C1F;
+  overflow: hidden;
+}
+.heading {
+    margin-top: 0.25em;
+    font-family: 'Pacifico', sans-serif;
+    text-shadow: 0.1em 0.1em 2px #3F6558;
+}
+
+.headingg {
+  font: 100 20px/1.3 'Oleo Script', sans-serif;
+  color: #2b2b2b;
+  text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+/*Home End*/
+#menu-tile:hover, #specials-tile:hover, #map-tile:hover {
+  box-shadow: 0 1px 5px 1px #cccccc;
+}
+#menu-tile {
+  background: url('../images/menu-tile.jpg') no-repeat;
+  background-position: center;
+}
+#specials-tile {
+  background: url('../images/specials-tile.jpg') no-repeat;
+  background-position: center;
+}
+#menu-tile span, #specials-tile span, #map-tile span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.6em;
+  text-transform: uppercase;
+  background-color: #000;
+  color: #fff;
+  opacity: .8;
+}
+/* END HOME PAGE */
+
+/* MENU CATEGORIES PAGE */
+.category-tile {
+  position: relative;
+  border: 2px solid #3F0C1F;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 15px;
+}
+.category-tile span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  background-color: #000;
+  color: #fff;
+  opacity: .8;
+}
+.category-tile:hover {
+  box-shadow: 0 1px 5px 1px #cccccc;
+}
+
+#menu-categories-title + div {
+  margin-bottom: 50px;
+}
+/* END MENU CATEGORIES PAGE */
+
+/* SINGLE CATEGORY PAGE */
+.menu-item-tile {
+  margin-bottom: 25px;
+}
+.menu-item-tile hr {
+  width: 80%;
+}
+.menu-item-tile .menu-item-price {
+  font-size: 1.1em;
+  text-align: right;
+  margin-top: -15px;
+  margin-right: -15px;
+}
+.menu-item-tile .menu-item-price span {
+  font-size: .6em;
+}
+.menu-item-photo {
+  position: relative;
+  border: 2px solid #3F0C1F;
+  overflow: hidden;
+  padding: 0;
+  margin-right: -15px;
+  margin-left: auto;
+  margin-bottom: 20px;
+  max-width: 250px;
+}
+.menu-item-photo div {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 80px;
+  background-color: #557c3e;
+  text-align: center;
+}
+.menu-item-description {
+  padding-right: 30px;
+}
+h3.menu-item-title {
+  margin: 0 0 10px;
+}
+.menu-item-details {
+  font-size: .9em;
+  font-style: italic;
+}
+/* END SINGLE CATEGORY PAGE */
+
+
+/********** Large devices only **********/
+@media (min-width: 1200px) {
+  .container .jumbotron {
+    background: url('../images/jumbotron_1200.jpg') no-repeat;
+    height: 675px;
+  }
+}
+
+/********** Medium devices only **********/
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Home Page */
+  .container .jumbotron {
+    background: url('../images/jumbotron_992.jpg') no-repeat;
+    height: 558px;
+  }
+  /* End Home Page */
+}
+
+/********** Small devices only **********/
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Home Page */
+  .container .jumbotron {
+    background: url('../images/jumbotron_768.jpg') no-repeat;
+    height: 432px;
+  }
+  /* End Home Page */
+}
+
+/********** Extra small devices only **********/
+@media (max-width: 767px) {
+  /* Home Page */
+  .container .jumbotron {
+    margin-top: 30px;
+    padding: 0;
+  }
+  #menu-tile, #specials-tile {
+    width: 360px;
+    margin: 0 auto 15px;
+  }
+
+  .menu-item-photo {
+    margin-right: auto;
+  }
+  .menu-item-tile .menu-item-price {
+    text-align: center;
+  }
+  .menu-item-description {
+    text-align: center;;
+  }
+}
+
+
+/********** Super extra small devices Only :-) (e.g., iPhone 4) **********/
+@media (max-width: 479px) {
+  /* Home page */
+  #menu-tile, #specials-tile {
+    width: 280px;
+    margin: 0 auto 15px;
+  }
+
+  .col-xxs-12 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    float: left;
+    width: 100%;
+  }
+}
+@import "compass/css3";
+
+/*
+
+RESPONSTABLE 2.0 by jordyvanraaij
+  Designed mobile first!
+
+If you like this solution, you might also want to check out the 1.0 version:
+  https://gist.github.com/jordyvanraaij/9069194
+
+*/
+
+// Default options for table style
+$table-breakpoint: 480px;
+$table-background-color: #FFF;
+$table-text-color: #024457;
+$table-outer-border: 1px solid #167F92;
+$table-cell-border: 1px solid #D9E4E6;
+
+// Extra options for table style (parse these arguments when including your mixin)
+$table-border-radius: 10px;
+$table-highlight-color: #EAF3F3;
+$table-header-background-color: #167F92;
+$table-header-text-color: #FFF;
+$table-header-border: 1px solid #FFF;
+
+// The Responstable mixin
+
+@mixin responstable(
+  $breakpoint: $table-breakpoint,
+  $background-color: $table-background-color,
+  $text-color: $table-text-color,
+  $outer-border: $table-outer-border,
+  $cell-border: $table-cell-border,
+  $border-radius: none,
+  $highlight-color: none,
+  $header-background-color: $table-background-color,
+  $header-text-color: $table-text-color,
+  $header-border: $table-cell-border) {
+
+  .responstable {
+    margin: 1em 0;
+    width: 100%;
+    overflow: hidden;
+    background: $background-color;
+    color: $text-color;
+    border-radius: $border-radius;
+    border: $outer-border;
+
+    tr {
+      border: $cell-border;
+      &:nth-child(odd) { // highlight the odd rows with a color
+        background-color: $highlight-color;
+      }
+    }
+
+    th {
+      display: none; // hide all the table header for mobile
+      border: $header-border;
+      background-color: $header-background-color;
+      color: $header-text-color;
+      padding: 1em;
+      &:first-child { // show the first table header for mobile
+        display: table-cell;
+        text-align: center;
+      }
+      &:nth-child(2) { // show the second table header but replace the content with the data-th from the markup for mobile
+        display: table-cell;
+        span {display:none;}
+        &:after {content:attr(data-th);}
+      }
+      @media (min-width: $breakpoint) {
+        &:nth-child(2) { // hide the data-th and show the normal header for tablet and desktop
+          span {display: block;}
+          &:after {display: none;}
+        }
+      }
+    }
+
+    td {
+      display: block; // display the table data as one block for mobile
+      word-wrap: break-word;
+      max-width: 7em;
+      &:first-child {
+        display: table-cell; // display the first one as a table cell (radio button) for mobile
+        text-align: center;
+        border-right: $cell-border;
+      }
+      @media (min-width: $breakpoint) {
+        border: $cell-border;
+      }
+    }
+
+    th, td {
+      text-align: left;
+      margin: .5em 1em;
+      @media (min-width: $breakpoint) {
+        display: table-cell; // show the table as a normal table for tablet and desktop
+        padding: 1em;
+      }
+    }
+  }
+}
+
+// Include the mixin (with extra options as overrides)
+
+@include responstable(
+  $border-radius: $table-border-radius,
+  $highlight-color: $table-highlight-color,
+  $header-background-color: $table-header-background-color,
+  $header-text-color: $table-header-text-color,
+  $header-border: $table-header-border);
+
+// General styles
+
+body {
+  padding: 0 2em;
+  font-family: Arial, sans-serif;
+  color: #024457;
+  background: #f2f2f2;
+}
+
+h1 {
+  font-family: Verdana;
+  font-weight: normal;
+  color: #024457;
+  span {color: #167F92;}
+}
+
+@media screen and (max-width: 300px) {
+    .tbb td:nth-of-type(3) {
+        display: none;
+    }
+}
+@media screen and (max-width: 600px) {
+    .tbb td:nth-of-type(4) {
+        display: none;
+    }
+}

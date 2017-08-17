@@ -1,0 +1,21 @@
+package com.cricket.austin.zulfi.service;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cricket.austin.zulfi.dao.TeamDao;
+@Service
+public class TeamServiceImpl implements TeamService {
+	@Autowired
+	private TeamDao teamDao;
+
+	@Override
+	public List<Map<String, Object>> findHowOut() {
+		return teamDao.findHowOut();
+
+	}
+
+}

@@ -1,0 +1,32 @@
+package com.cricket.austin.zulfi.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+
+public class TeamDaoImpl implements TeamDao {
+	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
+
+	static final Logger logger = LoggerFactory.getLogger(TeamDaoImpl.class);
+	
+	@Override
+	public List<Map<String, Object>> findHowOut() {
+		String sql = "SELECT howOutName as label , howOutId as value from howout order by howOutId";
+		List<Map<String, Object>> howOutList = jdbcTemplate.queryForList(sql);
+		return howOutList;
+
+	}
+
+}

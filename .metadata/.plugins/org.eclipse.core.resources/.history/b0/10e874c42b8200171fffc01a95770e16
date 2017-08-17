@@ -1,0 +1,12 @@
+package com.cricket.austin.zulfi.model;
+
+public class ScorecardBatting {
+	private int						name;
+	private int						game_id;
+	private int						season;
+	private int						innings_id;
+	private int						team;
+	private int						opponent;
+	private ScorecardBattingDetails	battingDetails;
+
+}

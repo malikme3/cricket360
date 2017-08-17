@@ -1,0 +1,14 @@
+package com.cricket.austin.zulfi.service;
+
+import java.util.List;
+import java.util.Map;
+
+public class TeamServiceImp implements TeamService{
+	@Override
+	public List<Map<String, Object>> findHowOut() {
+		return teamDao.findHowOut();
+
+	}
+	
+
+}

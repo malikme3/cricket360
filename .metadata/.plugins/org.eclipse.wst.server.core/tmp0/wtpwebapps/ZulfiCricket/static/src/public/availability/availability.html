@@ -1,0 +1,69 @@
+<div class="container">
+    <!-- <div><h1 color="white">Welcome Lion</h1> <h1 color="white">Welcome Lion</h1></div> -->
+    <div class="container">
+        <div id="textbox">
+            <h3>
+				<p class="alignleft">Zabir Hussain: Welcome to Lion Team</p>
+				<a ng-click="availabilityCtrl.logoutSubmit()"><p class="alignright">
+						<i class="glyphicon glyphicon-log-out">Logout</i>
+					</p></a>
+			</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="textbox">
+            <h3>
+				<a class="alignleft" ng-click="availabilityCtrl.openAvailability('Active')"> Skiper, Please click here to Turn on Availability</a>
+
+			</h3>
+        </div>
+    </div>
+
+    <form ng-if="!availabilityCtrl.isAvailabilityOn" ng-submit="availabilityCtrl.submitAvailability(availabilityCtrl.playerAvailablity)">
+        <div class="form-group">
+            <div class="container">
+                <span class="left">Your Name</span>
+                <span class="right">{{availabilityCtrl.checkDate | date : "EEE, MMM d"}}</span>
+            </div>
+
+            <input id="" type="text" ng-model="availabilityCtrl.key_search" placeholder="Please add your name here" class="form-control">
+            <ul ng-if="availabilityCtrl.key_search" ng-repeat="player in availabilityCtrl.players  | filter : availabilityCtrl.key_search">
+                <li ng-click="availabilityCtrl.playerClicked(player)" ng-hide="player.playerFName==availabilityCtrl.key_search">{{player.playerFName}} &ensp; {{player.playerLName}}</li>
+            </ul>
+            <div class="form-group">
+                Availability:
+                <select ng-model="availabilityCtrl.playerAvailablity" ng-options="person for person in availabilityCtrl.options" placeholder="Please add your availability here" class="form-control"></select>
+                <input ng-if="availabilityCtrl.submittButton" type="submit" name="please" class="button">
+            </div>
+        </div>
+    </form>
+    <div ng-if="availabilityCtrl.isTeamSelected">
+        <h3>Team for Laggan at Sunday @ RRCC</h3>
+        <div class="alert alert-success">
+            <span ng-repeat="player in availabilityCtrl.players | orderBy : 'playerFName'">
+				<p ng-if="player.playerAvailability == 'In Playing XI'">
+					{{$index+1}}:<i class="glyphicon glyphicon-check"></i>&ensp;{{player.playerFName}} {{player.playerLName}}&ensp;
+				</p>
+			</span>
+        </div>
+    </div>
+    <div ng-if="!availabilityCtrl.isTeamSelected">
+        <form ng-submit="availabilityCtrl.submitSelection(availabilityCtrl.players)" method="post">
+            <div class="form-group player" ng-repeat="player in availabilityCtrl.players | orderBy : 'playerAvailability'">
+                <span class="name">{{$index+1}} - {{player.playerFName}} {{player.playerLName}} </span>
+                <span class="avail" ng-if="!isSelected">{{player.playerAvailability}}</span>
+                <span class="avail" ng-if="isSelected">{{player.playerAvailability}}</span> &ensp;
+
+                <p class="alignright">
+                    <i class="fa fa-check class=" alignright "" aria-hidden="true"></i>
+                    <input ng-if="availabilityCtrl.Admin" type="checkbox" id="{{player.playerLName}}" name="{{player.playerFName}}" ng-checked="availabilityCtrl.selection.indexOf(player.playerFName) > -1" ng-click="availabilityCtrl.checked_selected_player(player.playerFName)" />
+                </p>
+
+            </div>
+            <input type="submit" name="please" class="button">
+        </form>
+    </div>
+</div>
+
+<div class="form-group"></div>

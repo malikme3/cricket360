@@ -1,0 +1,30 @@
+<div>Live Score work begins @ 26 April 20017</div>
+
+<div  class="form-group">
+	
+	<span> Bowler
+		<select
+			ng-model="liveScoreCtrl.bowler"
+			ng-options="person for person in liveScoreCtrl.bowler"
+			placeholder="Please add your availability here"></select>
+	</span>
+	<span> Batsman
+		<select
+			ng-model="liveScoreCtrl.batsman"
+			ng-options="person for person in liveScoreCtrl.batsman"
+			placeholder="Please add your availability here"></select>
+	</span>
+	<!-- <span>Over
+		<select
+			ng-model="liveScoreCtrl.over"
+			ng-options="person for person in liveScoreCtrl.over"
+			placeholder="Please add your availability here"></select>
+	</span>
+	<span>Score
+		<select
+			ng-model="liveScoreCtrl.score"
+			ng-options="person for person in liveScoreCtrl.score"
+			placeholder="Please add your availability here"></select>
+	</span> -->
+	<input ng-if="liveScoreCtrl.submittButton" type="submit" name="please" class="button"> 
+</div>

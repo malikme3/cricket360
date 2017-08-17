@@ -1,0 +1,7 @@
+package com.cricket.austin.zulfi.configuration;
+
+public class HibernateConfiguration {
+
+}
+
+

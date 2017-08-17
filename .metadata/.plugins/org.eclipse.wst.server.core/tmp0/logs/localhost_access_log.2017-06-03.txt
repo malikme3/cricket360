@@ -1,0 +1,8 @@
+127.0.0.1 - - [03/Jun/2017:23:36:31 -0500] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:36:33 -0500] "GET /ZulfiCricket/ HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:36:34 -0500] "GET /ZulfiCricket/login HTTP/1.1" 200 1779
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:36:34 -0500] "GET /ZulfiCricket/static/css/app.css HTTP/1.1" 200 1721
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:36:34 -0500] "GET /ZulfiCricket/static/css/bootstrap.css HTTP/1.1" 200 141414
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:36:34 -0500] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:43:41 -0500] "GET /ZulfiCricket/team/position/?seasonName=2017+20+Overs+League&seasonYear=Group+A HTTP/1.1" 200 1418
+0:0:0:0:0:0:0:1 - - [03/Jun/2017:23:57:05 -0500] "GET /ZulfiCricket/team/position/?seasonName=2017+20+Overs+League&seasonYear=Group+A HTTP/1.1" 200 1418

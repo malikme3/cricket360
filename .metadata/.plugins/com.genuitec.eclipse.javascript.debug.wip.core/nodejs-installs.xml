@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root DefaultId="system-node-js">
+<NodeJSInstall Id="__nodejs_version_7.10.0" InstallPath="C:\Users\HudaZulifqar\.webclipse\nodejs\7.10.0\node.exe" Name="Node 7.10.0"/>
+<NodeJSInstall Id="node-8.1.2" InstallPath="C:\Program Files\nodejs\node.exe" Name="node-8.1.2"/>
+</root>

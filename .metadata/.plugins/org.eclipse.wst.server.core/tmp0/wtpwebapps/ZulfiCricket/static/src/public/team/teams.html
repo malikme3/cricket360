@@ -1,0 +1,34 @@
+<div id="main-content" class="container">
+
+    <div id="home-tiles" class="col-md-12 row">
+        <div id="map-tile" align="middle">
+            <img src="{{teamsCtrl.team}}" alt="LagaanLogo"></img>
+            <span>{{teamsCtrl.name}}</span>
+        </div>
+    </div>
+
+    <!-- <match-table data="teamsCtrl.matchResults"></match-table> -->
+
+    <div class="col-md-12 row " id="home-tiles" align="middle" ">
+
+            <h3 > 20 Overs - Group A</h3>
+
+            <dynamic-table category="teamsCtrl.tableType " tables="teamsCtrl.team_group_20_A " header="teamsCtrl.tableHeader "> </dynamic-table>
+
+            <h3 >20 Overs - Group B</h3>
+            <dynamic-table category="teamsCtrl.tableType " tables="teamsCtrl.team_group_20_B " header="teamsCtrl.tableHeader "> </dynamic-table>
+
+            <h3 > 35 Overs - Group Red</h3>
+
+            <dynamic-table category="teamsCtrl.tableType " tables="teamsCtrl.team_group_35_red " header="teamsCtrl.tableHeader "> </dynamic-table>
+
+            <h3 >35 Overs - Group Blue</h3>
+
+            <dynamic-table category="teamsCtrl.tableType " tables="teamsCtrl.team_group_35_blue " header="teamsCtrl.tableHeader "> </dynamic-table>
+
+            <h3 >35 Overs - Group White</h3>
+
+             <dynamic-table category="teamsCtrl.tableType " tables="teamsCtrl.team_group_35_white " header="teamsCtrl.tableHeader "> </dynamic-table>
+    </div>
+
+</div>

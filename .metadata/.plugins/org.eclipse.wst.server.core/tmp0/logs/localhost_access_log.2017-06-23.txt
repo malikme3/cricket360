@@ -1,0 +1,14 @@
+127.0.0.1 - - [23/Jun/2017:00:09:42 -0500] "GET / HTTP/1.1" 404 994
+127.0.0.1 - - [23/Jun/2017:21:57:32 -0500] "GET / HTTP/1.1" 404 994
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:21:57:33 -0500] "GET /ZulfiCricket/ HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:21:57:35 -0500] "GET /ZulfiCricket/login HTTP/1.1" 500 38416
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:21:57:36 -0500] "GET /favicon.ico HTTP/1.1" 404 1016
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:02:38 -0500] "GET /ZulfiCricket/login HTTP/1.1" 200 1779
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:02:38 -0500] "GET /ZulfiCricket/static/css/app.css HTTP/1.1" 200 1721
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:02:38 -0500] "GET /ZulfiCricket/static/css/bootstrap.css HTTP/1.1" 200 141414
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:52:18 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:52:34 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:22:53:45 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:23:17:33 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:23:42:09 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
+0:0:0:0:0:0:0:1 - - [23/Jun/2017:23:43:22 -0500] "GET /ZulfiCricket/basic/scorecard/?seasonId=31 HTTP/1.1" 200 3205
