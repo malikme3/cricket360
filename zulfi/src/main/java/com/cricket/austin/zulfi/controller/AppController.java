@@ -364,7 +364,7 @@ public class AppController {
 	public ResponseEntity<Integer> updateScorecardExtrasDetails(@RequestBody SorecardExtrasDetails details)
 			throws Exception {
 		logger.info("In AppController.updateScorecardExtrasDetails");
-		int playersList = teamServiceMatch.updateScorecardExtrasDetails(details);
+		int playersList = teamServiceMatch.updateInsertScorecardExtrasDetails(details);
 		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
 	}
 
@@ -372,7 +372,7 @@ public class AppController {
 	public ResponseEntity<Integer> updateScorecardTotalDetails(@RequestBody ScorecardTotalDetails details)
 			throws Exception {
 		logger.info("In AppController.updateScorecardTotalDetails");
-		int playersList = teamServiceMatch.updateScorecardTotalDetails(details);
+		int playersList = teamServiceMatch.updateInsertScorecardTotalDetails(details);
 		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
 	}
 
@@ -380,7 +380,7 @@ public class AppController {
 	public ResponseEntity<Integer> updateScorecardFowDetails(@RequestBody ScorecardFowDetails details)
 			throws Exception {
 		logger.info("In AppController.updateScorecardFowDetails");
-		int playersList = teamServiceMatch.updateScorecardFowDetails(details);
+		int playersList = teamServiceMatch.updateInsertScorecardFowDetails1(details);
 		return new ResponseEntity<Integer>(playersList, HttpStatus.OK);
 	}
 

@@ -9,54 +9,81 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ScorecardGameDetails {
 	@JsonProperty("game_id")
 	private int		gameId;
-	@JsonProperty("leagueId")
+
+	@JsonProperty("league_id")
 	private int		leagueId;
+
 	@JsonProperty("season")
 	private int		season;
+
 	@JsonProperty("week")
 	private int		week;
+
 	@JsonProperty("awayteam")
 	private int		awayteam;
+
 	@JsonProperty("hometeam")
 	private int		hometeam;
-	@JsonProperty("umpires")
+
+	@JsonProperty("umpireTeam")
 	private int		umpires;
-	@JsonProperty("tossWonId")
+	// TODO:umpireTeam
+
+	@JsonProperty("toss_won_id")
 	private int		tossWonId;
-	@JsonProperty("resultWonId")
+
+	@JsonProperty("result_won_id")
 	private int		resultWonId;
-	@JsonProperty("battingFirstId")
+
+	@JsonProperty("batting_first_id")
 	private int		battingFirstId;
-	@JsonProperty("battingSecondId")
+
+	@JsonProperty("batting_second_id")
 	private int		battingSecondId;
-	@JsonProperty("groundId")
+
+	@JsonProperty("ground_id")
 	private int		groundId;
+
+	@JsonProperty("ground_name")
+	private String	groundName;
+
 	@JsonProperty("game_date")
-	private Date	gameDate;
+	private String	gameDate;
+
 	@JsonProperty("result")
 	private String	result;
 	@JsonProperty("tied")
 	private int		tied;
 	@JsonProperty("mom")
 	private int		mom;
+
 	@JsonProperty("umpire1")
 	private int		umpire1;
+
 	@JsonProperty("umpire2")
 	private int		umpire2;
+
 	@JsonProperty("maxovers")
 	private int		maxovers;
+
 	@JsonProperty("forfeit")
 	private int		forfeit;
+
 	@JsonProperty("cancelled")
 	private int		cancelled;
+
 	@JsonProperty("cancelledplay")
 	private int		cancelledplay;
+
 	@JsonProperty("isactive")
 	private int		isactive;
+
 	@JsonProperty("report")
 	private String	report;
+
 	@JsonProperty("points")
 	private String	points;
+
 	@JsonProperty("completed")
 	private int		completed;
 
@@ -156,11 +183,11 @@ public class ScorecardGameDetails {
 		this.groundId = groundId;
 	}
 
-	public Date getGameDate() {
+	public String getGameDate() {
 		return gameDate;
 	}
 
-	public void setGameDate(Date gameDate) {
+	public void setGameDate(String gameDate) {
 		this.gameDate = gameDate;
 	}
 
@@ -268,16 +295,24 @@ public class ScorecardGameDetails {
 		this.completed = completed;
 	}
 
+	public String getGroundName() {
+		return groundName;
+	}
+
+	public void setGroundName(String groundName) {
+		this.groundName = groundName;
+	}
+
 	@Override
 	public String toString() {
 		return "ScorecardGameDetails [gameId=" + gameId + ", leagueId=" + leagueId + ", season=" + season + ", week="
 				+ week + ", awayteam=" + awayteam + ", hometeam=" + hometeam + ", umpires=" + umpires + ", tossWonId="
 				+ tossWonId + ", resultWonId=" + resultWonId + ", battingFirstId=" + battingFirstId
-				+ ", battingSecondId=" + battingSecondId + ", groundId=" + groundId + ", gameDate=" + gameDate
-				+ ", result=" + result + ", tied=" + tied + ", mom=" + mom + ", umpire1=" + umpire1 + ", umpire2="
-				+ umpire2 + ", maxovers=" + maxovers + ", forfeit=" + forfeit + ", cancelled=" + cancelled
-				+ ", cancelledplay=" + cancelledplay + ", isactive=" + isactive + ", report=" + report + ", points="
-				+ points + ", completed=" + completed + "]";
+				+ ", battingSecondId=" + battingSecondId + ", groundId=" + groundId + ", groundName=" + groundName
+				+ ", gameDate=" + gameDate + ", result=" + result + ", tied=" + tied + ", mom=" + mom + ", umpire1="
+				+ umpire1 + ", umpire2=" + umpire2 + ", maxovers=" + maxovers + ", forfeit=" + forfeit + ", cancelled="
+				+ cancelled + ", cancelledplay=" + cancelledplay + ", isactive=" + isactive + ", report=" + report
+				+ ", points=" + points + ", completed=" + completed + "]";
 	}
 
 }

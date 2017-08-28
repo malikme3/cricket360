@@ -4,7 +4,6 @@ public class ScorecardFowDetails {
 
 	private int	game_id;
 	private int	innings_id;
-	private int	team_id;
 	private int	fow1;
 	private int	fow2;
 	private int	fow3;
@@ -30,14 +29,6 @@ public class ScorecardFowDetails {
 
 	public void setInnings_id(int innings_id) {
 		this.innings_id = innings_id;
-	}
-
-	public int getTeam_id() {
-		return team_id;
-	}
-
-	public void setTeam_id(int team_id) {
-		this.team_id = team_id;
 	}
 
 	public int getFow1() {
@@ -122,9 +113,9 @@ public class ScorecardFowDetails {
 
 	@Override
 	public String toString() {
-		return "ScorecardFowDetails [game_id=" + game_id + ", innings_id=" + innings_id + ", team_id=" + team_id
-				+ ", fow1=" + fow1 + ", fow2=" + fow2 + ", fow3=" + fow3 + ", fow4=" + fow4 + ", fow5=" + fow5
-				+ ", fow6=" + fow6 + ", fow7=" + fow7 + ", fow8=" + fow8 + ", fow9=" + fow9 + ", fow10=" + fow10 + "]";
+		return "ScorecardFowDetails [game_id=" + game_id + ", innings_id=" + innings_id + ", fow1=" + fow1 + ", fow2="
+				+ fow2 + ", fow3=" + fow3 + ", fow4=" + fow4 + ", fow5=" + fow5 + ", fow6=" + fow6 + ", fow7=" + fow7
+				+ ", fow8=" + fow8 + ", fow9=" + fow9 + ", fow10=" + fow10 + "]";
 	}
 
 }

@@ -277,7 +277,7 @@ public class TeamDaoImp implements TeamDao {
 	@SuppressWarnings("unused")
 	@Override
 	public void updatFname() {
-		String sql = "UPDATE players SET PlayerFName = 'Malik', PlayerLName = 'Shayan10' WHERE PlayerID = 1";
+		String sql = "UPDATE players SET PlayerFName = 'Apiture', PlayerLName = 'Bicycle' WHERE PlayerID = 1";
 
 		int rows = jdbcTemplate.update(sql);
 		logger.info("rows are ::" + rows);
@@ -288,7 +288,7 @@ public class TeamDaoImp implements TeamDao {
 	@Override
 	public void updatLname() {
 
-		String sql = "UPDATE players SET PlayerLNfame = 'f-786', PlayerLName = 'l-786' WHERE PlayerID = 1";
+		String sql = "UPDATE players SET PlayerLNfame = 'f-00786', PlayerLName = 'l-00786' WHERE PlayerID = 1";
 		int rows = jdbcTemplate.update(sql);
 		logger.info("rows are ::" + rows);
 	}
@@ -348,6 +348,16 @@ public class TeamDaoImp implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findPlayer() {
+		
+		
+		updatFname();
+		System.out.println("first name");
+		
+		updatLname();
+		System.out.println("updated");
+		
+		
+		
 		String sql = "SELECT CONCAT(p.PlayerFName, ' ', p.PlayerLName) as label, p.playerId as value  "
 				+ "FROM PLAYERS p INNER JOIN TEAMS t ON t.TeamID = p.PlayerTeam "
 				+ "WHERE p.isactive = 0  ORDER BY p.PlayerFName,p.PlayerLName;";

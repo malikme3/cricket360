@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.sql.DataSource;
+import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -277,7 +278,7 @@ public class TeamDaoImpl implements TeamDao {
 	@SuppressWarnings("unused")
 	@Override
 	public void updatFname() {
-		String sql = "UPDATE players SET PlayerFName = 'Malik', PlayerLName = 'Shayan10' WHERE PlayerID = 1";
+		String sql = "UPDATE players SET PlayerFName = '1', PlayerLName = '34' WHERE PlayerID = 1";
 
 		int rows = jdbcTemplate.update(sql);
 		logger.info("rows are ::" + rows);
@@ -288,7 +289,7 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public void updatLname() {
 
-		String sql = "UPDATE players SET PlayerLNfame = 'f-786', PlayerLName = 'l-786' WHERE PlayerID = 1";
+		String sql = "UPDATE players SET PlayerLNfame = 'f000-786', PlayerLName = 'l000-786' WHERE PlayerID = 1";
 		int rows = jdbcTemplate.update(sql);
 		logger.info("rows are ::" + rows);
 	}
@@ -345,6 +346,7 @@ public class TeamDaoImpl implements TeamDao {
 
 	@Override
 	public List<Map<String, Object>> findPlayer() {
+
 		String sql = "SELECT CONCAT(p.PlayerFName, ' ', p.PlayerLName) as label, p.playerId as value  "
 				+ "FROM PLAYERS p INNER JOIN TEAMS t ON t.TeamID = p.PlayerTeam "
 				+ "WHERE p.isactive = 0  ORDER BY p.PlayerFName,p.PlayerLName;";
@@ -390,36 +392,6 @@ public class TeamDaoImpl implements TeamDao {
 	}
 
 	@Override
-	public int updateScorecardExtrasDetails(SorecardExtrasDetails details) {
-		String sql = "INSERT INTO scorecard_extras_details "
-				+ "(game_id,innings_id,legbyes,byes,wides,noballs,total) "
-				+ "VALUES (?,?,?,?,?,?,?)";
-		int rows = jdbcTemplate.update(sql);
-		logger.info("rows are ::" + rows);
-		return rows;
-	}
-
-	@Override
-	public int updateScorecardTotalDetails(ScorecardTotalDetails details) {
-		String sql = "INSERT INTO scorecard_extras_details "
-				+ "(game_id,innings_id,team,wickets,total,overs) "
-				+ "VALUES (?,?,?,?,?,?)";
-		int rows = jdbcTemplate.update(sql);
-		logger.info("rows are ::" + rows);
-		return rows;
-	}
-
-	@Override
-	public int updateScorecardFowDetails(ScorecardFowDetails details) {
-		String sql = "INSERT INTO SCORECARD_FOW_DETAILS "
-				+ "(game_id,innings_id,fow1,fow2,fow3,fow4,fow5,fow6,fow7,fow8,fow9,fow10) "
-				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-		int rows = jdbcTemplate.update(sql);
-		logger.info("rows are ::" + rows);
-		return rows;
-	}
-
-	@Override
 	public int updateScorecardBattingDetails(ScorecardBattingDetails details) {
 		String sql = "scorecard_batting_details "
 				+ "(game_id,season,innings_id,player_id,batting_position,how_out,runs,assist,bowler,balls,fours,sixes,notout,team,opponent) "
@@ -436,6 +408,153 @@ public class TeamDaoImpl implements TeamDao {
 				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 		int rows = jdbcTemplate.update(sql);
 		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateInsertScorecardTotalDetails(ScorecardTotalDetails totalDetails) {
+
+		int rows = 0;
+		if (totalDetails.getGame_id() > 0) {
+			try {
+				rows = updateTotalsDetails(totalDetails);
+			} catch (Exception ex) {
+				logger.info("Update failed, Try to insert data");
+				rows = insertTotalsDetails(totalDetails);
+			}
+
+		} else {
+			logger.warn("Opps GameId is not provided");
+			return rows;
+		}
+		return rows;
+
+	}
+
+	private int updateTotalsDetails(ScorecardTotalDetails totalDetails) {
+
+		String sql = "UPDATE scorecard_total_details SET team=? ,wickets=? ,total=? ,overs=?  WHERE "
+				+ "game_id =? and innings_id = ?";
+		int rows = jdbcTemplate.update(sql, totalDetails.getTeam(), totalDetails.getWickets(), totalDetails.getTotal(),
+				totalDetails.getOvers(), totalDetails.getGame_id(), totalDetails.getInnings_id());
+		logger.info("rows are ::" + rows);
+		if (rows > 1) {
+			logger.warn("More than one Rows updated");
+		}
+
+		return rows;
+	}
+
+	private int insertTotalsDetails(ScorecardTotalDetails totalDetails) {
+
+		String sql = "INSERT INTO scorecard_total_details "
+				+ "(game_id,innings_id,team,wickets,total,overs) "
+				+ "VALUES (?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql, totalDetails.getGame_id(), totalDetails.getInnings_id(),
+				totalDetails.getTeam(), totalDetails.getWickets(), totalDetails.getTotal(), totalDetails.getOvers());
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateInsertScorecardFowDetails1(ScorecardFowDetails fowDetails) {
+		int rows = 0;
+		if (fowDetails.getGame_id() > 0) {
+			try {
+				rows = updateFowDetails(fowDetails);
+			} catch (Exception ex) {
+				logger.info("Update failed, Try to insert data");
+				rows = insertFowDetails(fowDetails);
+			}
+
+		} else {
+			logger.warn("Opps GameId is not provided");
+			return rows;
+		}
+		return rows;
+
+	}
+
+	public int updateFowDetails(ScorecardFowDetails fowDetails) {
+		String sql = "UPDATE SCORECARD_FOW_DETAILS SET fow1 = ?,fow2= ?,fow3= ?,fow4= ?,fow5= ?,fow6= ?,fow7= ?,fow8= ?,fow9= ?,fow10= ? WHERE "
+				+ "game_id =? and innings_id = ?";
+		int rows = jdbcTemplate.update(sql, fowDetails.getFow1(),
+				fowDetails.getFow2(), fowDetails.getFow3(), fowDetails.getFow4(), fowDetails.getFow5(),
+				fowDetails.getFow6(), fowDetails.getFow7(), fowDetails.getFow8(), fowDetails.getFow9(),
+				fowDetails.getFow10(), fowDetails.getGame_id(), fowDetails.getInnings_id());
+		logger.info("rows are ::" + rows);
+		if (rows > 1) {
+			logger.warn("More than one Rows updated");
+		}
+
+		return rows;
+
+	};
+
+	public int insertFowDetails(ScorecardFowDetails fowDetails) {
+		String sql = "INSERT INTO SCORECARD_FOW_DETAILS "
+				+ "(game_id,innings_id,fow1,fow2,fow3,fow4,fow5,fow6,fow7,fow8,fow9,fow10) "
+				+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql, fowDetails.getGame_id(), fowDetails.getInnings_id(), fowDetails.getFow1(),
+				fowDetails.getFow2(), fowDetails.getFow3(), fowDetails.getFow4(), fowDetails.getFow5(),
+				fowDetails.getFow6(), fowDetails.getFow7(), fowDetails.getFow8(), fowDetails.getFow9(),
+				fowDetails.getFow10());
+		logger.info("rows are ::" + rows);
+		return rows;
+	}
+
+	@Override
+	public int updateInsertScorecardExtrasDetails(SorecardExtrasDetails extrasDetails) {
+		int rows = 0;
+
+		if (extrasDetails.getGame_id() > 0
+				&& (extrasDetails.getInnings_id() == 1 || extrasDetails.getInnings_id() == 2)) {
+			try {
+				rows = updateExtrasDetails(extrasDetails);
+
+				// Making sure to Insert record if no row is updated
+				if (rows == 0) {
+					logger.warn("NO row is updated, Try to insert data");
+					rows = insertExtrasDetails(extrasDetails);
+				}
+			} catch (Exception ex) {
+				logger.info("Update failed, Try to insert data");
+				rows = insertExtrasDetails(extrasDetails);
+			}
+
+		} else {
+			logger.error("Opps Game Id or Innings Id is not Correct");
+			return rows;
+		}
+		return rows;
+
+	}
+
+	private int insertExtrasDetails(SorecardExtrasDetails extrasDetails) {
+		String sql = "INSERT INTO scorecard_extras_details "
+				+ "(game_id,innings_id,legbyes,byes,wides,noballs,total) "
+				+ "VALUES (?,?,?,?,?,?,?)";
+		int rows = jdbcTemplate.update(sql, extrasDetails.getGame_id(), extrasDetails.getInnings_id(),
+				extrasDetails.getLegbyes(), extrasDetails.getByes(), extrasDetails.getWides(),
+				extrasDetails.getNoballs(), extrasDetails.getTotal());
+		logger.info("R # of rows inserted are ::" + rows);
+		if (rows < 1) {
+			logger.error("Failed to Insert data");
+		}
+		return rows;
+	}
+
+	private int updateExtrasDetails(SorecardExtrasDetails extrasDetails) {
+		String sql = "UPDATE scorecard_extras_details SET legbyes=? ,byes=? ,wides=? ,noballs=?, total=?  WHERE "
+				+ "game_id =? and innings_id = ?";
+		int rows = jdbcTemplate.update(sql, extrasDetails.getLegbyes(), extrasDetails.getByes(),
+				extrasDetails.getWides(), extrasDetails.getNoballs(), extrasDetails.getTotal(),
+				extrasDetails.getGame_id(), extrasDetails.getInnings_id());
+		logger.info("rows are ::" + rows);
+		if (rows > 1) {
+			logger.warn("More than one Rows updated");
+		}
+
 		return rows;
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,9 @@ import com.cricket.austin.zulfi.model.ScorecardTotalDetails;
 import com.cricket.austin.zulfi.model.Seasons;
 import com.cricket.austin.zulfi.model.SorecardExtrasDetails;
 import com.cricket.austin.zulfi.model.SubmitResults;
+
 @Service
+@Component
 public class TeamServiceImpl implements TeamService {
 	@Autowired
 	private TeamDao teamDao;
@@ -117,8 +120,21 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public List<Map<String, Object>> findPlayer() {
-		return teamDao.findPlayer();
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = { Exception.class })
+	public List<Map<String, Object>> findPlayer() throws Exception {
+		try {
+			// teamDao.updatFname();
+
+			System.out.println("first name");
+
+			// teamDao.updatLname();
+			System.out.println("updated");
+
+			return teamDao.findPlayer();
+
+		} catch (Exception ex) {
+		}
+		throw new RuntimeException();
 
 	}
 
@@ -147,18 +163,18 @@ public class TeamServiceImpl implements TeamService {
 	}
 
 	@Override
-	public int updateScorecardExtrasDetails(SorecardExtrasDetails details) {
-		return teamDao.updateScorecardExtrasDetails(details);
+	public int updateInsertScorecardExtrasDetails(SorecardExtrasDetails details) {
+		return teamDao.updateInsertScorecardExtrasDetails(details);
 	}
 
 	@Override
-	public int updateScorecardTotalDetails(ScorecardTotalDetails details) {
-		return teamDao.updateScorecardTotalDetails(details);
+	public int updateInsertScorecardTotalDetails(ScorecardTotalDetails details) {
+		return teamDao.updateInsertScorecardTotalDetails(details);
 	}
 
 	@Override
-	public int updateScorecardFowDetails(ScorecardFowDetails details) {
-		return teamDao.updateScorecardFowDetails(details);
+	public int updateInsertScorecardFowDetails1(ScorecardFowDetails details) {
+		return teamDao.updateInsertScorecardFowDetails1(details);
 	}
 
 	@Override

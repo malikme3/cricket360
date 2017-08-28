@@ -55,11 +55,11 @@ public interface TeamDao {
 
 	List<Map<String, Object>> findHowOut();
 
-	int updateScorecardExtrasDetails(SorecardExtrasDetails details);
+	int updateInsertScorecardExtrasDetails(SorecardExtrasDetails details);
 
-	int updateScorecardTotalDetails(ScorecardTotalDetails details);
+	int updateInsertScorecardTotalDetails(ScorecardTotalDetails details);
 
-	int updateScorecardFowDetails(ScorecardFowDetails details);
+	int updateInsertScorecardFowDetails1(ScorecardFowDetails details);
 
 	int updateScorecardBattingDetails(ScorecardBattingDetails details);
 

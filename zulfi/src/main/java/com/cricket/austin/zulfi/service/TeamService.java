@@ -43,7 +43,7 @@ public interface TeamService {
 
 	List<Map<String, Object>> findPlayerByTeamId(String teamId);
 
-	List<Map<String, Object>> findPlayer();
+	List<Map<String, Object>> findPlayer() throws Exception;
 
 	int updateScorecardGameDetails(ScorecardGameDetails details);
 
@@ -51,15 +51,14 @@ public interface TeamService {
 
 	List<Map<String, Object>> findHowOut();
 
-	int updateScorecardExtrasDetails(SorecardExtrasDetails details);
+	int updateInsertScorecardExtrasDetails(SorecardExtrasDetails details);
 
-	int updateScorecardTotalDetails(ScorecardTotalDetails details);
+	int updateInsertScorecardTotalDetails(ScorecardTotalDetails details);
 
-	int updateScorecardFowDetails(ScorecardFowDetails details);
+	int updateInsertScorecardFowDetails1(ScorecardFowDetails details);
 
 	int updateScorecardBattingDetails(ScorecardBattingDetails details);
 
 	int updateScorecardBowlingDetails(ScorecardBowlingDetails details);
-
 
 }
